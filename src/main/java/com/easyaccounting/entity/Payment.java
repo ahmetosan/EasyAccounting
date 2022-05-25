@@ -22,10 +22,6 @@ public class Payment extends BaseEntity{
     private LocalDate year;
     private Double amount;
     private Boolean isPaid;
-    private Long createdBy;
-    private LocalDateTime createdTime;
-    private Long updatedBy;
-    private LocalDateTime updatedTime;
     private String institutionId;
 
 
