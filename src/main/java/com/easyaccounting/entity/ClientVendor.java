@@ -29,4 +29,6 @@ public class ClientVendor extends BaseEntity{
     private String address;
     private Boolean enabled;
 
+    // Delete after push
+
 }
