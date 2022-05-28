@@ -1,11 +1,14 @@
 package com.easyaccounting.entity;
 
+import com.easyaccounting.enums.State;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDate;
 
 @NoArgsConstructor
@@ -25,9 +28,7 @@ public class Company extends BaseEntity {
     private Boolean enabled;
     private String phone;
 
-    // Uncomment and review when enums will be added
-//    @Enumerated(EnumType.STRING)
-//    private State state;
-
+    @Enumerated(EnumType.STRING)
+    private State state;
 
 }
