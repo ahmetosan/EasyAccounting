@@ -2,6 +2,7 @@ package com.easyaccounting.enums;
 
 public enum InvoiceType {
 
+    //IF MORE ENUMS NEEDED WILL BE UPDATE
     SALESINVOICE("S_Invoice"), PURCHASEINVOICE("P_Invoice");
 
     private final String value;
