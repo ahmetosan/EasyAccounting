@@ -12,13 +12,14 @@ import javax.persistence.*;
 @Table(name = "users")
 @Where(clause = "is_deleted=false")
 public class User extends BaseEntity{
-    private String firstName;
-    private String lastName;
+    private String email;
+    private String firstname;
+    private String lastname;
 
     @Column(unique = true, nullable = false)
-    private String userName;
+    private String username;
 
-    private String passWord;
+    private String password;
     private boolean enabled;
     private String phone;
 
@@ -27,9 +28,9 @@ public class User extends BaseEntity{
     private Company company;
 
     //review when Role entity is added
-    //@ManyToOne
-    //@JoinColumn(name = "role_id")
-   // private Role role;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
 
 

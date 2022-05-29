@@ -5,16 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @NoArgsConstructor
 @Data
 @Entity
 @Where(clause = "is_deleted = false")
+@Table(name = "companies")
 public class Company extends BaseEntity {
 
     private String title;

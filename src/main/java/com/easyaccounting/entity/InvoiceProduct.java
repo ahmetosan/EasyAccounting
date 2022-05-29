@@ -14,13 +14,12 @@ import javax.persistence.*;
 @Setter
 @Where(clause = "is_deleted=false")
 public class InvoiceProduct extends BaseEntity{
-    // Comment out when Invoice&Product is created
-//    @OneToOne
-//    @JoinColumn(name = "invoice_id")
-//    private Invoice invoice;
-//    @OneToOne
-//    @JoinColumn(name = "product_id")
-//    private Product product;
+    @OneToOne
+    @JoinColumn(name = "invoice_id")
+    private Invoice invoice;
+    @OneToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
     private String name;
     private Long qty;
     private Long price;
