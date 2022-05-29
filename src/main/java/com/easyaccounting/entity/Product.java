@@ -37,5 +37,5 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "company_id")
     private Company company;
 
-
+//new update on products
 }
