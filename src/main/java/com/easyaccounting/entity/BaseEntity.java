@@ -16,7 +16,7 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false) // naming is should follow the documentation  ???
     private LocalDateTime insertDateTime;
 
     @Column(nullable = false,updatable = false)
