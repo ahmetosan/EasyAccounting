@@ -1,7 +1,7 @@
 package com.easyaccounting.enums;
 
 public enum InvoiceType {
-
+    //IF MORE ENUMS NEEDED WILL BE UPDATED ACCORDINGLY,
     SALESINVOICE("S_Invoice"), PURCHASEINVOICE("P_Invoice");
 
     private final String value;
@@ -13,5 +13,4 @@ public enum InvoiceType {
     public String getValue() {
         return value;
     }
-
 }
