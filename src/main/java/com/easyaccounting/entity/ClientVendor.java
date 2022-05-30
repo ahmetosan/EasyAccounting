@@ -1,6 +1,7 @@
 package com.easyaccounting.entity;
 
 
+import com.easyaccounting.enums.State;
 import com.easyaccounting.enums.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,7 +29,9 @@ public class ClientVendor extends BaseEntity{
     private String zipCode;
     private String address;
     private Boolean enabled;
-
-    // Delete after push
+    @ManyToOne
+    private Company company;
+    @Enumerated(EnumType.STRING)
+    private State state;
 
 }

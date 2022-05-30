@@ -1,13 +1,11 @@
 package com.easyaccounting.entity;
 
+import com.easyaccounting.enums.ProductStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @NoArgsConstructor
@@ -26,8 +24,8 @@ public class Product extends BaseEntity {
     private String new_column;
 
 
-//    @Enumerated(EnumType.STRING)
-//    private Status product_status;
+    @Enumerated(EnumType.STRING)
+    private ProductStatus product_status;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

@@ -7,12 +7,14 @@ import org.hibernate.annotations.Where;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 // do we need al arg constu
 @NoArgsConstructor
 @Data
 @Entity
 @Where(clause = "is_deleted = false")
+@Table(name = "categories")
 public class Category extends BaseEntity{
 
 
