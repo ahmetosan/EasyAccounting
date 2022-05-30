@@ -29,12 +29,6 @@ public class User extends BaseEntity{
     //review when Role entity is added
     //@ManyToOne
     //@JoinColumn(name = "role_id")
-   // private Role role;
-
-
-
-
-
-
+    // private Role role;
 
 }
