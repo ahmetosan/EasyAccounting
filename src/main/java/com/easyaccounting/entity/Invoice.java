@@ -24,9 +24,8 @@ public class Invoice extends BaseEntity{
     @Column(columnDefinition = "DATE")
     private LocalDate invoiceDate;
 //    Line 27-29 will be commented out after ClientVendor entity is created
-//    @ManyToOne
-//    @JoinColumn(name = "sptable_id")
-//    private ClientVendor clientVendor;
+    @ManyToOne
+    private ClientVendor clientVendor;
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
