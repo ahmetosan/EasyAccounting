@@ -6,7 +6,7 @@ insert into companies(insert_date_time, insert_user_id, is_deleted, last_update_
                       address1, address2, email, enabled, establishment_date, representative, state, title,
                       zip, phone)
 values ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, '15th Avenue',
-        'Ronaldinho Street, Buenos Aires', 'welfare@yahoo.com', false, '2021-01-05', 'Tomy Hunt', 'BRASIL', 'Hunt Techno',
+        'Ronaldinho Street, Buenos Aires', 'welfare@yahoo.com', false, '2021-01-05', 'Tomy Hunt', 'WI', 'Hunt Techno',
         '33600', '3216549877');
 
 insert into users(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id, email,
@@ -17,7 +17,9 @@ values ('2021-09-09 00:00:00', 1, false, '2021-09-09 00:00:00', 1, 'mike@ct.com'
 
 insert into categories(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
                        description, enabled, company_id)
-values ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, 'Smart Phone', false, 1);
+values ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, 'Smart Phone', false, 1),
+('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, 'Electronics', true, 1),
+('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, 'TV', true, 1);
 
 insert into client_vendor (company_name, phone, email, company_id, type, zip_code, address, enabled,
                            insert_date_time,
