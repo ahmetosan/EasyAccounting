@@ -23,7 +23,6 @@ public class Invoice extends BaseEntity{
     private String invoiceType;
     @Column(columnDefinition = "DATE")
     private LocalDate invoiceDate;
-//    Line 27-29 will be commented out after ClientVendor entity is created
     @ManyToOne
     private ClientVendor clientVendor;
     @ManyToOne
