@@ -16,4 +16,10 @@ public class LoginController {
         return "main2";
     }
 
+    //dashboard page added
+    @RequestMapping("/dashboard.html")
+    public String dashboard() {
+        return "dashboard";
+    }
+
 }
