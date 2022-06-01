@@ -53,19 +53,18 @@
                                                     <tr>
                                                         <th>#</th>
                                                         <th>Description</th>
-                                                        <th>Status</th>
+<!--                                                        <th>Status</th>-->
                                                         <th>Edit</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr >
-                                                        <td ></td>
-                                                        <td  class="text-truncate">
-                                                            Food
-                                                        </td>
-                                                        <td>
-                                                            category status
-                                                        </td>
+
+                                                    <tr th:each="category : ${categories}">
+
+                                                        <td  th:text="${category.id}"></td>
+                                                        <td  class="text-truncate"
+                                                        th:text="${category.description}"></td>
+<!--                                                        <td th:text="${category.enabled}"></td>-->
                                                         <td>
                                                             <a >
                                                                 <i class="ft-edit"></i>
