@@ -1,6 +1,7 @@
 package com.easyaccounting.entity;
 
 
+import com.easyaccounting.enums.InvoiceStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +20,8 @@ public class Invoice extends BaseEntity{
 
 
     private String invoiceNumber;
-    private String invoiceStatus;
+    @Enumerated(EnumType.STRING)
+    private InvoiceStatus invoiceStatus;
     private String invoiceType;
     @Column(columnDefinition = "DATE")
     private LocalDate invoiceDate;
