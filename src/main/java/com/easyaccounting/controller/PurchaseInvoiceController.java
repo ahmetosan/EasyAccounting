@@ -20,9 +20,9 @@ public class PurchaseInvoiceController {
         return "invoice/purchase-invoice-list";
     }
 
-//    @GetMapping("/invoice/invoice/purchase-invoice-list/")
-//    public String getAllPurchaseInvoices(Model model){
-//        model.addAttribute("purchaseInvoices", invoiceService.listAllPurchaseInvoices());
-//        return "invoice/purchase-invoice-list";
-//    }
+    @GetMapping("/invoice/invoice/purchase-invoice-list/")
+    public String getDashboardPurchaseInvoices(Model model){
+        model.addAttribute("purchaseInvoices", invoiceService.listAllPurchaseInvoices());
+        return "invoice/purchase-invoice-list";
+    }
 }
