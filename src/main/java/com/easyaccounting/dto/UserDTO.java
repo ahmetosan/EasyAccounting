@@ -25,6 +25,26 @@ public class UserDTO {
     private String phone;
 
 
+    private CompanyDTO company;
+
+    private RoleDTO role;
+
+    public CompanyDTO getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyDTO company) {
+        this.company = company;
+    }
+
+    public RoleDTO getRole() {
+        return role;
+    }
+
+    public void setRole(RoleDTO role) {
+        this.role = role;
+    }
+
     public Long getId() {
         return id;
     }
@@ -91,9 +111,6 @@ public class UserDTO {
         this.phone = phone;
     }
 
-    //These fields will be added once they are available
-    //    private CompanyDTO company;
 
-   //    private RoleDTO role;
 
 }
