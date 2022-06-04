@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="loading" lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: page_head">
-    <title>Sales Invoice List</title>
+<head>
+    <head th:replace="fragments :: page_head"></head>
+    <title>List Purchase</title>
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/ico/favicon.ico}">
 </head>
 
@@ -48,19 +49,19 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr >
-                                                            <td class="text-truncate" ></td>
-                                                            <td class="text-truncate" ></td>
-                                                            <td class="text-truncate" ></td>
-                                                            <td class="text-truncate" ></td>
-                                                            <td class="text-truncate" ></td>
-                                                            <td class="text-truncate" ></td>
-                                                            <td>
+                                                    <tr th:each="salesInvoice: ${salesInvoices}">
+                                                        <td class="text-truncate" th:text="${salesInvoice.invoiceNumber}" ></td>
+                                                        <td class="text-truncate" th:text="${salesInvoice.getInvoiceDate()}"></td>
+                                                        <td class="text-truncate" th:text="${salesInvoice.getClientVendor()}"></td>
+                                                        <td class="text-truncate" th:text="'$ '+${salesInvoice.getInvoiceCost()}"></td>
+                                                        <td class="text-truncate" th:text="'$ '+${salesInvoice.getInvoiceTax()}"></td>
+                                                        <td class="text-truncate" th:text="'$ '+${salesInvoice.getTotalCost()}"></td>
+                                                        <td>
                                                                 <a class="ft-list" >
                                                                 </a>
                                                             </td>
                                                             <td>
-                                                                <form action="#" data-th-action="@{/invoice/approveDeleteToInvoice/{id}(id=${salesInvoice.getInvoiceNo()})}"
+                                                                <form action="#" data-th-action="@{/invoice/approveDeleteToInvoice/{id}(id=${salesInvoice.getInvoiceNumber()})}"
                                                                       method="post">
                                                                     <button
                                                                             class="btn btn-success mb-2 mb-sm-0 mr-sm-2"
