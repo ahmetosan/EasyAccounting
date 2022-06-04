@@ -50,12 +50,12 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr th:each="purchaseInvoice: ${purchaseInvoices}">
-                                                            <td  th:text="${purchaseInvoice.getInvoiceNumber()}"></td>
-                                                            <td  th:text="${purchaseInvoice.getInvoiceDate()}"></td>
-                                                            <td  th:text="${purchaseInvoice.getClientVendor()}"></td>
-                                                            <td  th:text="${purchaseInvoice.getCost()}"></td>
-                                                            <td  th:text="${purchaseInvoice.getTax()}"></td>
-                                                            <td  th:text="${purchaseInvoice.getTotal()}"></td>
+                                                            <td class="text-truncate" th:text="${purchaseInvoice.invoiceNumber}" ></td>
+                                                            <td class="text-truncate" th:text="${purchaseInvoice.getInvoiceDate()}"></td>
+                                                            <td class="text-truncate" th:text="${purchaseInvoice.getClientVendor()}"></td>
+                                                            <td class="text-truncate" th:text="'$ '+${purchaseInvoice.getInvoiceCost()}"></td>
+                                                            <td class="text-truncate" th:text="'$ '+${purchaseInvoice.getInvoiceTax()}"></td>
+                                                            <td class="text-truncate" th:text="'$ '+${purchaseInvoice.getTotalCost()}"></td>
                                                             <td>
                                                                 <a class="ft-list" >
                                                                 </a>
