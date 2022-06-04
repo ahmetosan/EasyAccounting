@@ -38,30 +38,30 @@
                                                 <table id="example" class="table table-striped table-bordered file-export" style="width:100%">
                                                     <thead>
                                                     <tr>
-                                                        <th>Invoice No</th>
-                                                        <th>Invoice Date</th>
-                                                        <th>Vendor</th>
-                                                        <th>Cost</th>
-                                                        <th>Tax</th>
-                                                        <th>Total</th>
-                                                        <th>Add Line Item</th>
-                                                        <th></th>
+                                                        <th >Invoice No</th>
+                                                        <th >Invoice Date</th>
+                                                        <th >Vendor</th>
+                                                        <th >Cost</th>
+                                                        <th >Tax</th>
+                                                        <th >Total</th>
+                                                        <th >Add Line Item</th>
+                                                        <th ></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr >
-                                                            <td class="text-truncate" ></td>
-                                                            <td class="text-truncate" ></td>
-                                                            <td class="text-truncate" ></td>
-                                                            <td class="text-truncate" ></td>
-                                                            <td class="text-truncate" ></td>
-                                                            <td class="text-truncate" ></td>
+                                                        <tr th:each="purchaseInvoice: ${purchaseInvoices}">
+                                                            <td  th:text="${purchaseInvoice.getInvoiceNumber()}"></td>
+                                                            <td  th:text="${purchaseInvoice.getInvoiceDate()}"></td>
+                                                            <td  th:text="${purchaseInvoice.getClientVendor()}"></td>
+                                                            <td  th:text="${purchaseInvoice.getCost()}"></td>
+                                                            <td  th:text="${purchaseInvoice.getTax()}"></td>
+                                                            <td  th:text="${purchaseInvoice.getTotal()}"></td>
                                                             <td>
                                                                 <a class="ft-list" >
                                                                 </a>
                                                             </td>
                                                             <td>
-                                                                <form action="#" data-th-action="@{/invoice/approveDeleteToInvoice/{id}(id=${purchaseInvoice.getInvoiceNo()})}"
+                                                                <form action="#" th:action="@{/invoice/approveDeleteToInvoice/{id}(id=${purchaseInvoice.getInvoiceNumber()})}"
                                                                       method="post">
                                                                     <button
                                                                             class="btn btn-success mb-2 mb-sm-0 mr-sm-2"
