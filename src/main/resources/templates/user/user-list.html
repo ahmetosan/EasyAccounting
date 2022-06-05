@@ -68,15 +68,16 @@
                                                     </thead>
                                                     <tbody>
 
-<!--                                                    th:each="user: ${users}"-->
-                                                    <tr>
-                                                        <td ></td>
-                                                        <td class="text-truncate" ></td>
-<!--                                                        <td th:text="${user.firstname + ' '+ user.lastname}"></td>-->
-                                                        <td ></td>
-                                                        <td ></td>
-                                                        <td ></td>
-                                                        <td ></td>
+
+                                                    <tr th:each="user : ${users}">
+                                                        <td th:text="${user.id}" ></td>
+                                                        <td class="text-truncate" th:text="${user.firstname}" ></td>
+                                                        <td th:text="${user.lastname}" ></td>
+                                                        <td th:text="${user.email}"></td>
+                                                        <td th:text="${user.phone}"></td>
+                                                        <td th:text="${user.role.description}"></td>
+<!--                                                        add when company DTO available and check user DTO-->
+                                                        <td th:text="${user.company.title}"></td>
                                                         <td>
                                                             <span
 

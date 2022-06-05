@@ -1,6 +1,8 @@
 package com.easyaccounting.entity;
 
 
+import com.easyaccounting.enums.InvoiceStatus;
+import com.easyaccounting.enums.InvoiceType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,11 +21,12 @@ public class Invoice extends BaseEntity{
 
 
     private String invoiceNumber;
-    private String invoiceStatus;
-    private String invoiceType;
+    @Enumerated(EnumType.STRING)
+    private InvoiceStatus invoiceStatus;
+    @Enumerated(EnumType.STRING)
+    private InvoiceType invoiceType;
     @Column(columnDefinition = "DATE")
     private LocalDate invoiceDate;
-//    Line 27-29 will be commented out after ClientVendor entity is created
     @ManyToOne
     private ClientVendor clientVendor;
     @ManyToOne
