@@ -30,4 +30,10 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
                 .map(invoiceObj -> mapperUtil.convert(invoiceObj, new PurchaseInvoiceDTO()))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void approvePurchaseInvoice(String invoiceNumber) {
+
+    }
+
 }
