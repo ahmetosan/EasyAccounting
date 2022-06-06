@@ -1,8 +1,8 @@
 package com.easyaccounting.enums;
 
 public enum CompanyType {
-    // just a placeholder, actual types will be placed
-    IT("It"), TRAVEL("Travel"), FINTECH("Fintech");
+
+    Vendor("vendor"), CLIENT("Client");
 
     private final String value;
 
