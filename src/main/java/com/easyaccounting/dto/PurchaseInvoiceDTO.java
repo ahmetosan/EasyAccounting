@@ -26,13 +26,7 @@ public class PurchaseInvoiceDTO {
     private CompanyDTO company;
     private boolean enabled;
 
-    public PurchaseInvoiceDTO(String invoiceNumber, String invoiceStatus, String invoiceType, LocalDate invoiceDate, ClientVendorDTO clientVendor, CompanyDTO company, boolean enabled) {
-        this.invoiceNumber = invoiceNumber;
-        this.invoiceStatus = invoiceStatus;
-        this.invoiceType = invoiceType;
-        this.invoiceDate = invoiceDate;
-        this.clientVendor = clientVendor;
-        this.company = company;
-        this.enabled = enabled;
-    }
+    private int invoiceCost;
+    private int invoiceTax;
+    private int totalCost;
 }

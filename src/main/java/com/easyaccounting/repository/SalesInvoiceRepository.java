@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface PurchaseInvoiceRepository  extends JpaRepository<Invoice, Long> {
-
-    List<Invoice> findInvoicesByInvoiceType(InvoiceType invoiceType);
+public interface SalesInvoiceRepository extends JpaRepository<Invoice, Long> {
+       List<Invoice> findInvoiceByInvoiceType(InvoiceType invoiceType);
 }
