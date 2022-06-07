@@ -64,13 +64,24 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr >
-                                                        <td ></td>
-                                                        <td  class="text-truncate"></td>
-                                                        <td ></td>
-                                                        <td ></td>
-                                                        <td ></td>
-                                                        <td ></td>
-                                                        <td ></td>
+
+
+                                                        <!--                                                        //I start here-->
+                                                    <tr th:each="company : ${companies}">
+
+                                                        <td  th:text="${company.id}"></td>
+                                                        <td  class="text-truncate"
+                                                             th:text="${company.title}"></td>
+                                                        <td  class="text-truncate"
+                                                             th:text="${company.representative}"></td>
+                                                        <td  class="text-truncate"
+                                                             th:text="${company.email}"></td>
+                                                        <td  class="text-truncate"
+                                                             th:text="${company.phone}"></td>
+                                                        <td  class="text-truncate"
+                                                             th:text="${company.zip}"></td>
+                                                        <td  class="text-truncate"
+                                                             th:text="${company.state}"></td>
                                                         <td>
                                                             <span
 
@@ -79,12 +90,15 @@
 
                                                                     class="badge bg-light-DANGER"></span>
                                                         </td>
-                                                        <!--<td></td>-->
+
                                                         <td>
                                                             <a >
-                                                                <i class="ft-edit"></i>
+                                                                <i class="ft-edit" ></i>
+
+
                                                             </a>
                                                         </td>
+                                                                                                       </td>-->
                                                     </tr>
                                                     </tbody>
                                                 </table>
