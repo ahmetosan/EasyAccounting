@@ -29,14 +29,4 @@ public class PurchaseInvoiceDTO {
     private int invoiceCost;
     private int invoiceTax;
     private int totalCost;
-
-    public PurchaseInvoiceDTO(String invoiceNumber, String invoiceStatus, String invoiceType, LocalDate invoiceDate, ClientVendorDTO clientVendor, CompanyDTO company, boolean enabled) {
-        this.invoiceNumber = invoiceNumber;
-        this.invoiceStatus = invoiceStatus;
-        this.invoiceType = invoiceType;
-        this.invoiceDate = invoiceDate;
-        this.clientVendor = clientVendor;
-        this.company = company;
-        this.enabled = enabled;
-    }
 }
