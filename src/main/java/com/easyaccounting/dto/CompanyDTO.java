@@ -39,6 +39,7 @@ public class CompanyDTO {
         this.phone = phone;
         this.state = state;
     }
+
 }
 
 
