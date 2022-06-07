@@ -23,6 +23,9 @@ public class SalesInvoiceController {
         model.addAttribute("salesInvoices", salesInvoiceService.listAllSalesInvoice(InvoiceType.SALES));
         model.addAttribute("salesInvoice" , new SalesInvoiceDTO());
         return "/invoice/sales-invoice-list";
+        /*
+        test
+         */
     }
 
 }
