@@ -34,7 +34,9 @@ public class ProductDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate updatedTime;
 
-    private ProductStatus status;
+
+    @Enumerated(EnumType.STRING)
+    private ProductStatus productStatus;
     private Boolean isDeleted;
 
 }
