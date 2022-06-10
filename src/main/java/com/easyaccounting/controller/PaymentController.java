@@ -49,20 +49,22 @@ public class PaymentController {
     public String chargePayment(@PathVariable("id") Long id) {
         try {
             paymentService.chargePaymentById(id);
-            return "redirect:/payment/charge/" + id;
+            return "redirect:/payment/invoice/" + id;
         } catch(Exception exception) {
             exception.printStackTrace();
             return "/error";
         }
     }
 
-    @GetMapping("/charge/{id}")
-    public String getPaymentSuccess(Model model, @PathVariable("id") Long id) {
+    @GetMapping("/invoice/{id}")
+    public String getPaymentSuccess(Model model, @PathVariable("id") Long id, @RequestParam(required = false) String type) {
         PaymentDTO paymentDTO = paymentService.findPaymentById(id);
 
         if (!paymentDTO.getIsPaid()) {
             return "redirect:/payment/list";
         }
+
+        model.addAttribute("isInvoice", type == "invoice");
 
         model.addAttribute("payment", paymentDTO);
 
