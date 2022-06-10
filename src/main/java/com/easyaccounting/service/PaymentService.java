@@ -9,4 +9,7 @@ public interface PaymentService {
     List<PaymentDTO> findAll();
     List<PaymentDTO> findAllByYear(String year);
 
+    PaymentDTO findPaymentById(Long id);
+
+    void chargePaymentById(Long id);
 }
