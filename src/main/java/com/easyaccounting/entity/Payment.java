@@ -1,13 +1,12 @@
 package com.easyaccounting.entity;
 
+import com.easyaccounting.enums.MonthName;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Setter
@@ -16,15 +15,16 @@ import java.time.LocalDateTime;
 @Where(clause = "is_deleted=false")
 public class Payment extends BaseEntity{
 
-    private String month;
+    @Enumerated(EnumType.STRING)
+    private MonthName month;
 
-    @Column(columnDefinition = "DATE")
-    private LocalDate year;
+//    @Column(columnDefinition = "DATE")
+    private String year;
     private Double amount;
     private Boolean isPaid;
     private String institutionId;
 
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Company company;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Company company;
 }
