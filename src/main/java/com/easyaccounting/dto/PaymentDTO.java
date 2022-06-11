@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class PaymentDTO {
 
     private Long id;
