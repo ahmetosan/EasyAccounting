@@ -35,11 +35,16 @@ public class PaymentController {
     @GetMapping("/newpayment/{id}")
     public String getPaymentMethod(Model model, @PathVariable("id") Long id) {
 
+
+        PaymentDTO payment = paymentService.findPaymentById(id);
+        if(payment.getIsPaid()) {
+            return "redirect:/payment/list";
+        }
+        model.addAttribute("amount", payment.getAmount());
+
         model.addAttribute("modelId", id);
         model.addAttribute("currency", "EUR");
         model.addAttribute("stripePublicKey", stripePublicKey);
-
-        model.addAttribute("amount", paymentService.findPaymentById(id).getAmount());
 
 
         return "/payment/message";
@@ -48,6 +53,10 @@ public class PaymentController {
     @PostMapping("/charge/{id}")
     public String chargePayment(@PathVariable("id") Long id) {
         try {
+            PaymentDTO payment = paymentService.findPaymentById(id);
+            if(payment.getIsPaid()) {
+                return "redirect:/payment/list";
+            }
             paymentService.chargePaymentById(id);
             return "redirect:/payment/invoice/" + id;
         } catch(Exception exception) {
