@@ -9,9 +9,9 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
 @Setter
 @Getter
-@NoArgsConstructor
 @Where(clause = "is_deleted=false")
 public class Payment extends BaseEntity{
 
