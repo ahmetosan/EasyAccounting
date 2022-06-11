@@ -229,8 +229,8 @@
                                     <div class="toolbar hidden-print">
                                         <div class="text-end">
 <!--                                            <a  target="_blank" type="button" class="btn btn-dark"><i class="fa fa-edit"  ></i>Overview</a>-->
-                                            <a th:href="@{/payment/list}" type="button" class="btn btn-primary"><i class="fa fa-list mr-1"></i>Back to List</a>
-<!--                                            <a   type="button" class="btn btn-danger"><i class="fa fa-file-pdf-o" ></i> Export as PDF</a>-->
+                                            <a th:href="@{/payment/list}" type="button" class="btn btn-primary" data-html2canvas-ignore="true"><i class="fa fa-list mr-1"></i>Back to List</a>
+                                            <a  onclick="generatePDF()" type="button" class="btn btn-danger" id="pdf-download" th:attr="data-html2canvas-ignore='true'"><i class="fa fa-file-pdf-o" ></i> Export as PDF</a>
                                         </div>
                                         <hr>
                                     </div>
@@ -340,7 +340,7 @@
                                                     </tr>
                                                     </tfoot>
                                                 </table>
-                                                <div th:if="!isInvoice" class="thanks">Thank you! <br> Your Payment is Successful!</div>
+                                                <div th:unless="isInvoice" class="thanks" th:attr="data-html2canvas-ignore='true'">Thank you! <br> Your Payment is Successful!</div>
                                                 <div class="notices">
                                                     <div>NOTICE:</div>
                                                     <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
@@ -381,6 +381,23 @@
 <!-- END PAGE LEVEL JS-->
 <!-- BEGIN: Custom CSS-->
 <script th:src="@{/assets/js/scripts.js}"></script>
+
+<script th:src="@{/js/html2pdf.bundle.min.js}"></script>
+<script>
+    function generatePDF() {
+        // Choose the element that our invoice is rendered in.
+        const element = document.getElementById('invoice');
+        // options
+        var opt = {
+            margin:       1,
+            filename:     'invoice'+ (new Date()).getMilliseconds()+'.pdf',
+            jsPDF:        { unit: 'in', orientation: "landscape" },
+            enableLinks: true
+        };
+        // Choose the element and save the PDF for our user.
+        html2pdf().set(opt).from(element).save();
+    }
+</script>
 
 </body>
 <!-- END : Body-->
