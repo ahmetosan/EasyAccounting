@@ -17,7 +17,7 @@ public class CategoryController {
     }
 
 
-@RequestMapping
+    @RequestMapping
     public String openCategory(Model model) {
         model.addAttribute("categories", categoryService.listAllCategories());
         return "/category/category-list";
