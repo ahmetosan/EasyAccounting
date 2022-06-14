@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class PaymentDTO {
 
     private Long id;
-    private LocalDate year;
+    private String year;
     private Double amount;
     private Boolean isPaid;
     private String institutionId;
