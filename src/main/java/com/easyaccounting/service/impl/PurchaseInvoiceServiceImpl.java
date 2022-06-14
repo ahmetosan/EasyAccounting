@@ -4,6 +4,7 @@ import com.easyaccounting.dto.PurchaseInvoiceDTO;
 import com.easyaccounting.entity.Invoice;
 import com.easyaccounting.enums.InvoiceType;
 import com.easyaccounting.mapper.MapperUtil;
+import com.easyaccounting.mapper.PurchaseInvoiceMapper;
 import com.easyaccounting.repository.PurchaseInvoiceRepository;
 import com.easyaccounting.service.PurchaseInvoiceService;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,12 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
 
     private final PurchaseInvoiceRepository purchaseInvoiceRepository;
     private final MapperUtil mapperUtil;
+    private final PurchaseInvoiceMapper purchaseInvoiceMapper;
 
-    public PurchaseInvoiceServiceImpl(PurchaseInvoiceRepository purchaseInvoiceRepository, MapperUtil mapperUtil) {
+    public PurchaseInvoiceServiceImpl(PurchaseInvoiceRepository purchaseInvoiceRepository, MapperUtil mapperUtil, PurchaseInvoiceMapper purchaseInvoiceMapper) {
         this.purchaseInvoiceRepository = purchaseInvoiceRepository;
         this.mapperUtil = mapperUtil;
+        this.purchaseInvoiceMapper = purchaseInvoiceMapper;
     }
 
     @Override
@@ -33,6 +36,26 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
 
     @Override
     public void approvePurchaseInvoice(String invoiceNumber) {
+
+    }
+
+    @Override
+    public void updatePurchaseInvoice(String invoiceNumber) {
+
+    }
+
+    @Override
+    public void savePurchaseInvoice(PurchaseInvoiceDTO invoiceDTO) {
+
+    }
+
+    @Override
+    public void deletePurchaseInvoiceById(Long id) {
+
+        Invoice purchaseInvoice = purchaseInvoiceRepository.findInvoiceById(id);
+        purchaseInvoice.setIsDeleted(true);
+        purchaseInvoice.setInvoiceNumber(purchaseInvoice.getInvoiceNumber() + "-" + purchaseInvoice.getId());
+        purchaseInvoiceRepository.save(purchaseInvoice);
 
     }
 
