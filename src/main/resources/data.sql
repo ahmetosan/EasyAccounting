@@ -10,10 +10,16 @@ values ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, '15th Avenue'
         '33600', '3216549877');
 
 insert into users(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id, email,
-                  firstname, lastname, password, enabled, phone, username, company_id, role_id)
-values ('2021-09-09 00:00:00', 1, false, '2021-09-09 00:00:00', 1, 'mike@ct.com', 'Michael', 'Jordan',
+                  firstname, lastname, password, enabled, phone, username, company_id, role_id,product_status)
+values ('2021-09-09 00:00:00', 1, false, '2021-09-09 00:00:00', 1, 'michael@ct.com', 'Michael', 'Jordan',
         'Abc1', true,
-        '5557962233', 'mike@ct.com', 1, 1);
+        '5557962233', 'michael@ct.com', 1, 1,'ACTIVE'),
+       ('2021-09-09 00:00:00', 1, false, '2021-09-09 00:00:00', 1, 'mike@ct.com', 'Mike', 'Smith',
+        'Abc1', true,
+        '5557962233', 'mike@ct.com', 1, 1,'ACTIVE'),
+       ('2021-09-09 00:00:00', 1, false, '2021-09-09 00:00:00', 1, 'adam@ct.com', 'Adam', 'Smith',
+        'Abc1', true,
+        '5557962233', 'adam@ct.com', 1, 1,'ACTIVE');
 
 insert into categories(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
                        description, enabled, company_id)
