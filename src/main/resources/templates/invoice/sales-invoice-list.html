@@ -20,7 +20,7 @@
                     <div class="users-list-filter px-2">
                         <form>
                             <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-right">
-                                <a class="btn btn-success bg-light-success mb-1"
+                                <a class="btn btn-success bg-light-success mb-1" th:href="@{/invoice/sales-invoice-create}"
                                    ><i
                                         class="fa fa-plus mr-1"></i>Create Sales Invoice</a>
                             </div>
@@ -40,7 +40,7 @@
                                                     <tr>
                                                         <th>Invoice No</th>
                                                         <th>Invoice Date</th>
-                                                        <th>Vendor</th>
+                                                        <th>Invoice Type</th>
                                                         <th>Cost</th>
                                                         <th>Tax</th>
                                                         <th>Total</th>
@@ -52,7 +52,7 @@
                                                     <tr th:each="salesInvoice: ${salesInvoices}">
                                                         <td class="text-truncate" th:text="${salesInvoice.invoiceNumber}" ></td>
                                                         <td class="text-truncate" th:text="${salesInvoice.getInvoiceDate()}"></td>
-                                                        <td class="text-truncate" th:text="${salesInvoice.getClientVendor()}"></td>
+                                                        <td class="text-truncate" th:text="${salesInvoice.clientVendor.getType()}"></td>
                                                         <td class="text-truncate" th:text="'$ '+${salesInvoice.getInvoiceCost()}"></td>
                                                         <td class="text-truncate" th:text="'$ '+${salesInvoice.getInvoiceTax()}"></td>
                                                         <td class="text-truncate" th:text="'$ '+${salesInvoice.getTotalCost()}"></td>

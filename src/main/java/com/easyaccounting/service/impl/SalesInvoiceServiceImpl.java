@@ -32,4 +32,10 @@ public class SalesInvoiceServiceImpl implements SalesInvoiceService {
        return invoices.stream().map(salesInvoice -> mapperUtil.convert(salesInvoice, new SalesInvoiceDTO())).collect(Collectors.toList());
     }
 
+    @Override
+    public void approveSalesInvoice(String invoiceNumber) {
+
+    }
+
+
 }
