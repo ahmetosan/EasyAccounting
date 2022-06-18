@@ -2,7 +2,6 @@ package com.easyaccounting.entity;
 
 
 import com.easyaccounting.enums.State;
-import com.easyaccounting.enums.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,8 +23,7 @@ public class ClientVendor extends BaseEntity{
     private String phone;
     @Column(name = "email")
     private String emailAddress;
-    @Enumerated(EnumType.STRING)
-    private Type type;
+    private String type;
     private String zipCode;
     private String address;
     private Boolean enabled;
