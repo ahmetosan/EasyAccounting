@@ -9,5 +9,6 @@ public interface SalesInvoiceService {
 
 
     List<SalesInvoiceDTO> listAllSalesInvoice(InvoiceType sales);
+    void approveSalesInvoice(String invoiceNumber);
 
 }
