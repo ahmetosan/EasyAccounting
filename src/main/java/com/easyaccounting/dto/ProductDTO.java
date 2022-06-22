@@ -1,6 +1,7 @@
 package com.easyaccounting.dto;
 
 import com.easyaccounting.enums.ProductStatus;
+import com.easyaccounting.enums.UnitsType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,7 @@ public class ProductDTO {
     private Boolean enabled;
     private int createdBy;
     private CategoryDTO category;
-
+    private UnitsType unitsType;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate createdTime;
     private int updatedBy;

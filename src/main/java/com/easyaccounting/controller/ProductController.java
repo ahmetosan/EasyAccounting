@@ -1,5 +1,7 @@
 package com.easyaccounting.controller;
 
+import com.easyaccounting.dto.ProductDTO;
+import com.easyaccounting.entity.Product;
 import com.easyaccounting.service.CategoryService;
 import com.easyaccounting.service.ProductService;
 import org.springframework.stereotype.Controller;
@@ -42,4 +44,12 @@ public class ProductController {
 
     }
 
+    @GetMapping("/create")
+    public String createProduct(Model model){
+        model.addAttribute("products", new ProductDTO());
+        model.addAttribute("product",productService.listAllProducts());
+        model.addAttribute("categories",categoryService.listAllCategories());
+
+        return "/product/product-add";
+    }
 }

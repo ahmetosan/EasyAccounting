@@ -5,7 +5,7 @@ import com.easyaccounting.dto.ProductDTO;
 import java.util.List;
 
 
-public interface ProductService {
+public interface ProductService{
 
 
     List<ProductDTO> listAllProducts();
