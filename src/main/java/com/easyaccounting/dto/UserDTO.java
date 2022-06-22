@@ -2,6 +2,7 @@ package com.easyaccounting.dto;
 
 import com.easyaccounting.entity.Company;
 import com.easyaccounting.entity.Role;
+import com.easyaccounting.enums.ProductStatus;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -23,7 +24,15 @@ public class UserDTO {
     private String password;
     private boolean enabled;
     private String phone;
+    private ProductStatus productStatus;
 
+    public ProductStatus getProductStatus() {
+        return productStatus;
+    }
+
+    public void setProductStatus(ProductStatus productStatus) {
+        this.productStatus = productStatus;
+    }
 
     private CompanyDTO company;
 

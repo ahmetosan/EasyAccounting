@@ -53,13 +53,14 @@
                                                  aria-labelledby="account-tab">
 
                                                 <!-- Account form starts -->
-                                                <form class="needs-validation" novalidate>
+
+                                                <form th:action="@{/category/edit/{id}(id=${category.getId()})}" method="post" th:object="${category}" class="needs-validation" novalidate>
                                                     <div class="row">
                                                         <div class="col-12 col-md-6">
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label for="users-edit-username">Description</label>
-                                                                    <input type="text" id="users-edit-username"
+                                                                    <input th:field="*{description}" type="text" id="users-edit-username"
                                                                            class="form-control"
                                                                            placeholder="description"
                                                                            required aria-invalid="false">
@@ -74,13 +75,11 @@
                                                                     class="btn btn-primary mb-2 mb-sm-0 mr-sm-2">Save
                                                                 Changes
                                                             </button>
+<!--                                                            <a onclick="myFunction()"-->
+<!--                                                               class="btn btn-danger mb-2 mb-sm-0 mr-sm-2">-->
+<!--                                                                Delete Category</a>-->
 
-
-                                                            <a onclick="myFunction()"
-                                                               class="btn btn-danger mb-2 mb-sm-0 mr-sm-2">
-                                                                Delete Category</a>
-
-                                                            <a class="btn btn-danger mb-2 mb-sm-0 mr-sm-2">
+                                                            <a th:href="@{/category/delete/{id}(id=${category.getId()})}" class="btn btn-danger mb-2 mb-sm-0 mr-sm-2">
                                                                 Delete Category</a>
 
 
