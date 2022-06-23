@@ -40,7 +40,7 @@
                                                     <tr>
                                                         <th>Invoice No</th>
                                                         <th>Invoice Date</th>
-                                                        <th>Invoice Type</th>
+                                                        <th>Client</th>
                                                         <th>Cost</th>
                                                         <th>Tax</th>
                                                         <th>Total</th>
@@ -52,7 +52,7 @@
                                                     <tr th:each="salesInvoice: ${salesInvoices}">
                                                         <td class="text-truncate" th:text="${salesInvoice.invoiceNumber}" ></td>
                                                         <td class="text-truncate" th:text="${salesInvoice.getInvoiceDate()}"></td>
-                                                        <td class="text-truncate" th:text="${salesInvoice.clientVendor.getType()}"></td>
+                                                        <td class="text-truncate" th:text="${salesInvoice.clientVendor.companyName}"></td>
                                                         <td class="text-truncate" th:text="'$ '+${salesInvoice.getInvoiceCost()}"></td>
                                                         <td class="text-truncate" th:text="'$ '+${salesInvoice.getInvoiceTax()}"></td>
                                                         <td class="text-truncate" th:text="'$ '+${salesInvoice.getTotalCost()}"></td>
@@ -61,7 +61,7 @@
                                                                 </a>
                                                             </td>
                                                             <td>
-                                                                <form action="#" data-th-action="@{/invoice/approveDeleteToInvoice/{id}(id=${salesInvoice.getInvoiceNumber()})}"
+                                                                <form action="#" data-th-action="@{/invoice/approveDeleteToInvoice/{id}(id=${salesInvoice.id})}"
                                                                       method="post">
                                                                     <button
                                                                             class="btn btn-success mb-2 mb-sm-0 mr-sm-2"

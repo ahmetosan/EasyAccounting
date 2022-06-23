@@ -2,6 +2,8 @@ package com.easyaccounting.service.impl;
 
 
 import com.easyaccounting.dto.CompanyDTO;
+import com.easyaccounting.entity.Company;
+import com.easyaccounting.entity.User;
 import com.easyaccounting.mapper.CompanyMapper;
 import com.easyaccounting.mapper.MapperUtil;
 import com.easyaccounting.repository.CompanyRepository;
@@ -34,5 +36,9 @@ public class CompanyServiceImpl implements CompanyService {
 
 
 
+    public Company getCurrentCompany() {
+
+        return companyRepository.findById(1L).get();
+    }
 
 }

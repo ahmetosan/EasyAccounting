@@ -35,15 +35,18 @@
                                             <div class="tab-pane fade mt-2 show active" id="account" role="tabpanel"
                                                  aria-labelledby="account-tab">
                                                 <!-- INVOICE PART BEGIN-->
-                                                <form class="needs-validation" novalidate>
+                                                <form class="needs-validation" th:action="@{/purchase-invoice/update/{id}(id=${invoice.id})}" method="post"
+                                                      th:object="${invoice}" novalidate>
                                                     <div class="row">
                                                         <div class="col-12 col-md-4">
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label>Invoice No</label>
                                                                     <a type="text"
-                                                                       class="form-control" required aria-invalid="false"
-                                                                       readonly></a>
+                                                                       class="form-control"
+                                                                       th:field="*{invoiceNumber}"
+                                                                       required aria-invalid="false"
+                                                                       disabled=""></a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -52,6 +55,7 @@
                                                                 <div class="controls">
                                                                     <label>Invoice Date</label>
                                                                     <a type="text"
+                                                                       th:field="*{invoiceDate}"
                                                                        class="form-control" readonly
                                                                        required="" aria-invalid="false"></a>
                                                                 </div>
@@ -60,13 +64,13 @@
                                                         <div class="col-12 col-md-4">
                                                                 <div class="form-group">
                                                                     <div class="controls">
-                                                                    <label>Vendor</label>
-                                                                    <select
-                                                                            class="custom-select" required="required">
-                                                                        <option ></option>
-                                                                        <option
-                                                                        ></option>
-                                                                    </select>
+                                                                        <label>Vendor</label>
+                                                                        <select
+                                                                                class="custom-select" required="required">
+                                                                            <option ></option>
+                                                                            <option
+                                                                            ></option>
+                                                                        </select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -133,18 +137,19 @@
                                                                         <th>Product</th>
                                                                         <th>Price</th>
                                                                         <th>Quantity</th>
+                                                                        <th>Tax</th>
                                                                         <th>Total</th>
                                                                         <th>Delete</th>
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                    <tr th:each="purchaseInvoice: ${purchaseInvoices}">
-                                                                        <td class="text-truncate" th:text="${purchaseInvoice.product.getName()}" ></td>
-                                                                        <td class="text-truncate" th:text="${purchaseInvoice.product.getPrice()}"></td>
-                                                                        <td class="text-truncate" th:text="${purchaseInvoice.product.getQuantity()}"></td>
-                                                                        <td class="text-truncate" th:text="${purchaseInvoice.product.getTotal()}"></td>
-                                                                        <td class="text-truncate" th:text="${purchaseInvoice.getInvoiceTax()}"></td>
-
+                                                                    <tr th:each="product : ${invoiceProducts}">
+                                                                        <td class="text-truncate" th:text="${product.name}" ></td>
+                                                                        <td class="text-truncate" th:text="${product.price}"></td>
+                                                                        <td class="text-truncate" th:text="${product.qty}"></td>
+                                                                        <td class="text-truncate" th:text="${product.tax}"></td>
+                                                                        <td class="text-truncate" th:text="${(product.qty * product.price)}"></td>
+                                                                        <td class="text-truncate" ></td>
                                                                         <td></td>
                                                                         <td></td>
                                                                         <td></td>
@@ -160,6 +165,7 @@
                                                 <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2">
                                                     <form action="#" th:href="@{/purchase-invoice/list}"
                                                           method="post">
+                                                        <label>CANCEL</label>
                                                         <button class="btn btn-danger mb-2 mb-sm-0 mr-sm-2"
                                                                 type="submit" name="action" value="cancel">Cancel
                                                         </button>

@@ -1,6 +1,6 @@
 package com.easyaccounting.controller;
 
-import com.easyaccounting.dto.PurchaseInvoiceDTO;
+import com.easyaccounting.dto.InvoiceDTO;
 import com.easyaccounting.enums.InvoiceType;
 import com.easyaccounting.service.PurchaseInvoiceService;
 import org.springframework.stereotype.Controller;
@@ -20,13 +20,13 @@ public class PurchaseInvoiceController {
     @GetMapping("/list")
     public String getPurchaseInvoices(Model model){
         model.addAttribute("purchaseInvoices", invoiceService.listAllPurchaseInvoices(InvoiceType.PURCHASE));
-        model.addAttribute("purchaseInvoice", new PurchaseInvoiceDTO());
+        model.addAttribute("purchaseInvoice", new InvoiceDTO());
         return "/invoice/purchase-invoice-list";
     }
 
     @GetMapping("/create")
     public String getPurchaseInvoiceCreate(Model model){
-        model.addAttribute("purchaseInvoice", new PurchaseInvoiceDTO());
+        model.addAttribute("purchaseInvoice", new InvoiceDTO());
         return "/invoice/purchase-invoice-create";
     }
 
@@ -52,17 +52,16 @@ public class PurchaseInvoiceController {
     public String editPurchaseInvoiceById(@PathVariable("id") Long id, Model model) {
         model.addAttribute("invoice", invoiceService.findPurchaseInvoiceById(id));
         return "/invoice/purchase-invoice-create";
-
     }
 
     @PostMapping("/update")
-    public String updatePurchaseInvoice(@ModelAttribute("id") PurchaseInvoiceDTO purchaseInvoiceDTO){
+    public String updatePurchaseInvoice(@PathVariable("id") Long id, InvoiceDTO purchaseInvoiceDTO){
         invoiceService.updatePurchaseInvoice(purchaseInvoiceDTO);
         return "/invoice/purchase-invoice-create";
     }
 
     @PostMapping("/create/add")
-    public String createNewPurchaseInvoice(PurchaseInvoiceDTO purchaseInvoiceDTO){
+    public String createNewPurchaseInvoice(InvoiceDTO purchaseInvoiceDTO){
         invoiceService.savePurchaseInvoice(purchaseInvoiceDTO);
         return "/invoice/purchase-invoice-create";
     }

@@ -1,5 +1,6 @@
 package com.easyaccounting.repository;
 
+import com.easyaccounting.entity.Company;
 import com.easyaccounting.entity.Invoice;
 import com.easyaccounting.enums.InvoiceType;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,6 @@ import java.util.Optional;
 
 public interface PurchaseInvoiceRepository  extends JpaRepository<Invoice, Long> {
 
-    List<Invoice> findInvoicesByInvoiceType(InvoiceType invoiceType);
+    List<Invoice> findInvoicesByInvoiceTypeAndCompany(InvoiceType invoiceType, Company company);
     Invoice findInvoiceById(Long id);
 }

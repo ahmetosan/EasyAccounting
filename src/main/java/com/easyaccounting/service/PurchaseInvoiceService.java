@@ -1,17 +1,17 @@
 package com.easyaccounting.service;
 
-import com.easyaccounting.dto.PurchaseInvoiceDTO;
+import com.easyaccounting.dto.InvoiceDTO;
 import com.easyaccounting.enums.InvoiceType;
 
 import java.util.List;
 
 public interface PurchaseInvoiceService {
 
-    List<PurchaseInvoiceDTO> listAllPurchaseInvoices(InvoiceType purchase);
+    List<InvoiceDTO> listAllPurchaseInvoices(InvoiceType purchase);
     void approvePurchaseInvoice(Long id);
-    PurchaseInvoiceDTO findPurchaseInvoiceById(Long id);
-    void updatePurchaseInvoice(PurchaseInvoiceDTO invoiceDTO);
-    void savePurchaseInvoice(PurchaseInvoiceDTO invoiceDTO);
+    InvoiceDTO findPurchaseInvoiceById(Long id);
+    void updatePurchaseInvoice(InvoiceDTO invoiceDTO);
+    void savePurchaseInvoice(InvoiceDTO invoiceDTO);
     void deletePurchaseInvoiceById(Long id);
     void getToInvoiceById(Long id);
 }
