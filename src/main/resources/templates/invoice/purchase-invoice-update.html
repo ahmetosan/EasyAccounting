@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="loading" lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <head th:replace="fragments :: page_head"><title>Select Purchase Invoice Product</title></head>
+    <head th:replace="fragments :: page_head"><title>Create Purchase Invoice</title></head>
     <title>Add-Line | Purchase | Invoice</title>
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/ico/favicon.ico}">
 </head>
@@ -18,15 +18,11 @@
                 <section class="users-list-wrapper">
                     <!-- PURCHASE INVOICE LIST LINK -->
                     <div class="users-list-filter px-2">
-                        <form action="#" th:action="@{/invoice/purchase-invoice-list/{id}(id=${purchaseInvoice.getInvoiceNumber()})}" th:object="${purchaseInvoice}"
-                              method="post">
                             <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-right">
-                                <button class="btn btn-primary bg-light-primary mb-1"
-                                        type="submit" name="action" value="cancel" th:href="@{/invoice/purchase-invoice-list}">
+                                <a class="btn btn-primary bg-light-primary mb-1" th:href="@{/purchase-invoice/list}">
                                    <i class="fa fa-list mr-1"></i>Purchase Invoice List
-                                </button>
+                                </a>
                             </div>
-                        </form>
                     </div>
                     <!-- PURCHASE INVOICE LIST LINK END-->
                     <!-- FORMS BEGIN -->
@@ -39,15 +35,18 @@
                                             <div class="tab-pane fade mt-2 show active" id="account" role="tabpanel"
                                                  aria-labelledby="account-tab">
                                                 <!-- INVOICE PART BEGIN-->
-                                                <form class="needs-validation" novalidate>
+                                                <form class="needs-validation" th:action="@{/purchase-invoice/update/{id}(id=${invoice.id})}" method="post"
+                                                      th:object="${invoice}" novalidate>
                                                     <div class="row">
                                                         <div class="col-12 col-md-4">
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label>Invoice No</label>
                                                                     <a type="text"
-                                                                           class="form-control" required aria-invalid="false"
-                                                                       readonly></a>
+                                                                       class="form-control"
+                                                                       th:field="*{invoiceNumber}"
+                                                                       required aria-invalid="false"
+                                                                       disabled=""></a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -56,34 +55,35 @@
                                                                 <div class="controls">
                                                                     <label>Invoice Date</label>
                                                                     <a type="text"
-                                                                           class="form-control" readonly
+                                                                       th:field="*{invoiceDate}"
+                                                                       class="form-control" readonly
                                                                        required="" aria-invalid="false"></a>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-md-4">
-                                                            <div class="form-group">
-                                                                <div class="controls">
-                                                                <label>Vendor</label>
-                                                                <a type="text"
-                                                                       class="form-control" readonly aria-invalid="false"></a>
+                                                                <div class="form-group">
+                                                                    <div class="controls">
+                                                                        <label>Vendor</label>
+                                                                        <select
+                                                                                class="custom-select" required="required">
+                                                                            <option ></option>
+                                                                            <option
+                                                                            ></option>
+                                                                        </select>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <!-- INVOICE PART END -->
                                                     <!-- INVOICE PRODUCT PART BEGIN -->
-                                                    <div  class="needs-validation" novalidate>
+                                                    <div class="needs-validation" novalidate>
                                                         <div class="row">
                                                             <div class="col-12 col-md-3">
                                                                 <div class="form-group">
                                                                     <div class="controls">
                                                                         <label>Product</label>
-                                                                        <select
-                                                                                class="custom-select" required="required">
-                                                                            <option ></option>
-                                                                            <option
-                                                                            ></option>
+                                                                        <select class="custom-select" required="required" disabled>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -93,8 +93,8 @@
                                                                     <div class="controls">
                                                                         <label>Quantity</label>
                                                                         <input type="text"
-                                                                               class="form-control" disabled
-                                                                               required aria-invalid="false">
+                                                                               class="form-control"
+                                                                               required aria-invalid="false" disabled>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -103,8 +103,8 @@
                                                                     <div class="controls">
                                                                         <label>Price</label>
                                                                         <input type="text"
-                                                                               class="form-control" disabled
-                                                                               required aria-invalid="false">
+                                                                               class="form-control"
+                                                                               required aria-invalid="false" disabled>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -113,14 +113,14 @@
                                                                     <div class="controls">
                                                                         <label>Tax</label>
                                                                         <input type="text"
-                                                                               class="form-control" disabled
-                                                                               required aria-invalid="false">
+                                                                               class="form-control"
+                                                                               required aria-invalid="false" disabled>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2">
-                                                                <button type="submit" name="action" value="addItem" disabled
-                                                                    class="btn btn-warning mb-2 mb-sm-0 mr-sm-2">Add Item
+                                                                <button type="submit" name="action" value="addItem"
+                                                                    class="btn btn-warning mb-2 mb-sm-0 mr-sm-2" disabled>Add Item
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -137,22 +137,24 @@
                                                                         <th>Product</th>
                                                                         <th>Price</th>
                                                                         <th>Quantity</th>
+                                                                        <th>Tax</th>
                                                                         <th>Total</th>
                                                                         <th>Delete</th>
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                    <tr >
-                                                                        <td ></td>
-                                                                        <td ></td>
-                                                                        <td ></td>
-                                                                        <td ></td>
-                                                                        <td>
-                                                                            <form method="post"
-                                                                                  th:action="@{/invoice/removeItemFromInvoice/{id}(id=${invoiceProduct.getId()})}">
-                                                                                <button class="ft-minus btn-primary bg-light-primary" type="submit"></button>
-                                                                            </form>
-                                                                        </td>
+                                                                    <tr th:each="product : ${invoiceProducts}">
+                                                                        <td class="text-truncate" th:text="${product.name}" ></td>
+                                                                        <td class="text-truncate" th:text="${product.price}"></td>
+                                                                        <td class="text-truncate" th:text="${product.qty}"></td>
+                                                                        <td class="text-truncate" th:text="${product.tax}"></td>
+                                                                        <td class="text-truncate" th:text="${(product.qty * product.price)}"></td>
+                                                                        <td class="text-truncate" ></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
                                                                     </tr>
                                                                     </tbody>
                                                                 </table>
@@ -161,12 +163,9 @@
                                                     </div>
                                                 <!-- INVOICE PRODUCT LIST END-->
                                                 <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2">
-                                                    <form action="#" th:action="@{/invoice/cancelOrSave/{id}(id=${invoice.getInvoiceNo()})}"
+                                                    <form action="#" th:href="@{/purchase-invoice/list}"
                                                           method="post">
-                                                        <button
-                                                                class="btn btn-success mb-2 mb-sm-0 mr-sm-2"
-                                                                type="submit" name="action" value="save">Save
-                                                        </button>
+                                                        <label>CANCEL</label>
                                                         <button class="btn btn-danger mb-2 mb-sm-0 mr-sm-2"
                                                                 type="submit" name="action" value="cancel">Cancel
                                                         </button>

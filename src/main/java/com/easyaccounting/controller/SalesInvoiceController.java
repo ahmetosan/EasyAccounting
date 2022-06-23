@@ -1,8 +1,6 @@
 package com.easyaccounting.controller;
 
-import com.easyaccounting.dto.PurchaseInvoiceDTO;
-import com.easyaccounting.dto.SalesInvoiceDTO;
-import com.easyaccounting.entity.ClientVendor;
+import com.easyaccounting.dto.InvoiceDTO;
 import com.easyaccounting.enums.InvoiceType;
 import com.easyaccounting.service.SalesInvoiceService;
 import org.springframework.stereotype.Controller;
@@ -23,14 +21,14 @@ public class SalesInvoiceController {
 
     @GetMapping("/sales-invoice-list")
     public String getSalesInvoice (Model model) {
-        model.addAttribute("salesInvoices", salesInvoiceService.listAllSalesInvoice(InvoiceType.SALES));
-        model.addAttribute("salesInvoice" , new SalesInvoiceDTO());
+        model.addAttribute("salesInvoices", salesInvoiceService.listAllSalesInvoice(InvoiceType.SALE));
+        model.addAttribute("salesInvoice" , new InvoiceDTO());
         return "/invoice/sales-invoice-list";
     }
 
     @GetMapping("/sales-invoice-create")
     public String createSalesInvoice(Model model){
-        model.addAttribute("invoice", new SalesInvoiceDTO());
+        model.addAttribute("invoice", new InvoiceDTO());
         return "/invoice/sales-invoice-create";
     }
 
