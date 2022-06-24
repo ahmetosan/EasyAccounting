@@ -29,7 +29,7 @@
                     <!-- Filter starts -->
                     <div class="users-list-filter px-2">
                         <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-right">
-                            <a class="btn btn-primary bg-light-primary mb-1" th:href="@{/product/list}" ><i
+                            <a class="btn btn-primary bg-light-primary mb-1" th:href="@{/product}" ><i
                                     class="fa fa-list mr-1"></i>Product List</a>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                                                  aria-labelledby="account-tab">
 
                                                 <!-- Account form starts -->
-                                                <form th:action="@{/product/create}" method="post" th:object="${products}">
+                                                <form th:action="@{/product/add}" method="post" th:object="${product}" class="needs-validation" novalidate>
                                                     <div class="row">
                                                         <div class="col-12 col-md-6">
                                                             <div class="form-group">
@@ -102,8 +102,9 @@
                                                                             required  aria-invalid="false"
                                                                             >
                                                                         <option th:value="''" th:text="Select">Select Status</option>
-                                                                           <option th:each="products : ${product}"
-                                                                                   th:value="${products.productStatus}">
+                                                                           <option th:each="productStatu : ${productStatus}"
+                                                                                   th:value="${productStatu.name()}"
+                                                                                   th:text="${productStatu.name}" >
 
                                                                             </option>
                                                                     </select>
@@ -123,7 +124,8 @@
                                                                             required>
                                                                         <option th:value="''" th:text="Select">Select Category</option>
                                                                         <option th:each="categorie : ${categories}"
-                                                                                th:value="${categorie.description}">
+                                                                                th:value="${categorie.id}"
+                                                                                th:text="${categorie.description}">
                                                                         </option>
 
                                                                     </select>
@@ -149,8 +151,9 @@
                                                                             class="form-control"
                                                                             required>
                                                                         <option th:value="''" th:text="Select">Select Unit</option>
-                                                                        <option th:each="products : ${product}"
-                                                                                th:value="${products.unitsType}">
+                                                                        <option th:each="unistType : ${unitTypes}"
+                                                                                th:value="${unistType.name()}"
+                                                                                th:text="${unistType.name}">
                                                                         </option>
 
                                                                     </select>
@@ -169,10 +172,14 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-6 mt-sm-4">
-                                                                <button type="submit"
-                                                                        class="btn btn-success mb-2 mb-sm-0 mr-sm-2">
-                                                                    Create
-                                                                </button>
+                                                                <a th:href="@{/product/edit/{id}(id=${product.name})}">
+                                                                    <button type="submit" class="btn btn-success mb-2 mb-sm-0 mr-sm-2">Save
+                                                                    </button>
+                                                                </a>
+<!--                                                                <button type="submit"-->
+<!--                                                                        class="btn btn-success mb-2 mb-sm-0 mr-sm-2">-->
+<!--                                                                    Create-->
+<!--                                                                </button>-->
                                                                 <button type="reset" class="btn btn-secondary">Cancel
                                                                 </button>
                                                             </div>

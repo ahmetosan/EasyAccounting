@@ -18,6 +18,6 @@ public class ProductDtoConverter implements Converter<String, ProductDTO> {
             return null;
         }
 
-        return productService.findByName(source);
+        return null;
     }
 }

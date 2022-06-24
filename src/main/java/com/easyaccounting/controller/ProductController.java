@@ -1,14 +1,15 @@
 package com.easyaccounting.controller;
 
+import com.easyaccounting.dto.CategoryDTO;
 import com.easyaccounting.dto.ProductDTO;
 import com.easyaccounting.entity.Product;
+import com.easyaccounting.enums.ProductStatus;
+import com.easyaccounting.enums.UnitsType;
 import com.easyaccounting.service.CategoryService;
 import com.easyaccounting.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/product")
@@ -33,23 +34,47 @@ public class ProductController {
 
     @GetMapping("/add")
     public String addProduct(Model model){
-
+        model.addAttribute("product", new ProductDTO());
+        model.addAttribute("products",productService.listAllProducts());
+        model.addAttribute("unitTypes", UnitsType.values());
+        model.addAttribute("productStatus", ProductStatus.values());
+        model.addAttribute("categories",categoryService.listAllCategories());
         return "/product/product-add";
+    }
+
+    @PostMapping("/add")
+    public String insertCategory(@ModelAttribute("product") ProductDTO productDTO, Model model) {
+
+        model.addAttribute("products",productService.listAllProducts());
+        model.addAttribute("unitTypes", UnitsType.values());
+        model.addAttribute("product.Status", ProductStatus.values());
+        model.addAttribute("categories",categoryService.listAllCategories());
+        productService.save(productDTO);
+
+        return "redirect:/product/product-list";
     }
 
     @GetMapping("/edit/{id}")
-    public String editProduct(@PathVariable("id") String id){
-
+    public String editProduct(@PathVariable("id") Long id, Model model){
+        model.addAttribute("product", productService.findById(id));
+        model.addAttribute("products",productService.listAllProducts());
+        model.addAttribute("unitTypes", UnitsType.values());
+        model.addAttribute("productStatus", ProductStatus.values());
+        model.addAttribute("categories",categoryService.listAllCategories());
         return "/product/product-edit";
-
     }
 
-    @GetMapping("/create")
-    public String createProduct(Model model){
-        model.addAttribute("products", new ProductDTO());
-        model.addAttribute("product",productService.listAllProducts());
+    @PostMapping("/edit/{id}")
+    public String updateProduct(@ModelAttribute("project") ProductDTO product,Model model){
+
+        model.addAttribute("products",productService.listAllProducts());
+        model.addAttribute("unitTypes", UnitsType.values());
+        model.addAttribute("productStatus", ProductStatus.values());
         model.addAttribute("categories",categoryService.listAllCategories());
 
-        return "/product/product-add";
+        productService.update(product);
+
+        return "/product/product-list";
     }
+
 }
