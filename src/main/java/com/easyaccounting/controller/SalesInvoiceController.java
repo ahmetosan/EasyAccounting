@@ -34,7 +34,7 @@ public class SalesInvoiceController {
     }
 
     @GetMapping("/approve/{id}")
-    public String approvePurchaseInvoiceById(@PathVariable("id") Long id) {
+    public String approveSalesInvoiceById(@PathVariable("id") Long id) {
         salesInvoiceService.approveSalesInvoice(id);
         return "redirect:/invoice/sales-invoice-list";
     }
@@ -61,7 +61,7 @@ public class SalesInvoiceController {
     @PostMapping("/update")
     public String updateSalesInvoice(@PathVariable("id") Long id, InvoiceDTO salesInvoiceDTO){
         salesInvoiceService.updateSalesInvoice(salesInvoiceDTO);
-        return "/invoice/purchase-invoice-create";
+        return "/invoice/sales-invoice-create";
     }
 
 }
