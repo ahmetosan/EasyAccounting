@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class ClientVendorDTO {
     private String type;
+    private String companyName;
 }

@@ -40,7 +40,7 @@
                                                     <tr>
                                                         <th>Invoice No</th>
                                                         <th>Invoice Date</th>
-                                                        <th>Invoice Type</th>
+                                                        <th>Client</th>
                                                         <th>Cost</th>
                                                         <th>Tax</th>
                                                         <th>Total</th>
@@ -52,29 +52,38 @@
                                                     <tr th:each="salesInvoice: ${salesInvoices}">
                                                         <td class="text-truncate" th:text="${salesInvoice.invoiceNumber}" ></td>
                                                         <td class="text-truncate" th:text="${salesInvoice.getInvoiceDate()}"></td>
-                                                        <td class="text-truncate" th:text="${salesInvoice.clientVendor.getType()}"></td>
+                                                        <td class="text-truncate" th:text="${salesInvoice.clientVendor.companyName}"></td>
                                                         <td class="text-truncate" th:text="'$ '+${salesInvoice.getInvoiceCost()}"></td>
                                                         <td class="text-truncate" th:text="'$ '+${salesInvoice.getInvoiceTax()}"></td>
                                                         <td class="text-truncate" th:text="'$ '+${salesInvoice.getTotalCost()}"></td>
                                                         <td>
-                                                                <a class="ft-list" >
+                                                                <a class="ft-list"
+
+                                                                    th:if="${salesInvoice.getInvoiceStatus() == 'PENDING'}"
+                                                                    th:href="@{/invoice/update/{id}(id=${salesInvoice.id})}">
                                                                 </a>
                                                             </td>
                                                             <td>
-                                                                <form action="#" data-th-action="@{/invoice/approveDeleteToInvoice/{id}(id=${salesInvoice.getInvoiceNumber()})}"
+                                                                <form action="#"
                                                                       method="post">
-                                                                    <button
+                                                                    <a
+                                                                            th:if="${salesInvoice.getInvoiceStatus() == 'PENDING'}"
                                                                             class="btn btn-success mb-2 mb-sm-0 mr-sm-2"
-                                                                            type="submit" name="action" value="approve">Approve
-                                                                    </button>
-                                                                    <button
+                                                                            type="submit" value="approve"
+                                                                            th:href="@{/invoice/approve/{id}(id=${salesInvoice.id})}">Approve
+                                                                    </a>
+                                                                    <a
+                                                                            th:if="${salesInvoice.getInvoiceStatus() == 'PENDING'}"
                                                                             class="btn btn-danger mb-2 mb-sm-0 mr-sm-2"
-                                                                            type="submit" name="action" value="delete">Delete
-                                                                    </button>
-                                                                    <button
+                                                                            type="submit" value="delete"
+                                                                            th:href="@{/invoice/delete/{id}(id=${salesInvoice.id})}">Delete
+                                                                    </a>
+                                                                    <a
+                                                                            th:if="${salesInvoice.getInvoiceStatus() == 'APPROVED'}"
                                                                             class="btn btn-info mb-2 mb-sm-0 mr-sm-2"
-                                                                            type="submit" name="action" value="toInvoice">To Invoice
-                                                                    </button>
+                                                                            type="submit" value="toInvoice"
+                                                                            th:href="@{/invoice/toInvoice/{id}(id=${salesInvoice.getId()})}">To Invoice
+                                                                    </a>
                                                                 </form>
                                                             </td>
                                                         </tr>

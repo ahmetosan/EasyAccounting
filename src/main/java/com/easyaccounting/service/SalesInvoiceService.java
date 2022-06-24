@@ -1,6 +1,6 @@
 package com.easyaccounting.service;
 
-import com.easyaccounting.dto.SalesInvoiceDTO;
+import com.easyaccounting.dto.InvoiceDTO;
 import com.easyaccounting.enums.InvoiceType;
 
 import java.util.List;
@@ -8,7 +8,12 @@ import java.util.List;
 public interface SalesInvoiceService {
 
 
-    List<SalesInvoiceDTO> listAllSalesInvoice(InvoiceType sales);
-    void approveSalesInvoice(String invoiceNumber);
+    List<InvoiceDTO> listAllSalesInvoice(InvoiceType sales);
+    void approveSalesInvoice(Long id);
+    InvoiceDTO findSalesInvoiceById(Long id);
+    void updateSalesInvoice(InvoiceDTO invoiceDTO);
+    void saveSalesInvoice(InvoiceDTO invoiceDTO);
+    void deleteSalesInvoiceById(Long id);
+    void getToInvoiceById(Long id);
 
 }
