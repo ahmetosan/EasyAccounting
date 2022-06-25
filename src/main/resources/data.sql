@@ -7,7 +7,10 @@ insert into companies(insert_date_time, insert_user_id, is_deleted, last_update_
                       zip, phone)
 values ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, '15th Avenue',
         'Ronaldinho Street, Buenos Aires', 'welfare@yahoo.com', false, '2021-01-05', 'Tomy Hunt', 'WI', 'Hunt Techno',
-        '33600', '3216549877');
+        '33600', '3216549877'),
+        ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, '15th Avenue',
+        'Ronaldinho Street, Buenos Aires', 'welfare@yahoo.com', false, '2021-01-05', 'Tomy Hunt', 'WI', 'Hunt Techno',
+         '33600', '3216549877');
 
 insert into users(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id, email,
                   firstname, lastname, password, enabled, phone, username, company_id, role_id,product_status)
@@ -65,3 +68,7 @@ INSERT INTO "payment" ("id", "insert_date_time", "insert_user_id", "is_deleted",
 INSERT INTO "payment" ("id", "insert_date_time", "insert_user_id", "is_deleted", "last_update_date_time", "last_update_user_id", "amount", "institution_id", "is_paid", "month", "year", "company_id") VALUES (8, '2022-06-06 01:39:06.726483', 1, 'f', '2022-06-06 01:39:06.726483', 1, '1200', '1', 'f', 'AUGUST', '2022', 1);
 INSERT INTO "payment" ("id", "insert_date_time", "insert_user_id", "is_deleted", "last_update_date_time", "last_update_user_id", "amount", "institution_id", "is_paid", "month", "year", "company_id") VALUES (9, '2022-06-06 01:39:06.726483', 1, 'f', '2022-06-06 01:39:06.726483', 1, '1200', '1', 'f', 'SEPTEMBER', '2022', 1);
 INSERT INTO "payment" ("id", "insert_date_time", "insert_user_id", "is_deleted", "last_update_date_time", "last_update_user_id", "amount", "institution_id", "is_paid", "month", "year", "company_id") VALUES (10, '2022-06-06 01:39:06.726483', 1, 'f', '2022-06-06 01:39:06.726483', 1, '1200', '1', 'f', 'OCTOBER', '2022', 1);
+
+
+
+

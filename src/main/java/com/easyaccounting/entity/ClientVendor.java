@@ -1,6 +1,7 @@
 package com.easyaccounting.entity;
 
 
+import com.easyaccounting.enums.CompanyType;
 import com.easyaccounting.enums.State;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +15,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Where(clause ="is_deleted=false")
 public class ClientVendor extends BaseEntity{
@@ -27,9 +27,14 @@ public class ClientVendor extends BaseEntity{
     private String zipCode;
     private String address;
     private Boolean enabled;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
+
     @Enumerated(EnumType.STRING)
     private State state;
+
+    @Enumerated(EnumType.STRING)
+    private CompanyType companyType;
 
 }
