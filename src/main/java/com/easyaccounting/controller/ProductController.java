@@ -65,7 +65,7 @@ public class ProductController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateProduct(@ModelAttribute("project") ProductDTO product,Model model){
+    public String updateProduct(@PathVariable("id") Long id, ProductDTO  product,Model model){
 
         model.addAttribute("products",productService.listAllProducts());
         model.addAttribute("unitTypes", UnitsType.values());
@@ -75,6 +75,12 @@ public class ProductController {
         productService.update(product);
 
         return "/product/product-list";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable("id") Long id){
+        productService.delete(id);
+        return "redirect:/product-list";
     }
 
 }

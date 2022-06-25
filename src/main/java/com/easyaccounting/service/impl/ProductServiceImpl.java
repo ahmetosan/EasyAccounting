@@ -77,11 +77,10 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> product=productRepository.findById(dto.getId());
         Product convertedProduct=productMapper.convertToEntity(dto);
 
-        if (product.isPresent()){
             convertedProduct.setId(product.get().getId());
-            convertedProduct.setProduct_status(dto.getProductStatus()==null ? product.get().getProduct_status() : dto.getProductStatus());
+            convertedProduct.setProduct_status(product.get().getProduct_status());
             productRepository.save(convertedProduct);
-        }
+
     }
 
 

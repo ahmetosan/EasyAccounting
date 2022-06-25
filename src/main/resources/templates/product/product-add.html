@@ -172,16 +172,18 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-6 mt-sm-4">
-                                                                <a th:href="@{/product/edit/{id}(id=${product.name})}">
-                                                                    <button type="submit" class="btn btn-success mb-2 mb-sm-0 mr-sm-2">Save
-                                                                    </button>
-                                                                </a>
-<!--                                                                <button type="submit"-->
-<!--                                                                        class="btn btn-success mb-2 mb-sm-0 mr-sm-2">-->
-<!--                                                                    Create-->
-<!--                                                                </button>-->
-                                                                <button type="reset" class="btn btn-secondary">Cancel
-                                                                </button>
+                                                                <form action="#" method="post">
+                                                                    <a
+                                                                            class="btn btn-success mb-2 mb-sm-0 mr-sm-2"
+                                                                            type="submit" value="approve"
+                                                                            th:href="@{/product/edit/{id}(id=${product.id})}">Save
+                                                                    </a>
+                                                                    <a
+                                                                            class="btn btn-info mb-2 mb-sm-0 mr-sm-2"
+                                                                            type="submit" value="cancel"
+                                                                            th:href="@{/product/list}">Cancel
+                                                                    </a>
+                                                                </form>
                                                             </div>
                                                         </div>
 
