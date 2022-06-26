@@ -1,6 +1,7 @@
 package com.easyaccounting.service.impl;
 
 import com.easyaccounting.dto.ProductDTO;
+import com.easyaccounting.entity.ClientVendor;
 import com.easyaccounting.entity.Product;
 import com.easyaccounting.mapper.MapperUtil;
 import com.easyaccounting.mapper.ProductMapper;
@@ -47,9 +48,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void save(ProductDTO dto) {
-        Product product=productMapper.convertToEntity(dto);
         dto.setEnabled(true);
-        productRepository.save(product);
+        productRepository.save(mapperUtil.convert(dto,new Product()));
+
     }
 
     @Override
@@ -65,12 +66,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(Long id) {
-        Optional<Product> foundProduct = productRepository.findById(id);
 
-        if(foundProduct.isPresent()){
-            foundProduct.get().setIsDeleted(true);
-            productRepository.save(foundProduct.get());
-        }
+        Product product=productRepository.getById(id);
+        product.setIsDeleted(true);
+        productRepository.save(product);
     }
 
     @Override

@@ -55,22 +55,21 @@ public class ProductController {
         model.addAttribute("categories",categoryService.listAllCategories());
         productService.save(productDTO);
 
-        return "redirect:/product-list";
+        return "redirect:/product/list";
     }
 
     @GetMapping("/edit/{id}")
     public String editProduct(@PathVariable("id") Long id, Model model){
         model.addAttribute("company",companyRepository.findAll());
         model.addAttribute("product", productService.findById(id));
-        model.addAttribute("products",productService.listAllProducts());
         model.addAttribute("unitTypes", UnitsType.values());
         model.addAttribute("productStatus", ProductStatus.values());
         model.addAttribute("categories",categoryService.listAllCategories());
         return "/product/product-edit";
     }
 
-    @PostMapping("/edit/{id}")
-    public String updateProduct(@PathVariable("id") Long id, ProductDTO  product,Model model){
+    @PostMapping("/edit")
+    public String updateProduct(ProductDTO  product,Model model){
 
         model.addAttribute("company",companyRepository.findAll());
         model.addAttribute("products",productService.listAllProducts());
@@ -80,13 +79,13 @@ public class ProductController {
 
         productService.update(product);
 
-        return "/product/product-list";
+        return "redirect:/product/list";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id){
         productService.delete(id);
-        return "redirect:/product-list";
+        return "redirect:/product/list";
     }
 
 }

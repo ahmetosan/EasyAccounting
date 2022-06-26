@@ -29,7 +29,7 @@
                     <!-- Filter starts -->
                     <div class="users-list-filter px-2">
                         <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-right">
-                            <a class="btn btn-primary bg-light-primary mb-1" th:href="@{/product/list}"><i
+                            <a class="btn btn-primary bg-light-primary mb-1" th:href="@{/product/product-list.html}"><i
                                     class="fa fa-list mr-1"></i>Product Edit</a>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                                                  aria-labelledby="account-tab">
 
                                                 <!-- Account form starts -->
-                                                <form th:action="@{/product/edit/{id}(id=${product.getId()})}"
+                                                <form th:action="@{/product/edit}"
                                                        method="post"
                                                       th:object="${product}"
                                                       >
@@ -59,16 +59,12 @@
                                                         <div class="col-12 col-md-6">
                                                             <div class="form-group">
                                                                 <div class="controls">
-                                                                    <label for="company-name">Company Name</label>
-                                                                    <select id="company-name"
-                                                                            class="form-control">
-                                                                        <option th:value="''" th:text="Select">Select Status</option>
-                                                                        <option th:each="companys : ${company}"
-                                                                                th:value="${companys.getTitle()}"
-                                                                                th:text="${companys.title}" >
-
-                                                                        </option>
-                                                                    </select>
+                                                                    <label for="company-edit-companyName">CompanyName</label>
+                                                                    <input type="text" id="company-edit-companyName"
+                                                                           class="form-control" placeholder="Company Name"
+                                                                           th:field="*{companyName}"
+                                                                           required
+                                                                           aria-invalid="false">
                                                                 </div>
                                                             </div>
 
@@ -100,17 +96,11 @@
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label for="users-edit-status">Status</label>
-                                                                    <select id="users-edit-status"
-                                                                            th:field="*{productStatus}"
-                                                                            class="form-control"
-                                                                            required  aria-invalid="false"
-                                                                    >
-                                                                        <option th:value="''" th:text="Select">Select Status</option>
-                                                                        <option th:each="productStatu : ${productStatus}"
-                                                                                th:value="${productStatu.name()}"
-                                                                                th:text="${productStatu.name}" >
-
-                                                                        </option>
+                                                                    <select id="users-edit-status" class="form-control" th:field="*{enabled}"
+                                                                            required>
+                                                                        <option value="">Select Status</option>
+                                                                        <option value="true">Active</option>
+                                                                        <option value="false">Passive</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -175,23 +165,16 @@
                                                                 </div>
                                                             </div>
                                                               <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-6 mt-sm-4">
-                                                                  <form action="#" method="post">
-                                                                      <a
-                                                                              class="btn btn-success mb-2 mb-sm-0 mr-sm-2"
-                                                                              type="submit" value="approve"
-                                                                              th:href="@{/product/edit/{id}(id=${product.id})}">Save
-                                                                      </a>
-                                                                      <a
-                                                                              class="btn btn-danger mb-2 mb-sm-0 mr-sm-2"
-                                                                              type="submit" value="delete"
-                                                                              th:href="@{/product/edit/{id}(id=${product.id})}">Delete
-                                                                      </a>
-                                                                      <a
-                                                                              class="btn btn-info mb-2 mb-sm-0 mr-sm-2"
-                                                                              type="submit" value="cancel"
-                                                                              th:href="@{/product/list}">Cancel
-                                                                      </a>
-                                                                  </form>
+                                                                  <button type="submit"
+                                                                          class="btn btn-primary mb-2 mb-sm-0 mr-sm-2">
+                                                                      Save Changes
+                                                                  </button>
+                                                                  <a class="btn btn-danger mb-2 mb-sm-0 mr-sm-2"
+                                                                     th:href="@{/product/delete/{id}(id=${product.id})}">Delete</a>
+                                                                  <a type="button"
+                                                                     th:href="@{/product/list}"
+                                                                     class="btn btn-secondary">
+                                                                      Cancel</a>
 
                                                             </div>
                                                         </div>

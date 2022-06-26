@@ -18,12 +18,12 @@ public class ProductDTO {
 
 
     private Long id ;
+    private String companyName;
     private String name;
     private String description;
     private int  quantity;
     private String unit;
     private int lowLimitAlert;
-    private int tax;
     private Boolean enabled;
     private int createdBy;
     private CategoryDTO category;
@@ -32,6 +32,7 @@ public class ProductDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate createdTime;
     private int updatedBy;
+    private CompanyDTO company;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate updatedTime;
