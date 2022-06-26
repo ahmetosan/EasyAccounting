@@ -6,9 +6,9 @@ insert into companies(insert_date_time, insert_user_id, is_deleted, last_update_
                       address1, address2, email, enabled, establishment_date, representative, state, title,
                       zip, phone)
 values ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, '15th Avenue',
-        'Ronaldinho Street, Buenos Aires', 'welfare@yahoo.com', false, '2021-01-05', 'Tomy Hunt', 'WI', 'Hunt Techno',
+        'Ronaldinho Street, Buenos Aires', 'welfare@yahoo.com', true, '2021-01-05', 'Tomy Hunt', 'WI', 'Hunt Techno',
         '33600', '3216549877'),
-        ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, '15th Avenue',
+        ('2021-01-05 00:00:00', 2, false, '2021-01-05 00:00:00', 2, '15th Avenue',
         'Ronaldinho Street, Buenos Aires', 'welfare@yahoo.com', false, '2021-01-05', 'Tomy Hunt', 'WI', 'Hunt Techno',
          '33600', '3216549877');
 
