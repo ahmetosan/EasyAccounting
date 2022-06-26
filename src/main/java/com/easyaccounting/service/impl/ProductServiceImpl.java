@@ -1,13 +1,12 @@
 package com.easyaccounting.service.impl;
 
 import com.easyaccounting.dto.ProductDTO;
-import com.easyaccounting.entity.Category;
 import com.easyaccounting.entity.Product;
 import com.easyaccounting.mapper.MapperUtil;
 import com.easyaccounting.mapper.ProductMapper;
+import com.easyaccounting.repository.CompanyRepository;
 import com.easyaccounting.repository.ProductRepository;
 import com.easyaccounting.service.ProductService;
-import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,11 +20,13 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final MapperUtil mapperUtil;
     private final ProductMapper productMapper;
+    private final CompanyRepository companyRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository, MapperUtil mapperUtil, ProductMapper productMapper) {
+    public ProductServiceImpl(ProductRepository productRepository, MapperUtil mapperUtil, ProductMapper productMapper, CompanyRepository companyRepository) {
         this.productRepository = productRepository;
         this.mapperUtil = mapperUtil;
         this.productMapper = productMapper;
+        this.companyRepository = companyRepository;
     }
 
 

@@ -1,10 +1,9 @@
 package com.easyaccounting.controller;
 
-import com.easyaccounting.dto.CategoryDTO;
 import com.easyaccounting.dto.ProductDTO;
-import com.easyaccounting.entity.Product;
 import com.easyaccounting.enums.ProductStatus;
 import com.easyaccounting.enums.UnitsType;
+import com.easyaccounting.repository.CompanyRepository;
 import com.easyaccounting.service.CategoryService;
 import com.easyaccounting.service.ProductService;
 import org.springframework.stereotype.Controller;
@@ -17,17 +16,21 @@ public class ProductController {
 
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final CompanyRepository companyRepository;
 
-    public ProductController(ProductService productService, CategoryService categoryService) {
+    public ProductController(ProductService productService, CategoryService categoryService, CompanyRepository companyRepository) {
         this.productService = productService;
         this.categoryService = categoryService;
+        this.companyRepository = companyRepository;
     }
+
 
     @GetMapping("/list")
     public String getAllProducts(Model model){
 
         model.addAttribute("product",productService.listAllProducts());
         model.addAttribute("categories",categoryService.listAllCategories());
+        model.addAttribute("company",companyRepository.findAll());
 
         return "/product/product-list";
     }
@@ -35,6 +38,7 @@ public class ProductController {
     @GetMapping("/add")
     public String addProduct(Model model){
         model.addAttribute("product", new ProductDTO());
+        model.addAttribute("company",companyRepository.findAll());
         model.addAttribute("products",productService.listAllProducts());
         model.addAttribute("unitTypes", UnitsType.values());
         model.addAttribute("productStatus", ProductStatus.values());
@@ -44,18 +48,19 @@ public class ProductController {
 
     @PostMapping("/add")
     public String insertCategory(@ModelAttribute("product") ProductDTO productDTO, Model model) {
-
+        model.addAttribute("company",companyRepository.findAll());
         model.addAttribute("products",productService.listAllProducts());
         model.addAttribute("unitTypes", UnitsType.values());
         model.addAttribute("product.Status", ProductStatus.values());
         model.addAttribute("categories",categoryService.listAllCategories());
         productService.save(productDTO);
 
-        return "redirect:/product/product-list";
+        return "redirect:/product-list";
     }
 
     @GetMapping("/edit/{id}")
     public String editProduct(@PathVariable("id") Long id, Model model){
+        model.addAttribute("company",companyRepository.findAll());
         model.addAttribute("product", productService.findById(id));
         model.addAttribute("products",productService.listAllProducts());
         model.addAttribute("unitTypes", UnitsType.values());
@@ -67,6 +72,7 @@ public class ProductController {
     @PostMapping("/edit/{id}")
     public String updateProduct(@PathVariable("id") Long id, ProductDTO  product,Model model){
 
+        model.addAttribute("company",companyRepository.findAll());
         model.addAttribute("products",productService.listAllProducts());
         model.addAttribute("unitTypes", UnitsType.values());
         model.addAttribute("productStatus", ProductStatus.values());
