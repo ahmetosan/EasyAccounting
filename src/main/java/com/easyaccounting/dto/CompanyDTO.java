@@ -1,15 +1,18 @@
 package com.easyaccounting.dto;
 
 import com.easyaccounting.enums.State;
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 
+@Data
 @NoArgsConstructor
 //@AllArgsConstructor
-@Data
+
 public class CompanyDTO {
 
     private Long id;
@@ -19,6 +22,7 @@ public class CompanyDTO {
     private String zip;
     private String representative;
     private String email;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate establishmentDate;
     private Boolean enabled;
     private String phone;
