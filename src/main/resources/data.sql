@@ -7,7 +7,10 @@ insert into companies(insert_date_time, insert_user_id, is_deleted, last_update_
                       zip, phone)
 values ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, '15th Avenue',
         'Ronaldinho Street, Buenos Aires', 'welfare@yahoo.com', false, '2021-01-05', 'Tomy Hunt', 'WI', 'Hunt Techno',
-        '33600', '3216549877');
+        '33600', '3216549877'),
+        ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, '15th Avenue',
+        'Ronaldinho Street, Buenos Aires', 'welfare@yahoo.com', false, '2021-01-05', 'Tomy Hunt', 'WI', 'Hunt Techno',
+         '33600', '3216549877');
 
 insert into users(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id, email,
                   firstname, lastname, password, enabled, phone, username, company_id, role_id,product_status)
@@ -27,11 +30,13 @@ values ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, 'Smart Phone'
 ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, 'Electronics', true, 1),
 ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, 'TV', true, 1);
 
-insert into client_vendor (company_name, phone, email, company_id, type, zip_code, address, enabled,
+insert into client_vendor (company_name, phone, email, company_id, client_vendor_type, zip_code, address, enabled,
                            insert_date_time,
                            last_update_date_time, insert_user_id, last_update_user_id, is_deleted)
 values ('Twitterlist', '4513577934', 'adot0@blinklist.com', 1, 'VENDOR', '174 59', '868 Johnson Trail',
-        true, '2020-12-06', '2020-12-22', 1, 1, false);
+        true, '2020-12-06', '2020-12-22', 1, 1, false),
+       ('Twitter', '4513577935', 'adobe0@linklist.com', 1, 'VENDOR', '174 57', '868 Johnson Drive',
+        true, '2020-12-08', '2020-12-29', 1, 1, false);
 
 insert into invoices(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
                      invoice_date, enabled, invoice_number, invoice_status, invoice_type, company_id, client_vendor_id)
@@ -65,3 +70,7 @@ INSERT INTO "payment" ("id", "insert_date_time", "insert_user_id", "is_deleted",
 INSERT INTO "payment" ("id", "insert_date_time", "insert_user_id", "is_deleted", "last_update_date_time", "last_update_user_id", "amount", "institution_id", "is_paid", "month", "year", "company_id") VALUES (8, '2022-06-06 01:39:06.726483', 1, 'f', '2022-06-06 01:39:06.726483', 1, '1200', '1', 'f', 'AUGUST', '2022', 1);
 INSERT INTO "payment" ("id", "insert_date_time", "insert_user_id", "is_deleted", "last_update_date_time", "last_update_user_id", "amount", "institution_id", "is_paid", "month", "year", "company_id") VALUES (9, '2022-06-06 01:39:06.726483', 1, 'f', '2022-06-06 01:39:06.726483', 1, '1200', '1', 'f', 'SEPTEMBER', '2022', 1);
 INSERT INTO "payment" ("id", "insert_date_time", "insert_user_id", "is_deleted", "last_update_date_time", "last_update_user_id", "amount", "institution_id", "is_paid", "month", "year", "company_id") VALUES (10, '2022-06-06 01:39:06.726483', 1, 'f', '2022-06-06 01:39:06.726483', 1, '1200', '1', 'f', 'OCTOBER', '2022', 1);
+
+
+
+

@@ -2,9 +2,12 @@ package com.easyaccounting.controller;
 
 import com.easyaccounting.dto.ClientVendorDTO;
 import com.easyaccounting.dto.InvoiceDTO;
+import com.easyaccounting.dto.InvoiceProductDTO;
+import com.easyaccounting.enums.ClientVendorType;
 import com.easyaccounting.enums.InvoiceType;
 import com.easyaccounting.service.ClientVendorService;
 import com.easyaccounting.service.InvoiceProductService;
+import com.easyaccounting.service.ProductService;
 import com.easyaccounting.service.PurchaseInvoiceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,11 +20,13 @@ public class PurchaseInvoiceController {
     private final PurchaseInvoiceService invoiceService;
     private final InvoiceProductService invoiceProductService;
     private final ClientVendorService clientVendorService;
+    private final ProductService productService;
 
-    public PurchaseInvoiceController(PurchaseInvoiceService invoiceService, InvoiceProductService invoiceProductService, ClientVendorService clientVendorService) {
+    public PurchaseInvoiceController(PurchaseInvoiceService invoiceService, InvoiceProductService invoiceProductService, ClientVendorService clientVendorService, ProductService productService) {
         this.invoiceService = invoiceService;
         this.invoiceProductService = invoiceProductService;
         this.clientVendorService = clientVendorService;
+        this.productService = productService;
     }
 
     @GetMapping("/list")
@@ -57,19 +62,20 @@ public class PurchaseInvoiceController {
 
     @GetMapping("/update/{id}")
     public String editPurchaseInvoiceById(@PathVariable("id") Long id, Model model) {
-        InvoiceDTO invoiceDto = invoiceService.findPurchaseInvoiceById(id);
-        invoiceDto.setInvoiceProduct(invoiceProductService.getAllInvoiceProductsById(id));
-        model.addAttribute("invoice", invoiceDto);
-        model.addAttribute("invoiceProducts", invoiceDto.getInvoiceProduct());
+        model.addAttribute("invoice", invoiceService.findPurchaseInvoiceById(id));
+        model.addAttribute("invoiceProducts", invoiceProductService.getAllInvoiceProductsById(id));
         model.addAttribute("clientVendor", new ClientVendorDTO());
-        model.addAttribute("clientVendors", clientVendorService.getAllClientVendorByInvoiceType(InvoiceType.PURCHASE));
+        model.addAttribute("clientVendors", clientVendorService.getAllClientVendorsByCompanyType(ClientVendorType.VENDOR));
+        model.addAttribute("product", new InvoiceProductDTO());
+        model.addAttribute("products", productService.getAllProductsByCompany());
         return "invoice/purchase-invoice-update";
     }
 
     @PostMapping("/update")
     public String updatePurchaseInvoice(@PathVariable("id") Long id, InvoiceDTO purchaseInvoiceDTO){
+        // while debugging check if Id is available
         invoiceService.updatePurchaseInvoice(purchaseInvoiceDTO);
-        return "invoice/purchase-invoice-update";
+        return "invoice/purchase-invoice-list";
     }
 
     @PostMapping("/create/add")

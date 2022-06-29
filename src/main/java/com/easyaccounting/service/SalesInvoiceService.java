@@ -9,6 +9,11 @@ public interface SalesInvoiceService {
 
 
     List<InvoiceDTO> listAllSalesInvoice(InvoiceType sales);
-    void approveSalesInvoice(String invoiceNumber);
+    void approveSalesInvoice(Long id);
+    InvoiceDTO findSalesInvoiceById(Long id);
+    void updateSalesInvoice(InvoiceDTO invoiceDTO);
+    void saveSalesInvoice(InvoiceDTO invoiceDTO);
+    void deleteSalesInvoiceById(Long id);
+    void getToInvoiceById(Long id);
 
 }

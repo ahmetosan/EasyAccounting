@@ -46,6 +46,7 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
 
     public InvoiceDTO getPurchaseInvoiceCost(InvoiceDTO purchaseInvoiceDTO){
         List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllByInvoiceId(purchaseInvoiceDTO.getId());
+        // stream.map(each-> each.getCost)
     return purchaseInvoiceDTO;
     }
 
@@ -83,6 +84,7 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     public void approvePurchaseInvoice(Long id) {
         Invoice purchaseInvoice = purchaseInvoiceRepository.findInvoiceById(id);
         purchaseInvoice.setInvoiceStatus(InvoiceStatus.APPROVED);
+        // need one more method for increase and decrease product qty
         purchaseInvoiceRepository.save(purchaseInvoice);
     }
 

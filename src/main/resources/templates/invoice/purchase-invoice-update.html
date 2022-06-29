@@ -55,11 +55,11 @@
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label>Invoice Date</label>
-                                                                    <a type="text"
+                                                                    <input type="date"
                                                                        th:field="*{invoiceDate}"
                                                                        class="form-control" readonly
                                                                        required="required" aria-invalid="false"
-                                                                       disabled></a>
+                                                                       disabled>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -67,69 +67,74 @@
                                                                 <div class="form-group">
                                                                     <div class="controls">
                                                                         <label>Vendor</label>
-                                                                        <select th:field="*{clientVendor}" class="custom-select" name="id" required="required">
+                                                                        <select th:field="*{clientVendor}" class="custom-select" required="required">
                                                                             <option value="">Select</option>
                                                                             <option th:each="clientVendor : ${clientVendors}" th:value="${clientVendor.id}"
                                                                                     th:text="${clientVendor.companyName}"></option>
                                                                         </select>
+<!--                                                                        <label>Vendor</label>-->
+<!--                                                                        <input type="text"-->
+<!--                                                                               th:field="*{clientVendor.companyName}"-->
+<!--                                                                               class="form-control" readonly-->
+<!--                                                                               required="required" aria-invalid="false"-->
+<!--                                                                               disabled>-->
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <!-- INVOICE PART END -->
                                                     <!-- INVOICE PRODUCT PART BEGIN -->
-                                                    <div class="needs-validation" novalidate>
-                                                        <div class="row">
-                                                            <div class="col-12 col-md-3">
-                                                                <div class="form-group">
-                                                                    <div class="controls">
-                                                                        <label>Product</label>
-                                                                            <select th:field="productDTO" class="custom-select" required="required" name="productDTO">
+                                                    </form>
+                                                <form th:action="@{/purchase-invoice/update/add-invoice-product}" th:object="${product}" method="post">
+                                                    <input type="hidden" name="_csrf" value="">
+                                                        <div class="needs-validation" novalidate="">
+                                                            <div class="row">
+                                                                <div class="col-12 col-md-3">
+                                                                    <div class="form-group">
+                                                                        <div class="controls">
+                                                                            <label>Product</label>
+                                                                            <select th:field="*{product}" class="custom-select" required="required" >
                                                                                 <option value="">Select</option>
-                                                                                <option th:each="product : ${products}" th:value="${product.id}"
-                                                                                        th:text="${product.name}"></option>
+                                                                                <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"></option>
                                                                             </select>
+                                                                            <div class="help-block"></div></div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-3">
-                                                                <div class="form-group">
-                                                                    <div class="controls">
-                                                                        <label>Quantity</label>
-                                                                        <input type="number" min="1" class="form-control" th:field="*{qty}" id="qty" value="0" required="" name="qty">
+                                                                <div class="col-12 col-md-3">
+                                                                    <div class="form-group">
+                                                                        <div class="controls">
+                                                                            <label for="qty" class="form-label">Quantity</label>
+                                                                            <input type="number" min="1" class="form-control" th:field="*{qty}" id="qty" value="0" required="required" name="qty">
+                                                                            <div class="help-block"></div></div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-3">
-                                                                <div class="form-group">
-                                                                    <div class="controls">
-                                                                        <label>Price</label>
-                                                                        <input type="number" min="1" class="form-control" th:field="*{price}" id="price" value="0" required="" name="price">
+                                                                <div class="col-12 col-md-3">
+                                                                    <div class="form-group">
+                                                                        <div class="controls">
+                                                                            <label for="price" class="form-label">Price</label>
+                                                                            <input type="number" min="1" class="form-control" th:field="*{price}" id="price" value="0" required="" name="price">
+                                                                            <div class="help-block"></div></div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-12 col-md-3">
-                                                                <div class="form-group">
-                                                                    <div class="controls">
-                                                                        <label>Tax</label>
-                                                                        <input type="number" min="1" class="form-control" th:field="*{tax}" id="tax" value="0" required="" name="tax">
+                                                                <div class="col-12 col-md-3">
+                                                                    <div class="form-group">
+                                                                        <div class="controls">
+                                                                            <label for="tax" class="form-label">Tax</label>
+                                                                            <input type="number" min="1" class="form-control" th:field="*{tax}" id="tax" value="0" required="" name="tax">
+                                                                            <div class="help-block"></div></div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2">
-<!--                                                                <a class="btn btn-warning" th:href="@{/purchase-invoice/create}">-->
-<!--                                                                    Add Item</a>-->
-                                                                <button type="submit" name="action" value="addItem" class="btn btn-warning mb-2 mb-sm-0 mr-sm-2">Add Item
-                                                                </button>
+                                                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2">
+                                                                    <button type="submit" name="action" value="addItem" class="btn btn-warning mb-2 mb-sm-0 mr-sm-2">Add Item
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
                                                 </form>
-                                                <!-- INVOICE PRODUCT PART END -->
                                                 <!-- INVOICE PRODUCT LIST BEGIN -->
-                                                    <div class="card-content fw-container">
-                                                        <div class="card-body fw-body">
-                                                            <div class="table-responsive content demo-html">
+                                                <div class="card-content fw-container">
+                                                    <div class="card-body fw-body">
+                                                        <div class="table-responsive content demo-html">
                                                                 <table id="example" class="table table-striped table-bordered file-export" style="width:100%">
                                                                     <thead>
                                                                     <tr>
