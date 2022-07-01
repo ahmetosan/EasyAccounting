@@ -43,7 +43,7 @@ public class PurchaseInvoiceController {
     }
 
     @GetMapping("/approve/{id}")
-    public String approvePurchaseInvoiceById(@PathVariable("id") Long id) {
+    public String approvePurchaseInvoiceById(@PathVariable("id") Long id){
         invoiceService.approvePurchaseInvoice(id);
         return "redirect:/purchase-invoice/list";
     }
@@ -71,12 +71,25 @@ public class PurchaseInvoiceController {
         return "invoice/purchase-invoice-update";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/update/{id}")
     public String updatePurchaseInvoice(@PathVariable("id") Long id, InvoiceDTO purchaseInvoiceDTO){
-        // while debugging check if Id is available
-        invoiceService.updatePurchaseInvoice(purchaseInvoiceDTO);
+       // need to implement update on invoiceProduct
+        invoiceService.updatePurchaseInvoice(purchaseInvoiceDTO, id);
         return "invoice/purchase-invoice-list";
     }
+
+    @PostMapping("/update/add-invoice-product")
+    public String addInvoiceProduct(InvoiceProductDTO invoiceProductDTO) {
+        // need to find a way to add item
+        return "redirect:/purchase-invoice/update";
+    }
+
+    @PostMapping("/update/delete-invoice-product")
+    public String deleteInvoiceProduct(InvoiceProductDTO invoiceProductDTO){
+        // need to find a way to delete item
+        return "redirect:/purchase-invoice/update";
+    }
+
 
     @PostMapping("/create/add")
     public String createNewPurchaseInvoice(InvoiceDTO purchaseInvoiceDTO){

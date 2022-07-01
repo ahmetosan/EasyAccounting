@@ -28,4 +28,8 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
                 .map(obj -> mapperUtil.convert(obj, new InvoiceProductDTO()))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void updateInvoiceProduct(Long id, InvoiceProductDTO invoiceProductDTO) {
+    }
 }

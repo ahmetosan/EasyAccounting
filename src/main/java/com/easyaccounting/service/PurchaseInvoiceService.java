@@ -10,7 +10,7 @@ public interface PurchaseInvoiceService {
     List<InvoiceDTO> listAllPurchaseInvoices(InvoiceType purchase);
     void approvePurchaseInvoice(Long id);
     InvoiceDTO findPurchaseInvoiceById(Long id);
-    void updatePurchaseInvoice(InvoiceDTO invoiceDTO);
+    InvoiceDTO updatePurchaseInvoice(InvoiceDTO invoiceDTO, Long id);
     void savePurchaseInvoice(InvoiceDTO invoiceDTO);
     void deletePurchaseInvoiceById(Long id);
     void getToInvoiceById(Long id);
