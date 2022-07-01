@@ -29,7 +29,7 @@
                     <!-- Filter starts -->
                     <div class="users-list-filter px-2">
                         <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-right">
-                            <a class="btn btn-primary bg-light-primary mb-1" th:href="@{/product/list}"><i
+                            <a class="btn btn-primary bg-light-primary mb-1" th:href="@{/product/product-list.html}"><i
                                     class="fa fa-list mr-1"></i>Product Edit</a>
                         </div>
                     </div>
@@ -51,21 +51,20 @@
                                                  aria-labelledby="account-tab">
 
                                                 <!-- Account form starts -->
-                                                <form novalidate
+                                                <form th:action="@{/product/edit}"
                                                        method="post"
+                                                      th:object="${product}"
                                                       >
                                                     <div class="row">
                                                         <div class="col-12 col-md-6">
                                                             <div class="form-group">
                                                                 <div class="controls">
-                                                                    <label for="company-name">Company Name</label>
-                                                                    <select disabled id="company-name"
-                                                                            class="form-control">
-
-                                                                        <option
-                                                                        ></option>
-
-                                                                    </select>
+                                                                    <label for="company-edit-companyName">CompanyName</label>
+                                                                    <input type="text" id="company-edit-companyName"
+                                                                           class="form-control" placeholder="Company Name"
+                                                                           th:field="*{companyName}"
+                                                                           required
+                                                                           aria-invalid="false">
                                                                 </div>
                                                             </div>
 
@@ -73,49 +72,54 @@
                                                                 <div class="controls">
                                                                     <label for="users-edit-username">Name</label>
                                                                     <input type="text" id="users-edit-username"
+                                                                           th:field="*{name}"
                                                                            class="form-control"
                                                                            placeholder="Product Name"
                                                                            value="" required
                                                                            aria-invalid="false"
-                                                                           >
+                                                                    >
+
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label for="quantity">Quantity</label>
                                                                     <input type="number" id="quantity"
+                                                                           th:field="*{quantity}"
                                                                            class="form-control"
                                                                            placeholder="Quantity"
                                                                            value="" required aria-invalid="false"
-                                                                           >
+                                                                    >
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label for="users-edit-status">Status</label>
-                                                                    <select id="users-edit-status"
-                                                                            class="form-control"
-                                                                            required >
-                                                                        <option
-
-                                                                        ></option>
-
+                                                                    <select id="users-edit-status" class="form-control" th:field="*{enabled}"
+                                                                            required>
+                                                                        <option value="">Select Status</option>
+                                                                        <option value="true">Active</option>
+                                                                        <option value="false">Passive</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
 
                                                         </div>
-
                                                         <div class="col-12 col-md-6">
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label for="users-edit-status">Category</label>
                                                                     <select
                                                                             id="users-edit-status1"
+                                                                            th:field="*{category}"
                                                                             class="form-control"
                                                                             required>
-                                                                        <option ></option>
+                                                                        <option th:value="''" th:text="Select">Select Category</option>
+                                                                        <option th:each="categorie : ${categories}"
+                                                                                th:value="${categorie.id}"
+                                                                                th:text="${categorie.description}">
+                                                                        </option>
 
                                                                     </select>
                                                                 </div>
@@ -124,9 +128,11 @@
                                                                 <div class="controls">
                                                                     <label for="users-edit-company">Description</label>
                                                                     <input type="text" id="users-edit-company"
+                                                                           th:field="*{description}"
                                                                            class="form-control"
                                                                            placeholder="Ex: Home product, Kitchen Tools "
-                                                                           >
+                                                                           required
+                                                                    >
                                                                 </div>
                                                             </div>
 
@@ -134,9 +140,13 @@
                                                                 <div class="controls">
                                                                     <label for="users-edit-role">Unit</label>
                                                                     <select  id="users-edit-role"
-                                                                            class="form-control"
-                                                                            required>
-                                                                        <option >
+                                                                             th:field="*{unitsType}"
+                                                                             class="form-control"
+                                                                             required>
+                                                                        <option th:value="''" th:text="Select">Select Unit</option>
+                                                                        <option th:each="unistType : ${unitTypes}"
+                                                                                th:value="${unistType.name()}"
+                                                                                th:text="${unistType.name}">
                                                                         </option>
 
                                                                     </select>
@@ -147,23 +157,25 @@
                                                                     <label for="product-low-limit">Low limit
                                                                         Alert</label>
                                                                     <input type="number" id="product-low-limit"
+                                                                           th:field="*{lowLimitAlert}"
                                                                            class="form-control"
                                                                            placeholder="Quantity for low limit Alert"
                                                                            required
-
                                                                     >
                                                                 </div>
                                                             </div>
-                                                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-6 mt-sm-4">
-                                                                <button type="submit"
-                                                                        class="btn btn-success mb-2 mb-sm-0 mr-sm-2">
-                                                                    Save
-                                                                </button>
-                                                                <a class="btn btn-danger mb-2 mb-sm-0 mr-sm-2"
-                                                                   >
-                                                                    Delete</a>
-                                                                <button type="reset" class="btn btn-secondary">Cancel
-                                                                </button>
+                                                              <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-6 mt-sm-4">
+                                                                  <button type="submit"
+                                                                          class="btn btn-primary mb-2 mb-sm-0 mr-sm-2">
+                                                                      Save Changes
+                                                                  </button>
+                                                                  <a class="btn btn-danger mb-2 mb-sm-0 mr-sm-2"
+                                                                     th:href="@{/product/delete/{id}(id=${product.id})}">Delete</a>
+                                                                  <a type="button"
+                                                                     th:href="@{/product/list}"
+                                                                     class="btn btn-secondary">
+                                                                      Cancel</a>
+
                                                             </div>
                                                         </div>
 

@@ -51,20 +51,20 @@
                                                  aria-labelledby="account-tab">
 
                                                 <!-- Account form starts -->
-                                                <form novalidate
-                                                       method="post">
+                                                <form th:action="@{/product/add}" th:method="post" th:object="${product}" class="needs-validation" novalidate>
                                                     <div class="row">
                                                         <div class="col-12 col-md-6">
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label for="company-name">Company Name</label>
-                                                                    <select disabled id="company-name"
+                                                                    <select id="company-name"
                                                                             class="form-control">
+                                                                        <option th:value="''" th:text="Select">Select Status</option>
+                                                                        <option th:each="companys : ${company}"
+                                                                                th:value="${companys.getTitle()}"
+                                                                                th:text="${companys.title}" >
 
-                                                                        <option
-                                                                                selected="selected"
-                                                                        ></option>
-
+                                                                        </option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -73,17 +73,20 @@
                                                                 <div class="controls">
                                                                     <label for="users-edit-username">Name</label>
                                                                     <input type="text" id="users-edit-username"
+                                                                           th:field="*{name}"
                                                                            class="form-control"
                                                                            placeholder="Product Name"
                                                                            value="" required
                                                                            aria-invalid="false"
                                                                            >
+
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label for="quantity">Quantity</label>
                                                                     <input type="number" id="quantity"
+                                                                           th:field="*{quantity}"
                                                                            class="form-control"
                                                                            placeholder="Quantity"
                                                                            value="" required aria-invalid="false"
@@ -95,14 +98,16 @@
                                                                 <div class="controls">
                                                                     <label for="users-edit-status">Status</label>
                                                                     <select id="users-edit-status"
+                                                                            th:field="*{productStatus}"
                                                                             class="form-control"
                                                                             required  aria-invalid="false"
                                                                             >
-                                                                        <option value="">Select Status</option>
-                                                                        <option
+                                                                        <option th:value="''" th:text="Select">Select Status</option>
+                                                                           <option th:each="productStatu : ${productStatus}"
+                                                                                   th:value="${productStatu.name()}"
+                                                                                   th:text="${productStatu.name}" >
 
-                                                                        ></option>
-
+                                                                            </option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -115,10 +120,14 @@
                                                                     <label for="users-edit-status">Category</label>
                                                                     <select
                                                                             id="users-edit-status1"
+                                                                            th:field="*{category}"
                                                                             class="form-control"
                                                                             required>
-                                                                        <option value="">Select Category</option>
-                                                                        <option ></option>
+                                                                        <option th:value="''" th:text="Select">Select Category</option>
+                                                                        <option th:each="categorie : ${categories}"
+                                                                                th:value="${categorie.getDescription()}"
+                                                                                th:text="${categorie.description}">
+                                                                        </option>
 
                                                                     </select>
                                                                 </div>
@@ -127,6 +136,7 @@
                                                                 <div class="controls">
                                                                     <label for="users-edit-company">Description</label>
                                                                     <input type="text" id="users-edit-company"
+                                                                           th:field="*{description}"
                                                                            class="form-control"
                                                                            placeholder="Ex: Home product, Kitchen Tools "
                                                                            required
@@ -138,10 +148,13 @@
                                                                 <div class="controls">
                                                                     <label for="users-edit-role">Unit</label>
                                                                     <select  id="users-edit-role"
+                                                                             th:field="*{unitsType}"
                                                                             class="form-control"
                                                                             required>
-                                                                        <option value="">Select Unit</option>
-                                                                        <option >
+                                                                        <option th:value="''" th:text="Select">Select Unit</option>
+                                                                        <option th:each="unistType : ${unitTypes}"
+                                                                                th:value="${unistType.name()}"
+                                                                                th:text="${unistType.name}">
                                                                         </option>
 
                                                                     </select>
@@ -152,6 +165,7 @@
                                                                     <label for="product-low-limit">Low limit
                                                                         Alert</label>
                                                                     <input type="number" id="product-low-limit"
+                                                                           th:field="*{lowLimitAlert}"
                                                                            class="form-control"
                                                                            placeholder="Quantity for low limit Alert"
                                                                            required
@@ -160,15 +174,15 @@
                                                             </div>
                                                             <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-6 mt-sm-4">
                                                                 <button type="submit"
-                                                                        class="btn btn-success mb-2 mb-sm-0 mr-sm-2">
-                                                                    Create
+                                                                        class="btn btn-primary mb-2 mb-sm-0 mr-sm-2">
+                                                                    Save
                                                                 </button>
-                                                                <button type="reset" class="btn btn-secondary">Cancel
-                                                                </button>
+                                                                <a type="button"
+                                                                   th:href="@{/product/list}"
+                                                                   class="btn btn-secondary">
+                                                                    Cancel</a>
                                                             </div>
                                                         </div>
-
-
                                                     </div>
                                                 </form>
                                                 <!-- Account form ends -->

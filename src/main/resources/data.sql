@@ -53,7 +53,11 @@ insert into product(insert_date_time, insert_user_id, is_deleted, last_update_da
                     description, enabled, low_limit_alert, name, qty, unit, product_status,
                     category_id, company_id)
 values ('2021-09-09 00:00:00', 1, false, '2021-09-09 00:00:00', 1, 'kitchen utils', true, 5,
-        'Tefal Coffee Maker A26', 0, 'PCS', 'ACTIVE', 1, 1);
+        'Tefal Coffee Maker A26', 5, 'PCS', 'ACTIVE', 1, 1),
+       ('2020-01-08 00:00:00', 2, false , '2021-09-09 00:00:00', 1, 'Smart phone', true, 5,
+        'Apple', 5, 'PCS', 'ACTIVE', 1, 1),
+    ('2020-01-08 00:00:00', 2, false , '2021-09-09 00:00:00', 1, 'TV', true, 5,
+        'LG', 5, 'PCS', 'ACTIVE', 1, 1);
 
 
 insert into invoice_products(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
