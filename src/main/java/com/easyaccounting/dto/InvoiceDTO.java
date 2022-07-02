@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +28,7 @@ public class InvoiceDTO {
     private CompanyDTO company;
     private boolean enabled;
 
+    List<InvoiceProductDTO> invoiceProduct = new ArrayList<>();
     private int invoiceCost;
     private int invoiceTax;
     private int totalCost;

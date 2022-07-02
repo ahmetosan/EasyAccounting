@@ -1,7 +1,13 @@
 package com.easyaccounting.controller;
 
+import com.easyaccounting.dto.ClientVendorDTO;
 import com.easyaccounting.dto.InvoiceDTO;
+import com.easyaccounting.dto.InvoiceProductDTO;
+import com.easyaccounting.enums.ClientVendorType;
 import com.easyaccounting.enums.InvoiceType;
+import com.easyaccounting.service.ClientVendorService;
+import com.easyaccounting.service.InvoiceProductService;
+import com.easyaccounting.service.ProductService;
 import com.easyaccounting.service.PurchaseInvoiceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,26 +18,32 @@ import org.springframework.web.bind.annotation.*;
 public class PurchaseInvoiceController {
 
     private final PurchaseInvoiceService invoiceService;
+    private final InvoiceProductService invoiceProductService;
+    private final ClientVendorService clientVendorService;
+    private final ProductService productService;
 
-    public PurchaseInvoiceController(PurchaseInvoiceService invoiceService) {
+    public PurchaseInvoiceController(PurchaseInvoiceService invoiceService, InvoiceProductService invoiceProductService, ClientVendorService clientVendorService, ProductService productService) {
         this.invoiceService = invoiceService;
+        this.invoiceProductService = invoiceProductService;
+        this.clientVendorService = clientVendorService;
+        this.productService = productService;
     }
 
     @GetMapping("/list")
     public String getPurchaseInvoices(Model model){
-        model.addAttribute("purchaseInvoices", invoiceService.listAllPurchaseInvoices(InvoiceType.PURCHASE));
-        model.addAttribute("purchaseInvoice", new InvoiceDTO());
+        model.addAttribute("invoices", invoiceService.listAllPurchaseInvoices(InvoiceType.PURCHASE));
+        model.addAttribute("invoice", new InvoiceDTO());
         return "/invoice/purchase-invoice-list";
     }
 
     @GetMapping("/create")
     public String getPurchaseInvoiceCreate(Model model){
-        model.addAttribute("purchaseInvoice", new InvoiceDTO());
+        model.addAttribute("invoice", new InvoiceDTO());
         return "/invoice/purchase-invoice-create";
     }
 
     @GetMapping("/approve/{id}")
-    public String approvePurchaseInvoiceById(@PathVariable("id") Long id) {
+    public String approvePurchaseInvoiceById(@PathVariable("id") Long id){
         invoiceService.approvePurchaseInvoice(id);
         return "redirect:/purchase-invoice/list";
     }
@@ -51,14 +63,33 @@ public class PurchaseInvoiceController {
     @GetMapping("/update/{id}")
     public String editPurchaseInvoiceById(@PathVariable("id") Long id, Model model) {
         model.addAttribute("invoice", invoiceService.findPurchaseInvoiceById(id));
-        return "/invoice/purchase-invoice-create";
+        model.addAttribute("invoiceProducts", invoiceProductService.getAllInvoiceProductsById(id));
+        model.addAttribute("clientVendor", new ClientVendorDTO());
+        model.addAttribute("clientVendors", clientVendorService.getAllClientVendorsByCompanyType(ClientVendorType.VENDOR));
+        model.addAttribute("product", new InvoiceProductDTO());
+        model.addAttribute("products", productService.getAllProductsByCompany());
+        return "invoice/purchase-invoice-update";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/update/{id}")
     public String updatePurchaseInvoice(@PathVariable("id") Long id, InvoiceDTO purchaseInvoiceDTO){
-        invoiceService.updatePurchaseInvoice(purchaseInvoiceDTO);
-        return "/invoice/purchase-invoice-create";
+       // need to implement update on invoiceProduct
+        invoiceService.updatePurchaseInvoice(purchaseInvoiceDTO, id);
+        return "invoice/purchase-invoice-list";
     }
+
+    @PostMapping("/update/add-invoice-product")
+    public String addInvoiceProduct(InvoiceProductDTO invoiceProductDTO) {
+        // need to find a way to add item
+        return "redirect:/purchase-invoice/update";
+    }
+
+    @PostMapping("/update/delete-invoice-product")
+    public String deleteInvoiceProduct(InvoiceProductDTO invoiceProductDTO){
+        // need to find a way to delete item
+        return "redirect:/purchase-invoice/update";
+    }
+
 
     @PostMapping("/create/add")
     public String createNewPurchaseInvoice(InvoiceDTO purchaseInvoiceDTO){

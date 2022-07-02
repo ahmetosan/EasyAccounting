@@ -2,10 +2,14 @@ package com.easyaccounting.service;
 
 
 import com.easyaccounting.dto.ClientVendorDTO;
+import com.easyaccounting.enums.ClientVendorType;
 
 import java.util.List;
 
 public interface ClientVendorService {
+
+    List<ClientVendorDTO> getAllClientVendorsByCompanyType(ClientVendorType companyType);
+
     List<ClientVendorDTO> listAllClientVendors();
 
     List<ClientVendorDTO> listAllActiveClients();
@@ -20,3 +24,4 @@ public interface ClientVendorService {
 
     void delete(Long id);
 }
+

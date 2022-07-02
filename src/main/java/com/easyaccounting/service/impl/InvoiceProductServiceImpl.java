@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class InvoiceProductImpl implements InvoiceProductService {
+public class InvoiceProductServiceImpl implements InvoiceProductService {
 
     private final InvoiceProductRepository invoiceProductRepository;
     private final MapperUtil mapperUtil;
 
-    public InvoiceProductImpl(InvoiceProductRepository invoiceProductRepository, MapperUtil mapperUtil) {
+    public InvoiceProductServiceImpl(InvoiceProductRepository invoiceProductRepository, MapperUtil mapperUtil) {
         this.invoiceProductRepository = invoiceProductRepository;
         this.mapperUtil = mapperUtil;
     }
@@ -27,5 +27,9 @@ public class InvoiceProductImpl implements InvoiceProductService {
         return invoiceProductList.stream()
                 .map(obj -> mapperUtil.convert(obj, new InvoiceProductDTO()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateInvoiceProduct(Long id, InvoiceProductDTO invoiceProductDTO) {
     }
 }

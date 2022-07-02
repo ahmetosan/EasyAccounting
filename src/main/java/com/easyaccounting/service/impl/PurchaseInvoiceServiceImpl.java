@@ -14,6 +14,7 @@ import com.easyaccounting.repository.PurchaseInvoiceRepository;
 import com.easyaccounting.service.PurchaseInvoiceService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +47,7 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
 
     public InvoiceDTO getPurchaseInvoiceCost(InvoiceDTO purchaseInvoiceDTO){
         List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllByInvoiceId(purchaseInvoiceDTO.getId());
+        // stream.map(each-> each.getCost)
     return purchaseInvoiceDTO;
     }
 
@@ -56,12 +58,17 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     }
 
     @Override
-    public void updatePurchaseInvoice(InvoiceDTO invoiceDTO) {
-        Invoice purchaseInvoice = purchaseInvoiceRepository.findInvoiceById(invoiceDTO.getId());
-        Invoice convertedPurchaseInvoice = purchaseInvoiceMapper.convertToEntity(invoiceDTO);
+    public InvoiceDTO updatePurchaseInvoice(InvoiceDTO invoiceDTO, Long id) {
+        Invoice purchaseInvoice = purchaseInvoiceRepository.findInvoiceById(id);
+        Invoice convertedPurchaseInvoice = mapperUtil.convert(invoiceDTO, new Invoice());
         convertedPurchaseInvoice.setId(purchaseInvoice.getId());
-        purchaseInvoiceRepository.save(convertedPurchaseInvoice);
-        findPurchaseInvoiceById(invoiceDTO.getId());
+        convertedPurchaseInvoice.setInvoiceDate(purchaseInvoice.getInvoiceDate());
+        convertedPurchaseInvoice.setInvoiceStatus(purchaseInvoice.getInvoiceStatus());
+        convertedPurchaseInvoice.setInvoiceNumber(purchaseInvoice.getInvoiceNumber());
+        convertedPurchaseInvoice.setInvoiceType(purchaseInvoice.getInvoiceType());
+        convertedPurchaseInvoice.setCompany(purchaseInvoice.getCompany());
+        convertedPurchaseInvoice.setEnabled(purchaseInvoice.isEnabled());
+        return mapperUtil.convert(purchaseInvoiceRepository.save(convertedPurchaseInvoice), new InvoiceDTO());
     }
 
     @Override
@@ -83,6 +90,7 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     public void approvePurchaseInvoice(Long id) {
         Invoice purchaseInvoice = purchaseInvoiceRepository.findInvoiceById(id);
         purchaseInvoice.setInvoiceStatus(InvoiceStatus.APPROVED);
+        // need one more method for increase and decrease product qty
         purchaseInvoiceRepository.save(purchaseInvoice);
     }
 

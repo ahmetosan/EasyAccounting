@@ -14,4 +14,5 @@ public interface ProductService{
     void edit(Long id, ProductDTO dto);
     void delete(Long id);
     void update(ProductDTO dto);
+    List<ProductDTO> getAllProductsByCompany();
 }

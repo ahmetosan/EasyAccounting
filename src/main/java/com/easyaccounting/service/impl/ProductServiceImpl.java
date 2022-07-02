@@ -1,7 +1,9 @@
 package com.easyaccounting.service.impl;
 
+import com.easyaccounting.dto.InvoiceProductDTO;
 import com.easyaccounting.dto.ProductDTO;
 import com.easyaccounting.entity.ClientVendor;
+import com.easyaccounting.entity.Company;
 import com.easyaccounting.entity.Product;
 import com.easyaccounting.mapper.MapperUtil;
 import com.easyaccounting.mapper.ProductMapper;
@@ -81,6 +83,20 @@ public class ProductServiceImpl implements ProductService {
             convertedProduct.setProduct_status(product.get().getProduct_status());
             productRepository.save(convertedProduct);
 
+    }
+
+    @Override
+    public List<ProductDTO> getAllProductsByCompany() {
+        Company company = getCurrentCompany();
+        return productRepository.findAllByCompanyId(company.getId())
+                .stream()
+                .map(obj -> mapperUtil.convert(obj, new ProductDTO()))
+                .collect(Collectors.toList());
+    }
+
+    public Company getCurrentCompany() {
+// ToDO find current user, to return company info logged in by current user
+        return companyRepository.findById(1L).get();
     }
 
 
