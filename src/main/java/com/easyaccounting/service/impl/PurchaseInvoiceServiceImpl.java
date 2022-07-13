@@ -14,7 +14,6 @@ import com.easyaccounting.repository.PurchaseInvoiceRepository;
 import com.easyaccounting.service.PurchaseInvoiceService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,14 +41,43 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
         List<InvoiceDTO> listDTO = invoices.stream()
                 .map(invoiceObj -> mapperUtil.convert(invoiceObj, new InvoiceDTO()))
                 .collect(Collectors.toList());
-        return listDTO;
+        return listDTO.stream()
+                .map(this::getPurchaseInvoiceCost)
+                .map(this::getPurchaseInvoiceTax)
+                .map(this::getPurchaseInvoiceTotalCost)
+                .collect(Collectors.toList());
     }
 
     public InvoiceDTO getPurchaseInvoiceCost(InvoiceDTO purchaseInvoiceDTO){
         List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllByInvoiceId(purchaseInvoiceDTO.getId());
-        // stream.map(each-> each.getCost)
+        int costWithoutTax = 0;
+        for (InvoiceProduct each:listInvoiceProducts) {
+            costWithoutTax += each.getQty() * each.getPrice();
+        }
+        purchaseInvoiceDTO.setInvoiceCost(costWithoutTax);
     return purchaseInvoiceDTO;
     }
+
+    public InvoiceDTO getPurchaseInvoiceTax(InvoiceDTO purchaseInvoiceDTO){
+        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllByInvoiceId(purchaseInvoiceDTO.getId());
+        int totalTax = 0;
+        for (InvoiceProduct each:listInvoiceProducts) {
+            totalTax += (each.getQty() * each.getPrice() * each.getTax())/100;
+        }
+        purchaseInvoiceDTO.setInvoiceTax(totalTax);
+        return purchaseInvoiceDTO;
+    }
+
+    public InvoiceDTO getPurchaseInvoiceTotalCost(InvoiceDTO purchaseInvoiceDTO){
+        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllByInvoiceId(purchaseInvoiceDTO.getId());
+        int totalCostWithTax = 0;
+        for (InvoiceProduct each:listInvoiceProducts) {
+            totalCostWithTax += (each.getQty() * each.getPrice()) + (each.getQty() * each.getPrice() * each.getTax())/100;
+        }
+        purchaseInvoiceDTO.setTotalCost(totalCostWithTax);
+        return purchaseInvoiceDTO;
+    }
+
 
     @Override
     public InvoiceDTO findPurchaseInvoiceById(Long id) {
