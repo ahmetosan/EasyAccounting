@@ -62,7 +62,8 @@ values ('2021-09-09 00:00:00', 1, false, '2021-09-09 00:00:00', 1, 'kitchen util
 
 insert into invoice_products(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id,
                              qty, tax, price, invoice_id, product_id, profit)
-values  ('2021-09-09 00:00:00', 1, false, '2021-09-09 00:00:00', 1, 1, 10, 100, 1, 1, 0);
+values  ('2021-09-09 00:00:00', 1, false, '2021-09-09 00:00:00', 1, 1, 10, 100, 1, 1, 0),
+        ('2021-01-09 00:00:00', 1, false, '2021-01-09 00:00:00', 5, 1, 5, 120, 4, 1, 0);
 
 INSERT INTO "payment" ("id", "insert_date_time", "insert_user_id", "is_deleted", "last_update_date_time", "last_update_user_id", "amount", "institution_id", "is_paid", "month", "year", "company_id") VALUES (1, '2022-06-06 01:39:06.726483', 1, 'f', '2022-06-06 01:39:06.726483', 1, '1200', '1', 'f', 'JANUARY', '2022', 1);
 INSERT INTO "payment" ("id", "insert_date_time", "insert_user_id", "is_deleted", "last_update_date_time", "last_update_user_id", "amount", "institution_id", "is_paid", "month", "year", "company_id") VALUES (2, '2022-06-06 01:39:06.726483', 1, 'f', '2022-06-06 01:39:06.726483', 1, '1200', '1', 'f', 'FEBRUARY', '2022', 1);

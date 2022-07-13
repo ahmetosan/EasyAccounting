@@ -13,6 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/purchase-invoice")
 public class PurchaseInvoiceController {
@@ -73,8 +76,8 @@ public class PurchaseInvoiceController {
 
     @PostMapping("/update/{id}")
     public String updatePurchaseInvoice(@PathVariable("id") Long id, InvoiceDTO purchaseInvoiceDTO){
-       // need to implement update on invoiceProduct
         invoiceService.updatePurchaseInvoice(purchaseInvoiceDTO, id);
+        invoiceProductService.updateInvoiceProduct(id, purchaseInvoiceDTO.getInvoiceProduct());
         return "invoice/purchase-invoice-list";
     }
 

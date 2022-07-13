@@ -9,5 +9,5 @@ import java.util.List;
 public interface InvoiceProductService {
 
     List<InvoiceProductDTO> getAllInvoiceProductsById(Long id);
-    void updateInvoiceProduct(Long id, InvoiceProductDTO invoiceProductDTO);
+    void updateInvoiceProduct(Long id, List<InvoiceProductDTO> invoiceProductDTO);
 }

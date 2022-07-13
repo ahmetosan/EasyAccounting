@@ -162,17 +162,17 @@
                                                                     </thead>
                                                                     <tbody>
                                                                     <tr th:each="product : ${invoiceProducts}">
-                                                                        <td th:text="${product.name}" ></td>
-                                                                        <td th:text="${product.price}"></td>
+                                                                        <td th:text="${product.product.getName()}"></td>
+                                                                        <td th:text="'$ '+ ${product.price}"></td>
                                                                         <td th:text="${product.qty}"></td>
-                                                                        <td th:text="${product.tax}"></td>
-                                                                        <td th:text="${(product.qty * product.price)}"></td>
+                                                                        <td th:text="'% '+ ${product.tax}"></td>
+                                                                        <td th:text="'$ '+ ${(product.qty * product.price) + (product.qty * product.price * product.tax)/100}"></td>
                                                                         <td>
                                                                             <form th:action="@{/purchase-invoice/update/delete-invoice-product}" th:object="${product}" method="post">
-                                                                                <input type="hidden" th:value="${product.name}" name="name">
-                                                                                <input type="hidden" th:value="${product.qty}" name="qty">
-                                                                                <input type="hidden" th:value="${product.price}" name="price">
-                                                                                <input type="hidden" th:value="${product.tax}" name="tax">
+                                                                                <input type="hidden" th:value="${product.product.getName()}" name="name"/>
+                                                                                <input type="hidden" th:value="${product.qty}" name="qty"/>
+                                                                                <input type="hidden" th:value="${product.price}" name="price"/>
+                                                                                <input type="hidden" th:value="${product.tax}" name="tax"/>
                                                                                 <button type="submit" class="btn btn-default">
                                                                                     <i class="ft-trash"></i>
                                                                                 </button>
