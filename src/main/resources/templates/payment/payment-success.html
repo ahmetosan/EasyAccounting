@@ -228,8 +228,9 @@
                                 <div id="invoice">
                                     <div class="toolbar hidden-print">
                                         <div class="text-end">
-                                            <a  target="_blank" type="button" class="btn btn-dark"><i class="fa fa-edit"  ></i>Overview</a>
-                                            <a   type="button" class="btn btn-danger"><i class="fa fa-file-pdf-o" ></i> Export as PDF</a>
+<!--                                            <a  target="_blank" type="button" class="btn btn-dark"><i class="fa fa-edit"  ></i>Overview</a>-->
+                                            <a th:href="@{/payment/list}" type="button" class="btn btn-primary" data-html2canvas-ignore="true"><i class="fa fa-list mr-1"></i>Back to List</a>
+                                            <a  onclick="generatePDF()" type="button" class="btn btn-danger" id="pdf-download" th:attr="data-html2canvas-ignore='true'"><i class="fa fa-file-pdf-o" ></i> Export as PDF</a>
                                         </div>
                                         <hr>
                                     </div>
@@ -239,14 +240,14 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <a href="javascript:;">
-                                                            <img src="assets/images/logo-icon.png" width="80" alt="">
+                                                            <img th:src="@{assets/images/logo-icon.png}" width="80" alt="">
                                                         </a>
                                                     </div>
                                                     <div class="col company-details">
                                                         <h2 class="name">
                                                             <a target="_blank" href="javascript:;"
                                                                >
-
+                                                                Company name will be here
                                                             </a>
                                                         </h2>
                                                         <div>455 Foggy Heights, AZ 85004, US</div>
@@ -267,7 +268,7 @@
                                                     <div class="col invoice-details">
                                                         <h1 class="invoice-id" ></h1>
                                                         <div class="date" ></div>
-                                                        <div class="date">Due Date: 01/01/2022</div>
+                                                        <div class="date" th:text="'Payment for: ' + ${payment.month.value} +' &#09;'+ ${payment.year}"></div>
                                                     </div>
                                                 </div>
                                                 <table>
@@ -292,9 +293,9 @@
                                                             <a target="_blank" href="javascript:;">
                                                                 MemberShip details<br>
                                                             </a> You can reach out your agreement details with this link</td>
-                                                        <td class="unit" ></td>
-                                                        <td class="extra" ></td>
-                                                        <td class="total" ></td>
+                                                        <td class="unit"  th:text="'€ ' + ${payment.amount*5/8}"></td>
+                                                        <td class="extra" th:text="'€ ' + ${payment.amount*1/8}"></td>
+                                                        <td class="total" th:text="'€ ' + ${payment.amount*3/4}"></td>
                                                     </tr>
                                                     <!--                                    <tr>-->
                                                     <!--                                        <td class="no">01</td>-->
@@ -325,21 +326,21 @@
                                                     <tr>
                                                         <td colspan="2"></td>
                                                         <td colspan="2">SUBTOTAL</td>
-                                                        <td ></td>
+                                                        <td th:text="'€ ' + ${payment.amount*3/4}"></td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="2"></td>
                                                         <td colspan="2">TAX 25%</td>
-                                                        <td ></td>
+                                                        <td th:text="'€ ' + ${payment.amount*1/4}"></td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="2"></td>
                                                         <td colspan="2">GRAND TOTAL</td>
-                                                        <td ></td>
+                                                        <td th:text="'€ ' + ${payment.amount}"></td>
                                                     </tr>
                                                     </tfoot>
                                                 </table>
-                                                <div class="thanks">Thank you! Your Payment is Successful!</div>
+                                                <div th:unless="isInvoice" class="thanks" th:attr="data-html2canvas-ignore='true'">Thank you! <br> Your Payment is Successful!</div>
                                                 <div class="notices">
                                                     <div>NOTICE:</div>
                                                     <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
@@ -380,6 +381,23 @@
 <!-- END PAGE LEVEL JS-->
 <!-- BEGIN: Custom CSS-->
 <script th:src="@{/assets/js/scripts.js}"></script>
+
+<script th:src="@{/js/html2pdf.bundle.min.js}"></script>
+<script>
+    function generatePDF() {
+        // Choose the element that our invoice is rendered in.
+        const element = document.getElementById('invoice');
+        // options
+        var opt = {
+            margin:       [0,0.5],
+            filename:     'invoice'+ (new Date()).getMilliseconds()+'.pdf',
+            jsPDF:        { unit: 'in' },
+            enableLinks: true
+        };
+        // Choose the element and save the PDF for our user.
+        html2pdf().set(opt).from(element).save();
+    }
+</script>
 
 </body>
 <!-- END : Body-->

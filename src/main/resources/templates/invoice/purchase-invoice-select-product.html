@@ -18,11 +18,11 @@
                 <section class="users-list-wrapper">
                     <!-- PURCHASE INVOICE LIST LINK -->
                     <div class="users-list-filter px-2">
-                        <form action="#" th:action="@{/invoice/purchase-invoice-list/{id}(id=${invoice.getInvoiceNumber()})}" th:object="${invoice}"
+                        <form action="#" th:action="@{/invoice/purchase-invoice-list/{id}(id=${purchaseInvoice.getInvoiceNumber()})}" th:object="${purchaseInvoice}"
                               method="post">
                             <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-right">
                                 <button class="btn btn-primary bg-light-primary mb-1"
-                                        type="submit" name="action" value="cancel">
+                                        type="submit" name="action" value="cancel" th:href="@{/invoice/purchase-invoice-list}">
                                    <i class="fa fa-list mr-1"></i>Purchase Invoice List
                                 </button>
                             </div>

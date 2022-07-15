@@ -3,7 +3,7 @@
 <!-- BEGIN : Head-->
 
 <head>
-    <head th:replace="fragments :: page_head"/>
+    <head th:replace="fragments :: page_head"></head>
     <title>Edit Company</title>
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/logos/logo-color-big.png}">
 </head>
@@ -35,7 +35,7 @@
 
 
                         <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-right">
-                            <a class="btn btn-primary bg-light-primary mb-1"th:href="@{/company}" ><i
+                            <a class="btn btn-primary bg-light-primary mb-1" th:href="@{/company/company-list}"><i
                                     class="fa fa-list mr-1"></i>Company List</a>
                         </div>
                     </div>
@@ -56,7 +56,10 @@
                                                  aria-labelledby="account-tab">
 
                                                 <!-- Account form starts -->
-                                                <form class="needs-validation" novalidate>
+                                                <form class="needs-validation" novalidate
+                                                      th:action="@{/company/company-edit}"
+                                                      th:object="${company}"
+                                                      method="post">
                                                     <div class="row">
                                                         <div class="col-12 col-md-6">
                                                             <div class="form-group">
@@ -64,26 +67,41 @@
                                                                     <label for="users-edit-username">Title</label>
                                                                     <input type="text" id="users-edit-username"
                                                                            class="form-control" placeholder="title"
+                                                                           th:field="*{title}"
                                                                            required
-                                                                           aria-invalid="false" >
+                                                                           aria-invalid="false">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label for="zip">Zip</label>
                                                                     <input type="text" id="zip" class="form-control"
-                                                                           placeholder="zipcode" required
-                                                                           aria-invalid="false" >
+                                                                           placeholder="zipcode"
+                                                                           th:field="*{zip}"
+                                                                           required
+                                                                           aria-invalid="false">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <div class="controls">
-                                                                    <label for="address">Address</label>
-                                                                    <input type="text" id="address"
+                                                                    <label for="address1">Address</label>
+                                                                    <input type="text" id="address1"
                                                                            class="form-control"
-                                                                           placeholder="address"
+                                                                           placeholder="address 1"
+                                                                           th:field="*{address1}"
                                                                            required
-                                                                           aria-invalid="false" >
+                                                                           aria-invalid="false">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="controls">
+                                                                    <label for="address2">Address</label>
+                                                                    <input type="text" id="address2"
+                                                                           class="form-control"
+                                                                           placeholder="address cont."
+                                                                           th:field="*{address2}"
+                                                                           required
+                                                                           aria-invalid="false">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -91,8 +109,9 @@
                                                                     <label for="email">E-mail</label>
                                                                     <input type="email" id="email"
                                                                            class="form-control" placeholder="email"
+                                                                           th:field="*{email}"
                                                                            required
-                                                                           aria-invalid="false" >
+                                                                           aria-invalid="false">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -102,9 +121,11 @@
                                                                 <div class="controls">
                                                                     <label for="state">State</label>
                                                                     <select id="state" class="form-control"
-                                                                            required >
-                                                                        <option selected></option>
-                                                                        <option ></option>
+                                                                            th:field="*{state}" required>
+                                                                        <option th:value="''" th:text="Select"></option>
+                                                                        <option th:each="state : ${stateList}"
+                                                                                th:value="${state.name()}"
+                                                                                th:text="${state.name()}"></option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -115,6 +136,7 @@
                                                                     <input type="date" id="establishmentdate"
                                                                            class="form-control"
                                                                            placeholder="establishment date"
+                                                                           th:field="*{establishmentDate}"
                                                                            required
                                                                            aria-invalid="false">
                                                                 </div>
@@ -125,6 +147,7 @@
                                                                     <input type="text" id="representative"
                                                                            class="form-control"
                                                                            placeholder="representative"
+                                                                           th:field="*{representative}"
                                                                            aria-invalid="false">
                                                                 </div>
                                                             </div>
@@ -133,9 +156,12 @@
                                                                     <label for="phone">Phone</label>
                                                                     <input type="text" id="phone"
                                                                            class="form-control"
-                                                                           placeholder="phone" aria-invalid="false">
+                                                                           placeholder="phone"
+                                                                           th:field="*{phone}"
+                                                                           aria-invalid="false">
                                                                 </div>
                                                             </div>
+                                                            <input type="hidden" th:field="*{id}">
                                                         </div>
 
 
@@ -144,9 +170,16 @@
                                                                     class="btn btn-primary mb-2 mb-sm-0 mr-sm-2">
                                                                 Save Changes
                                                             </button>
-                                                            <a type="button" class="btn btn-danger mb-2 mb-sm-0 mr-sm-2" data-toggle="tooltip" data-placement="top" title="Any person from this company will not be able to get access again if you closed this COMPANY">
+                                                            <a type="button" class="btn btn-danger mb-2 mb-sm-0 mr-sm-2"
+                                                               data-toggle="tooltip" data-placement="top"
+                                                               title="Any person from this company will not be able to get access again if you closed this COMPANY"
+                                                            >
                                                                 Close Company</a>
-                                                            <a type="button" class="btn btn-success mb-2 mb-sm-0 mr-sm-2" data-toggle="tooltip" data-placement="top" title="All the people are allowed by the Company can get access the system again">
+                                                            <a type="button"
+                                                               class="btn btn-success mb-2 mb-sm-0 mr-sm-2"
+                                                               data-toggle="tooltip" data-placement="top"
+                                                               title="All the people are allowed by the Company can get access the system again"
+                                                            >
                                                                 Re-Open Company</a>
                                                             <button type="reset" class="btn btn-secondary">Cancel
                                                             </button>

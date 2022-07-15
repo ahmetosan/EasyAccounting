@@ -1,0 +1,22 @@
+package com.easyaccounting.dto;
+
+import com.easyaccounting.enums.MonthName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class PaymentDTO {
+
+    private Long id;
+    private String year;
+    private Double amount;
+    private Boolean isPaid;
+    private String institutionId;
+    private MonthName month;
+
+}

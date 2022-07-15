@@ -17,10 +17,16 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    public String addUser(Model model){
+    public String openUserList(Model model){
 
         model.addAttribute("users", userService.listAllUsers());
 
         return "/user/user-list";
+    }
+
+    @GetMapping("/add")
+    public String addUser(){
+
+        return "/user/user-add";
     }
 }
