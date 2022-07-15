@@ -3,7 +3,6 @@ package com.easyaccounting.service.impl;
 
 import com.easyaccounting.dto.CompanyDTO;
 import com.easyaccounting.entity.Company;
-import com.easyaccounting.entity.User;
 import com.easyaccounting.mapper.CompanyMapper;
 import com.easyaccounting.mapper.MapperUtil;
 import com.easyaccounting.repository.CompanyRepository;
@@ -17,12 +16,10 @@ import java.util.stream.Collectors;
 public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyRepository companyRepository;
-    private final CompanyMapper companyMapper;
     private final MapperUtil mapperUtil;
 
     public CompanyServiceImpl(CompanyRepository companyRepository, CompanyMapper companyMapper, MapperUtil mapperUtil) {
         this.companyRepository = companyRepository;
-        this.companyMapper = companyMapper;
         this.mapperUtil = mapperUtil;
     }
 
@@ -48,7 +45,8 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyDTO findCompanyById(Long id) {
-        return null;
+        Company company = companyRepository.findById(id).get();
+        return mapperUtil.convert(company,new CompanyDTO());
     }
 
     @Override
@@ -59,7 +57,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void update(CompanyDTO companyDTO) {
-
+        companyRepository.save(mapperUtil.convert(companyDTO, new Company()));
     }
 
     @Override
@@ -69,12 +67,11 @@ public class CompanyServiceImpl implements CompanyService {
 
 
     public Company getCurrentCompany() {
-
         return companyRepository.findById(1L).get();
     }
+
     @Override
     public CompanyDTO findByCompanyTitle(String title) {
-
         Company company = companyRepository.findCompanyByTitle(title);
         return mapperUtil.convert(company,new CompanyDTO());
 
