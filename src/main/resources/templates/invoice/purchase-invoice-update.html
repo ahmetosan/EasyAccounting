@@ -68,7 +68,6 @@
                                                                     <div class="controls">
                                                                         <label>Vendor</label>
                                                                         <select th:field="*{clientVendor}" class="custom-select" required="required">
-                                                                            <option value="">Select</option>
                                                                             <option th:each="clientVendor : ${clientVendors}" th:value="${clientVendor.id}"
                                                                                     th:text="${clientVendor.companyName}"></option>
                                                                         </select>
@@ -96,9 +95,9 @@
                                                     <!-- INVOICE PRODUCT PART BEGIN -->
                                                     </form>
                                                 <!-- INVOICE PART END -->
-                                                <form th:object="${product}" th:action="@{/purchase-invoice/update/add-invoice-product}" method="post">
+                                                <form th:object="${product}" th:action="@{/purchase-invoice/update/add-invoice-product/{id}(id=${invoice.id})}" method="post">
                                                     <input type="hidden" name="_csrf" value="">
-                                                        <div class="needs-validation" novalidate="">
+                                                    <div class="needs-validation" novalidate="">
                                                             <div class="row">
                                                                 <div class="col-12 col-md-3">
                                                                     <div class="form-group">
@@ -136,6 +135,8 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2">
+<!--                                                                    <label>Add Item</label>-->
+<!--                                                                    <a class="btn btn-warning" th:href="@{/purchase-invoice/update/{id}(id=${invoice.id})}">Add Item</a>-->
                                                                     <button type="submit" name="action" value="addItem" class="btn btn-warning mb-2 mb-sm-0 mr-sm-2">Add Item
                                                                     </button>
                                                                 </div>

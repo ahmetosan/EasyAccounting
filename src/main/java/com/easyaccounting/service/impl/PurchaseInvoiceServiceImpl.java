@@ -1,6 +1,7 @@
 package com.easyaccounting.service.impl;
 
 import com.easyaccounting.dto.InvoiceDTO;
+import com.easyaccounting.entity.ClientVendor;
 import com.easyaccounting.entity.Company;
 import com.easyaccounting.entity.Invoice;
 import com.easyaccounting.entity.InvoiceProduct;
@@ -88,15 +89,8 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     @Override
     public InvoiceDTO updatePurchaseInvoice(InvoiceDTO invoiceDTO, Long id) {
         Invoice purchaseInvoice = purchaseInvoiceRepository.findInvoiceById(id);
-        Invoice convertedPurchaseInvoice = mapperUtil.convert(invoiceDTO, new Invoice());
-        convertedPurchaseInvoice.setId(purchaseInvoice.getId());
-        convertedPurchaseInvoice.setInvoiceDate(purchaseInvoice.getInvoiceDate());
-        convertedPurchaseInvoice.setInvoiceStatus(purchaseInvoice.getInvoiceStatus());
-        convertedPurchaseInvoice.setInvoiceNumber(purchaseInvoice.getInvoiceNumber());
-        convertedPurchaseInvoice.setInvoiceType(purchaseInvoice.getInvoiceType());
-        convertedPurchaseInvoice.setCompany(purchaseInvoice.getCompany());
-        convertedPurchaseInvoice.setEnabled(purchaseInvoice.isEnabled());
-        return mapperUtil.convert(purchaseInvoiceRepository.save(convertedPurchaseInvoice), new InvoiceDTO());
+        purchaseInvoice.setClientVendor(mapperUtil.convert(invoiceDTO.getClientVendor(), new ClientVendor()));
+        return mapperUtil.convert(purchaseInvoiceRepository.save(purchaseInvoice), new InvoiceDTO());
     }
 
     @Override

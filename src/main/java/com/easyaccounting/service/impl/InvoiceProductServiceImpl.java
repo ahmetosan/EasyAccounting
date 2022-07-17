@@ -30,8 +30,8 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
     }
 
     @Override
-    public void updateInvoiceProduct(Long id, List<InvoiceProductDTO> invoiceProductDTO) {
+    public void updateInvoiceProduct(Long id) {
         List<InvoiceProduct> invoiceProducts = invoiceProductRepository.findAllByInvoiceId(id);
-        // need to set updated values on invoiceProducts
+
     }
 }
