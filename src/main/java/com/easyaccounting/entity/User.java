@@ -17,7 +17,7 @@ public class User extends BaseEntity{
     private String firstname;
     private String lastname;
 
-    @Column(unique = true, nullable = false)
+   // @Column(unique = true, nullable = false)
     private String username;
 
     private String password;
@@ -35,6 +35,8 @@ public class User extends BaseEntity{
 
     @Enumerated(EnumType.STRING)
     private ProductStatus productStatus;
+
+
 
 
 
