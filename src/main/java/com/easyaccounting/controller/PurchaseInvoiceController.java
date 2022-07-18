@@ -57,30 +57,31 @@ public class PurchaseInvoiceController {
         return "/invoice/toInvoice";
     }
 
-    @GetMapping("/update/{id}")
+    @GetMapping({"/update", "/update/{id}"})
     public String editPurchaseInvoiceById(@PathVariable("id") Long id, Model model) {
         model.addAttribute("invoice", invoiceService.findPurchaseInvoiceById(id));
         model.addAttribute("invoiceProducts", invoiceProductService.getAllInvoiceProductsById(id));
         model.addAttribute("clientVendor", new ClientVendorDTO());
         model.addAttribute("clientVendors", clientVendorService.getAllClientVendorsByCompanyType(ClientVendorType.VENDOR));
-        model.addAttribute("product", new InvoiceProductDTO());
+        model.addAttribute("invoiceProduct", new InvoiceProductDTO());
         model.addAttribute("products", productService.getAllProductsByCompany());
         return "invoice/purchase-invoice-update";
     }
 
     @PostMapping("/update/add-invoice-product/{id}")
-    public String addInvoiceProduct(@PathVariable("id") Long id, InvoiceProductDTO invoiceProductDTO) {
+    public String addInvoiceProduct(@PathVariable("id") Long id, InvoiceProductDTO invoiceProduct) {
         InvoiceDTO invoiceDTO = invoiceService.findPurchaseInvoiceById(id);
-        invoiceDTO.getInvoiceProduct().add(invoiceProductDTO);
-        return "redirect:invoice/update/"+id;
-//        return "redirect:/purchase-invoice/update";
-//        return "redirect:/purchase-invoice/list";
+        invoiceProduct.setInvoice(invoiceDTO);
+        invoiceProduct.setId(null);
+        invoiceProductService.saveInvoiceProduct(invoiceProduct);
+        return "redirect:/purchase-invoice/update/" + id;
+
     }
 
-    @PostMapping("/update/delete-invoice-product")
-    public String deleteInvoiceProduct(InvoiceProductDTO invoiceProductDTO){
-        // need to find a way to delete item
-        return "redirect:/purchase-invoice-update";
+    @GetMapping("/update/delete-invoice-product/{id}")
+    public String deleteInvoiceProduct(@PathVariable("id") Long id, InvoiceProductDTO invoiceProduct){
+        invoiceProductService.deleteInvoiceProduct(id);
+        return "redirect:/purchase-invoice/update";
     }
 
     @PostMapping("/update/{id}")

@@ -95,7 +95,7 @@
                                                     <!-- INVOICE PRODUCT PART BEGIN -->
                                                     </form>
                                                 <!-- INVOICE PART END -->
-                                                <form th:object="${product}" th:action="@{/purchase-invoice/update/add-invoice-product/{id}(id=${invoice.id})}" method="post">
+                                                <form th:object="${invoiceProduct}" th:action="@{/purchase-invoice/update/add-invoice-product/{id}(id=${invoice.id})}" method="post">
                                                     <input type="hidden" name="_csrf" value="">
                                                     <div class="needs-validation" novalidate="">
                                                             <div class="row">
@@ -105,7 +105,7 @@
                                                                             <label>Product</label>
                                                                             <select th:field="*{product}" class="custom-select" required="required" >
                                                                                 <option value="">Select</option>
-                                                                                <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"></option>
+                                                                                <option th:each="productDTO : ${products}" th:value="${productDTO.id}" th:text="${productDTO.name}"></option>
                                                                             </select>
                                                                             <div class="help-block"></div></div>
                                                                     </div>
@@ -135,8 +135,6 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2">
-<!--                                                                    <label>Add Item</label>-->
-<!--                                                                    <a class="btn btn-warning" th:href="@{/purchase-invoice/update/{id}(id=${invoice.id})}">Add Item</a>-->
                                                                     <button type="submit" name="action" value="addItem" class="btn btn-warning mb-2 mb-sm-0 mr-sm-2">Add Item
                                                                     </button>
                                                                 </div>
@@ -163,14 +161,14 @@
                                                                     </thead>
                                                                     <tbody>
                                                                     <tr th:each="product : ${invoiceProducts}">
-                                                                        <td th:text="${product.product.getName()}"></td>
+                                                                        <td th:text="${product.product.name}"></td>
                                                                         <td th:text="'$ '+ ${product.price}"></td>
                                                                         <td th:text="${product.qty}"></td>
                                                                         <td th:text="'% '+ ${product.tax}"></td>
                                                                         <td th:text="'$ '+ ${(product.qty * product.price) + (product.qty * product.price * product.tax)/100}"></td>
                                                                         <td>
-                                                                            <form th:action="@{/purchase-invoice/update/delete-invoice-product}" th:object="${product}" method="post">
-                                                                                <input type="hidden" th:value="${product.product.getName()}" name="name"/>
+                                                                            <form th:action="@{/purchase-invoice/update/delete-invoice-product/{id}(id=${product.id})}" th:object="${product}" method="get">
+                                                                                <input type="hidden" th:value="${product.product.name}" name="name"/>
                                                                                 <input type="hidden" th:value="${product.qty}" name="qty"/>
                                                                                 <input type="hidden" th:value="${product.price}" name="price"/>
                                                                                 <input type="hidden" th:value="${product.tax}" name="tax"/>
