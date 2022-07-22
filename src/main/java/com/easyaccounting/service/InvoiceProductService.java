@@ -10,6 +10,7 @@ public interface InvoiceProductService {
 
     List<InvoiceProductDTO> getAllInvoiceProductsById(Long id);
     void updateInvoiceProduct(Long id);
+    InvoiceProductDTO getInvoiceProductById(Long id);
     void saveInvoiceProduct(InvoiceProductDTO invoiceProductDTO);
     void deleteInvoiceProduct(Long id);
 }

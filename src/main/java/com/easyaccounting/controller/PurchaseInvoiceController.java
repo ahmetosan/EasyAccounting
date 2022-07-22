@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -61,8 +62,7 @@ public class PurchaseInvoiceController {
     public String editPurchaseInvoiceById(@PathVariable("id") Long id, Model model) {
         model.addAttribute("invoice", invoiceService.findPurchaseInvoiceById(id));
         model.addAttribute("invoiceProducts", invoiceProductService.getAllInvoiceProductsById(id));
-        model.addAttribute("clientVendor", new ClientVendorDTO());
-        model.addAttribute("clientVendors", clientVendorService.getAllClientVendorsByCompanyType(ClientVendorType.VENDOR));
+        model.addAttribute("clientVendor", invoiceService.findPurchaseInvoiceById(id).getClientVendor());
         model.addAttribute("invoiceProduct", new InvoiceProductDTO());
         model.addAttribute("products", productService.getAllProductsByCompany());
         return "invoice/purchase-invoice-update";
@@ -78,10 +78,10 @@ public class PurchaseInvoiceController {
 
     }
 
-    @GetMapping("/update/delete-invoice-product/{id}")
-    public String deleteInvoiceProduct(@PathVariable("id") Long id, InvoiceProductDTO invoiceProduct){
-        invoiceProductService.deleteInvoiceProduct(id);
-        return "redirect:/purchase-invoice/update";
+    @PostMapping("/update/delete-invoice-product/{invoiceId}/{id}")
+    public String deleteInvoiceProduct(@PathVariable("invoiceId") Long invoiceId, @PathVariable("id") Long id){
+       invoiceProductService.deleteInvoiceProduct(id);
+        return "redirect:/purchase-invoice/update/"+invoiceId;
     }
 
     @PostMapping("/update/{id}")

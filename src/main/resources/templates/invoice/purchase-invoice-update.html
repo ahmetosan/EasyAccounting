@@ -38,7 +38,7 @@
                                                 <form class="needs-validation" th:action="@{/purchase-invoice/update/{id}(id=${invoice.id})}" method="post"
                                                       th:object="${invoice}" novalidate>
                                                     <div class="row">
-                                                        <div class="col-12 col-md-3">
+                                                        <div class="col-12 col-md-4">
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label>Invoice No</label>
@@ -51,7 +51,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-12 col-md-3">
+                                                        <div class="col-12 col-md-4">
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label>Invoice Date</label>
@@ -63,33 +63,38 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-12 col-md-3">
+                                                        <div class="col-12 col-md-4">
                                                                 <div class="form-group">
                                                                     <div class="controls">
                                                                         <label>Vendor</label>
-                                                                        <select th:field="*{clientVendor}" class="custom-select" required="required">
-                                                                            <option th:each="clientVendor : ${clientVendors}" th:value="${clientVendor.id}"
-                                                                                    th:text="${clientVendor.companyName}"></option>
-                                                                        </select>
+                                                                        <input type="text"
+                                                                               th:field="*{clientVendor.companyName}"
+                                                                               class="form-control" readonly
+                                                                               required="required" aria-invalid="false"
+                                                                               disabled>
+<!--                                                                        <select th:field="*{clientVendor}" class="custom-select" required="required">-->
+<!--                                                                            <option th:each="clientVendor : ${clientVendors}" th:value="${clientVendor.id}"-->
+<!--                                                                                    th:text="${clientVendor.companyName}"></option>-->
+<!--                                                                        </select>-->
                                                                     </div>
                                                                 </div>
                                                         </div>
-                                                        <div div class="col-12 col-md-1">
-                                                            <div class="form-group">
-                                                                <div class="controls">
-                                                                    <label>Update</label>
-                                                                    <button type="submit" class="btn btn-success mb-2 mb-sm-0 mr-sm-2">Update</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div div class="col-12 col-md-1">
-                                                            <div class="form-group">
-                                                                <div class="controls">
-                                                                    <label>Cancel</label>
-                                                                    <a class="btn btn-danger" th:href="@{/purchase-invoice/list}">Cancel</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+<!--                                                        <div div class="col-12 col-md-1">-->
+<!--                                                            <div class="form-group">-->
+<!--                                                                <div class="controls">-->
+<!--                                                                    <label>Update</label>-->
+<!--                                                                    <button type="submit" class="btn btn-success mb-2 mb-sm-0 mr-sm-2">Update</button>-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+<!--                                                        <div div class="col-12 col-md-1">-->
+<!--                                                            <div class="form-group">-->
+<!--                                                                <div class="controls">-->
+<!--                                                                    <label>Cancel</label>-->
+<!--                                                                    <button type="reset" class="btn btn-danger">Cancel</button>-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
                                                     </div>
                                                     <!-- INVOICE PART END -->
                                                     <!-- INVOICE PRODUCT PART BEGIN -->
@@ -135,8 +140,10 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2">
-                                                                    <button type="submit" name="action" value="addItem" class="btn btn-warning mb-2 mb-sm-0 mr-sm-2">Add Item
-                                                                    </button>
+                                                                            <button type="submit" name="action" class="btn btn-warning mb-2 mb-sm-0 mr-sm-2">Add Item</button>
+<!--                                                                </div>-->
+<!--                                                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2">-->
+                                                                            <button type="reset" class="btn btn-danger mb-2 mb-sm-0 mr-sm-2">Cancel</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -167,11 +174,7 @@
                                                                         <td th:text="'% '+ ${product.tax}"></td>
                                                                         <td th:text="'$ '+ ${(product.qty * product.price) + (product.qty * product.price * product.tax)/100}"></td>
                                                                         <td>
-                                                                            <form th:action="@{/purchase-invoice/update/delete-invoice-product/{id}(id=${product.id})}" th:object="${product}" method="get">
-                                                                                <input type="hidden" th:value="${product.product.name}" name="name"/>
-                                                                                <input type="hidden" th:value="${product.qty}" name="qty"/>
-                                                                                <input type="hidden" th:value="${product.price}" name="price"/>
-                                                                                <input type="hidden" th:value="${product.tax}" name="tax"/>
+                                                                            <form th:action="@{/purchase-invoice/update/delete-invoice-product/{invoiceId}/{id}(invoiceId=${product.getInvoice().id},id=${product.id})}" th:object="${product}" method="post">
                                                                                 <button type="submit" class="btn btn-default">
                                                                                     <i class="ft-trash"></i>
                                                                                 </button>

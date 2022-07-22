@@ -50,7 +50,7 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     }
 
     public InvoiceDTO getPurchaseInvoiceCost(InvoiceDTO purchaseInvoiceDTO){
-        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllByInvoiceId(purchaseInvoiceDTO.getId());
+        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllInvoiceProductsByInvoiceIdAndIsDeleted(purchaseInvoiceDTO.getId(), false);
         int costWithoutTax = 0;
         for (InvoiceProduct each:listInvoiceProducts) {
             costWithoutTax += each.getQty() * each.getPrice();
@@ -60,7 +60,7 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     }
 
     public InvoiceDTO getPurchaseInvoiceTax(InvoiceDTO purchaseInvoiceDTO){
-        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllByInvoiceId(purchaseInvoiceDTO.getId());
+        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllInvoiceProductsByInvoiceIdAndIsDeleted(purchaseInvoiceDTO.getId(), false);
         int totalTax = 0;
         for (InvoiceProduct each:listInvoiceProducts) {
             totalTax += (each.getQty() * each.getPrice() * each.getTax())/100;
@@ -70,7 +70,7 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     }
 
     public InvoiceDTO getPurchaseInvoiceTotalCost(InvoiceDTO purchaseInvoiceDTO){
-        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllByInvoiceId(purchaseInvoiceDTO.getId());
+        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllInvoiceProductsByInvoiceIdAndIsDeleted(purchaseInvoiceDTO.getId(), false);
         int totalCostWithTax = 0;
         for (InvoiceProduct each:listInvoiceProducts) {
             totalCostWithTax += (each.getQty() * each.getPrice()) + (each.getQty() * each.getPrice() * each.getTax())/100;

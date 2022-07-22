@@ -1,7 +1,6 @@
 package com.easyaccounting.service.impl;
 
 import com.easyaccounting.dto.InvoiceProductDTO;
-import com.easyaccounting.entity.Invoice;
 import com.easyaccounting.entity.InvoiceProduct;
 import com.easyaccounting.mapper.MapperUtil;
 import com.easyaccounting.repository.InvoiceProductRepository;
@@ -28,7 +27,7 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
 
     @Override
     public List<InvoiceProductDTO> getAllInvoiceProductsById(Long id) {
-        List<InvoiceProduct> invoiceProductList = invoiceProductRepository.findAllByInvoiceId(id);
+        List<InvoiceProduct> invoiceProductList = invoiceProductRepository.findAllInvoiceProductsByInvoiceIdAndIsDeleted(id, false);
         return invoiceProductList.stream()
                 .map(obj -> mapperUtil.convert(obj, new InvoiceProductDTO()))
                 .collect(Collectors.toList());
@@ -36,8 +35,14 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
 
     @Override
     public void updateInvoiceProduct(Long id) {
-        List<InvoiceProduct> invoiceProducts = invoiceProductRepository.findAllByInvoiceId(id);
+//        List<InvoiceProduct> invoiceProducts = invoiceProductRepository.findAllByInvoiceId(id);
 
+    }
+
+    @Override
+    public InvoiceProductDTO getInvoiceProductById(Long invoiceProductId) {
+        InvoiceProduct invoiceProduct = invoiceProductRepository.findInvoiceProductById(invoiceProductId);
+        return mapperUtil.convert(invoiceProduct, new InvoiceProductDTO());
     }
 
     @Override
@@ -46,9 +51,9 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
     }
 
     @Override
-    public void deleteInvoiceProduct(Long id) {
-        Optional<InvoiceProduct> invoiceProduct = invoiceProductRepository.findById(id);
-        invoiceProduct.get().setIsDeleted(true);
-        invoiceProductRepository.save(invoiceProduct.get());
+    public void deleteInvoiceProduct(Long invoiceProductId) {
+        InvoiceProduct invoiceProduct = invoiceProductRepository.findById(invoiceProductId).get();
+        invoiceProduct.setIsDeleted(true);
+        invoiceProductRepository.save(invoiceProduct);
     }
 }
