@@ -1,6 +1,7 @@
 package com.easyaccounting.service.impl;
 
 import com.easyaccounting.dto.InvoiceDTO;
+import com.easyaccounting.entity.ClientVendor;
 import com.easyaccounting.entity.Company;
 import com.easyaccounting.entity.Invoice;
 import com.easyaccounting.entity.InvoiceProduct;
@@ -15,6 +16,7 @@ import com.easyaccounting.service.PurchaseInvoiceService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,7 +51,7 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     }
 
     public InvoiceDTO getPurchaseInvoiceCost(InvoiceDTO purchaseInvoiceDTO){
-        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllByInvoiceId(purchaseInvoiceDTO.getId());
+        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllInvoiceProductsByInvoiceIdAndIsDeleted(purchaseInvoiceDTO.getId(), false);
         int costWithoutTax = 0;
         for (InvoiceProduct each:listInvoiceProducts) {
             costWithoutTax += each.getQty() * each.getPrice();
@@ -59,7 +61,7 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     }
 
     public InvoiceDTO getPurchaseInvoiceTax(InvoiceDTO purchaseInvoiceDTO){
-        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllByInvoiceId(purchaseInvoiceDTO.getId());
+        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllInvoiceProductsByInvoiceIdAndIsDeleted(purchaseInvoiceDTO.getId(), false);
         int totalTax = 0;
         for (InvoiceProduct each:listInvoiceProducts) {
             totalTax += (each.getQty() * each.getPrice() * each.getTax())/100;
@@ -69,7 +71,7 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     }
 
     public InvoiceDTO getPurchaseInvoiceTotalCost(InvoiceDTO purchaseInvoiceDTO){
-        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllByInvoiceId(purchaseInvoiceDTO.getId());
+        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllInvoiceProductsByInvoiceIdAndIsDeleted(purchaseInvoiceDTO.getId(), false);
         int totalCostWithTax = 0;
         for (InvoiceProduct each:listInvoiceProducts) {
             totalCostWithTax += (each.getQty() * each.getPrice()) + (each.getQty() * each.getPrice() * each.getTax())/100;
@@ -88,15 +90,8 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     @Override
     public InvoiceDTO updatePurchaseInvoice(InvoiceDTO invoiceDTO, Long id) {
         Invoice purchaseInvoice = purchaseInvoiceRepository.findInvoiceById(id);
-        Invoice convertedPurchaseInvoice = mapperUtil.convert(invoiceDTO, new Invoice());
-        convertedPurchaseInvoice.setId(purchaseInvoice.getId());
-        convertedPurchaseInvoice.setInvoiceDate(purchaseInvoice.getInvoiceDate());
-        convertedPurchaseInvoice.setInvoiceStatus(purchaseInvoice.getInvoiceStatus());
-        convertedPurchaseInvoice.setInvoiceNumber(purchaseInvoice.getInvoiceNumber());
-        convertedPurchaseInvoice.setInvoiceType(purchaseInvoice.getInvoiceType());
-        convertedPurchaseInvoice.setCompany(purchaseInvoice.getCompany());
-        convertedPurchaseInvoice.setEnabled(purchaseInvoice.isEnabled());
-        return mapperUtil.convert(purchaseInvoiceRepository.save(convertedPurchaseInvoice), new InvoiceDTO());
+        purchaseInvoice.setClientVendor(mapperUtil.convert(invoiceDTO.getClientVendor(), new ClientVendor()));
+        return mapperUtil.convert(purchaseInvoiceRepository.save(purchaseInvoice), new InvoiceDTO());
     }
 
     @Override
@@ -127,6 +122,14 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
         Invoice purchaseInvoice = purchaseInvoiceRepository.findInvoiceById(id);
         purchaseInvoice.setInvoiceStatus(InvoiceStatus.APPROVED);
         purchaseInvoiceRepository.save(purchaseInvoice);
+    }
+
+    @Override
+    public InvoiceDTO calculateInvoiceCost(InvoiceDTO purchaseInvoiceDTO) {
+        purchaseInvoiceDTO.setInvoiceCost(getPurchaseInvoiceCost(purchaseInvoiceDTO).getInvoiceCost());
+        purchaseInvoiceDTO.setInvoiceTax(getPurchaseInvoiceTax(purchaseInvoiceDTO).getInvoiceTax());
+        purchaseInvoiceDTO.setTotalCost(getPurchaseInvoiceTotalCost(purchaseInvoiceDTO).getTotalCost());
+        return purchaseInvoiceDTO;
     }
 
     public Company getCurrentCompany() {

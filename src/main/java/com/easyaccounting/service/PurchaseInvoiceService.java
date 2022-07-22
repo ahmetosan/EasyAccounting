@@ -14,4 +14,5 @@ public interface PurchaseInvoiceService {
     void savePurchaseInvoice(InvoiceDTO invoiceDTO);
     void deletePurchaseInvoiceById(Long id);
     void getToInvoiceById(Long id);
+    InvoiceDTO calculateInvoiceCost(InvoiceDTO purchaseInvoiceDTO);
 }

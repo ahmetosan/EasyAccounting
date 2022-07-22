@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class InvoiceProductDTO {
 
     private Long id;
+    private String name;
     private InvoiceDTO invoice;
     private ProductDTO product;
     private Long qty;
