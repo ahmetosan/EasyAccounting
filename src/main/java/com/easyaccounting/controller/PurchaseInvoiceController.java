@@ -5,17 +5,10 @@ import com.easyaccounting.dto.InvoiceDTO;
 import com.easyaccounting.dto.InvoiceProductDTO;
 import com.easyaccounting.enums.ClientVendorType;
 import com.easyaccounting.enums.InvoiceType;
-import com.easyaccounting.service.ClientVendorService;
-import com.easyaccounting.service.InvoiceProductService;
-import com.easyaccounting.service.ProductService;
-import com.easyaccounting.service.PurchaseInvoiceService;
+import com.easyaccounting.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/purchase-invoice")
@@ -25,12 +18,14 @@ public class PurchaseInvoiceController {
     private final InvoiceProductService invoiceProductService;
     private final ClientVendorService clientVendorService;
     private final ProductService productService;
+    private final CompanyService companyService;
 
-    public PurchaseInvoiceController(PurchaseInvoiceService invoiceService, InvoiceProductService invoiceProductService, ClientVendorService clientVendorService, ProductService productService) {
+    public PurchaseInvoiceController(PurchaseInvoiceService invoiceService, InvoiceProductService invoiceProductService, ClientVendorService clientVendorService, ProductService productService, CompanyService companyService) {
         this.invoiceService = invoiceService;
         this.invoiceProductService = invoiceProductService;
         this.clientVendorService = clientVendorService;
         this.productService = productService;
+        this.companyService = companyService;
     }
 
     @GetMapping("/list")
@@ -53,8 +48,15 @@ public class PurchaseInvoiceController {
     }
 
     @GetMapping("/toInvoice/{id}")
-    public String getToPurchaseInvoiceById(@PathVariable("id") Long id){
+    public String getToPurchaseInvoiceById(@PathVariable("id") Long id, Model model){
         invoiceService.getToInvoiceById(id);
+        InvoiceDTO invoiceDTO = invoiceService.findPurchaseInvoiceById(id);
+        InvoiceDTO invoiceCostDTO = invoiceService.calculateInvoiceCost(invoiceDTO);
+        model.addAttribute("invoice", invoiceCostDTO);
+        model.addAttribute("product", productService.getProductByCompany());
+        model.addAttribute("company", companyService.findCompanyById(invoiceDTO.getCompany().getId()));
+        model.addAttribute("invoiceProducts", invoiceProductService.getAllInvoiceProductsById(id));
+
         return "/invoice/toInvoice";
     }
 
@@ -84,13 +86,6 @@ public class PurchaseInvoiceController {
         return "redirect:/purchase-invoice/update/"+invoiceId;
     }
 
-    @PostMapping("/update/{id}")
-    public String updatePurchaseInvoice(@PathVariable("id") Long id, InvoiceDTO purchaseInvoiceDTO){
-        invoiceService.updatePurchaseInvoice(purchaseInvoiceDTO, id);
-//        invoiceProductService.updateInvoiceProduct(id, purchaseInvoiceDTO.getInvoiceProduct());
-        return "redirect:invoice/purchase-invoice-list";
-    }
-
     @GetMapping("/create")
     public String getPurchaseInvoiceCreate(Model model){
         model.addAttribute("invoice", new InvoiceDTO());
@@ -101,9 +96,4 @@ public class PurchaseInvoiceController {
         return "/invoice/purchase-invoice-create";
     }
 
-    @PostMapping("/create/add-purchase-invoice/{id}")
-    public String createNewPurchaseInvoice(@PathVariable("id") Long id, Model model, InvoiceDTO purchaseInvoiceDTO){
-        invoiceService.savePurchaseInvoice(purchaseInvoiceDTO);
-        return "/invoice/purchase-invoice-create";
-    }
 }

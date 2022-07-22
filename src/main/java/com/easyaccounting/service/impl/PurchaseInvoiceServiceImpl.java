@@ -16,6 +16,7 @@ import com.easyaccounting.service.PurchaseInvoiceService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -121,6 +122,14 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
         Invoice purchaseInvoice = purchaseInvoiceRepository.findInvoiceById(id);
         purchaseInvoice.setInvoiceStatus(InvoiceStatus.APPROVED);
         purchaseInvoiceRepository.save(purchaseInvoice);
+    }
+
+    @Override
+    public InvoiceDTO calculateInvoiceCost(InvoiceDTO purchaseInvoiceDTO) {
+        purchaseInvoiceDTO.setInvoiceCost(getPurchaseInvoiceCost(purchaseInvoiceDTO).getInvoiceCost());
+        purchaseInvoiceDTO.setInvoiceTax(getPurchaseInvoiceTax(purchaseInvoiceDTO).getInvoiceTax());
+        purchaseInvoiceDTO.setTotalCost(getPurchaseInvoiceTotalCost(purchaseInvoiceDTO).getTotalCost());
+        return purchaseInvoiceDTO;
     }
 
     public Company getCurrentCompany() {

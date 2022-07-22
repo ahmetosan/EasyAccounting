@@ -94,6 +94,12 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public ProductDTO getProductByCompany() {
+        Company company = getCurrentCompany();
+        return mapperUtil.convert(productRepository.findById(company.getId()),new ProductDTO());
+    }
+
     public Company getCurrentCompany() {
 // ToDO find current user, to return company info logged in by current user
         return companyRepository.findById(1L).get();
