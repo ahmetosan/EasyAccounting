@@ -48,10 +48,8 @@ public class CompanyController {
     public String editCompany(@PathVariable("id") Long id, Model model){
 
         logger.info("Company to be edited: " + companyService.findCompanyById(id));
-
         model.addAttribute("company", companyService.findCompanyById(id));
         model.addAttribute("stateList", List.of(State.values()));
-
         return "/company/company-edit";
     }
 
@@ -59,24 +57,19 @@ public class CompanyController {
     public String editCompany(CompanyDTO companyDTO){
         logger.info("Company edited: " + companyDTO);
         companyService.update(companyDTO);
-
-        return "redirect:/company/company-list";
+        return "redirect:/company/list";
     }
     @GetMapping("/close/{id}")
     public String closeCompany(@PathVariable("id") Long id){
-
         logger.info("Company to be deleted: " + companyService.findCompanyById(id));
         // companyService.disable(id);
-
         return "redirect:/company/company-list";
     }
 
     @GetMapping("/re-open/{id}")
     public String reOpenCompany(@PathVariable("id") Long id){
-
         logger.info("Company to be deleted: " + companyService.findCompanyById(id));
-        //  companyService.enable(id);
-
+        //companyService.enable(id);
         return "redirect:/company/company-list";
     }
 

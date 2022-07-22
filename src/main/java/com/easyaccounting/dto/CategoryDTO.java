@@ -11,6 +11,8 @@ public class CategoryDTO {
     private String description;
     private Boolean enabled;
 
+    private CompanyDTO company;
+
     public CategoryDTO(String description, Boolean enabled) {
         this.description = description;
         this.enabled = enabled;

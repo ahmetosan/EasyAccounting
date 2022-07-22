@@ -2,15 +2,19 @@ package com.easyaccounting.converter;
 
 import com.easyaccounting.dto.CompanyDTO;
 import com.easyaccounting.service.CompanyService;
+import org.springframework.boot.context.properties.ConfigurationPropertiesBinding;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
-
+@Component
+@ConfigurationPropertiesBinding
 public class CompanyDtoConverter implements Converter<String, CompanyDTO> {
 
-    private final CompanyService companyService;
+    CompanyService companyService;
 
 
-    public CompanyDtoConverter(CompanyService companyService) {
+    public CompanyDtoConverter(@Lazy CompanyService companyService) {
         this.companyService = companyService;
     }
 

@@ -1,7 +1,6 @@
 package com.easyaccounting.dto;
 
 import com.easyaccounting.enums.State;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
