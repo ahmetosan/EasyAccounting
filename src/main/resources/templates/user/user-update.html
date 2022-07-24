@@ -33,7 +33,7 @@
 
 
                         <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-right">
-                            <a class="btn btn-primary bg-light-primary mb-1" ><i
+                            <a class="btn btn-primary bg-light-primary mb-1"  th:href="@{/user/user-list.html}"><i
                                     class="fa fa-list mr-1"></i>User List</a>
                         </div>
                     </div>
@@ -55,14 +55,13 @@
                                                  aria-labelledby="account-tab">
 
                                                 <!-- Account form starts -->
-                                                <form novalidate
-                                                      method="post" >
+                                                <form th:action="@{/user/update/{id}(id=${user.getId()})}" method="post" th:object="${user}" class="needs-validation" novalidate>
                                                     <div class="row">
                                                         <div class="col-12 col-md-6">
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label for="users-edit-username">Firstname</label>
-                                                                    <input type="text" id="users-edit-username"
+                                                                    <input type="text" id="users-edit-username" th:field="*{firstname}"
                                                                            class="form-control" placeholder="Username"
                                                                             required
                                                                            aria-invalid="false">
@@ -73,6 +72,7 @@
                                                                     <label for="users-edit-password">Password</label>
                                                                     <input type="password" id="users-edit-password"
                                                                            class="form-control" placeholder="Password"
+                                                                           th:field="*{password}"
 
                                                                            aria-invalid="false" readonly>
                                                                 </div>
@@ -80,7 +80,7 @@
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label for="users-edit-email2">E-mail</label>
-                                                                    <input type="email" id="users-edit-email2"
+                                                                    <input type="email" id="users-edit-email2" th:field="*{email}"
                                                                            class="form-control" placeholder="Email"
                                                                             required
                                                                            aria-invalid="false">
@@ -89,13 +89,16 @@
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label for="users-edit-status3">Company</label>
-                                                                    <select id="users-edit-status3" class="form-control"
-                                                                            name="company"
-                                                                            required>
-                                                                        <!--                                                                        <option value="">Select Company</option>-->
-                                                                        <option ></option>
+                                                                    <input type="text" id="users-edit-status3" th:field="*{company.title}" class="form-control"
+                                                                            name="company" disabled
+                                                                            >
+<!--                                                                         <option value="">Select Company</option>-->
+<!--                                                                        <option th:each="company:${companies}"-->
+<!--                                                                                th:value="${company.id}"-->
+<!--                                                                                th:text="${company.title}"></option>-->
 
-                                                                    </select>
+
+                                                                    </input>
                                                                 </div>
                                                             </div>
 
@@ -105,7 +108,7 @@
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label for="users-edit-company1">Lastname</label>
-                                                                    <input type="text" id="users-edit-company1"
+                                                                    <input th:field="*{lastname}" type="text" id="users-edit-company1"
                                                                            class="form-control" placeholder="Lastname"
                                                                             required>
                                                                 </div>
@@ -113,7 +116,7 @@
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label for="users-edit-company">Phone</label>
-                                                                    <input type="text" id="users-edit-company"
+                                                                    <input type="text" id="users-edit-company" th:field="*{phone}"
                                                                            class="form-control"
                                                                            placeholder="9734157843"
                                                                             required>
@@ -122,27 +125,20 @@
                                                             <div class="form-group">
                                                                 <div class="controls">
                                                                     <label for="users-edit-role">Role</label>
-                                                                    <select id="users-edit-role" class="form-control"
+                                                                    <select id="users-edit-role" th:field="*{role}" class="form-control"
                                                                             name="role"
                                                                             required>
-                                                                        <!--                                                                        <option value="">Select Role</option>-->
-                                                                        <option ></option>
+
+
+                                                                        <option th:value="''" th:text="Select"></option>
+                                                                        <option th:each="role : ${roles}"
+                                                                                th:value="${role.id}"
+                                                                                th:text="${role.description}"></option>
 
                                                                     </select>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <div class="controls">
-                                                                    <label for="users-edit-status">Status</label>
-                                                                    <select id="users-edit-status" class="form-control"
-                                                                            name="status"
-                                                                            >
-                                                                        <!--                                                                        <option value="">Select Role</option>-->
-                                                                        <option ></option>
 
-                                                                    </select>
-                                                                </div>
-                                                            </div>
 
 
                                                         </div>
