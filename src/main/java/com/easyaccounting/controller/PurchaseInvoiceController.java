@@ -32,6 +32,8 @@ public class PurchaseInvoiceController {
     public String getPurchaseInvoices(Model model){
         model.addAttribute("invoices", invoiceService.listAllPurchaseInvoices(InvoiceType.PURCHASE));
         model.addAttribute("invoice", new InvoiceDTO());
+        model.addAttribute("clientVendor", new ClientVendorDTO());
+        model.addAttribute("clientVendors", clientVendorService.getAllClientVendorsByCompanyType(ClientVendorType.VENDOR));
         return "/invoice/purchase-invoice-list";
     }
 
@@ -60,7 +62,7 @@ public class PurchaseInvoiceController {
         return "/invoice/toInvoice";
     }
 
-    @GetMapping({"/update", "/update/{id}"})
+    @GetMapping( "/update/{id}")
     public String editPurchaseInvoiceById(@PathVariable("id") Long id, Model model) {
         model.addAttribute("invoice", invoiceService.findPurchaseInvoiceById(id));
         model.addAttribute("invoiceProducts", invoiceProductService.getAllInvoiceProductsById(id));
@@ -73,9 +75,7 @@ public class PurchaseInvoiceController {
     @PostMapping("/update/add-invoice-product/{id}")
     public String addInvoiceProduct(@PathVariable("id") Long id, InvoiceProductDTO invoiceProduct) {
         InvoiceDTO invoiceDTO = invoiceService.findPurchaseInvoiceById(id);
-        invoiceProduct.setInvoice(invoiceDTO);
-        invoiceProduct.setId(null);
-        invoiceProductService.saveInvoiceProduct(invoiceProduct);
+        invoiceProductService.saveInvoiceProduct(invoiceProduct, invoiceDTO);
         return "redirect:/purchase-invoice/update/" + id;
 
     }
@@ -86,14 +86,9 @@ public class PurchaseInvoiceController {
         return "redirect:/purchase-invoice/update/"+invoiceId;
     }
 
-    @GetMapping("/create")
-    public String getPurchaseInvoiceCreate(Model model){
-        model.addAttribute("invoice", new InvoiceDTO());
-        model.addAttribute("clientVendor", new ClientVendorDTO());
-        model.addAttribute("clientVendors", clientVendorService.getAllClientVendorsByCompanyType(ClientVendorType.VENDOR));
-        model.addAttribute("product", new InvoiceProductDTO());
-        model.addAttribute("products", productService.getAllProductsByCompany());
-        return "/invoice/purchase-invoice-create";
+    @GetMapping("/create-invoice")
+    public String createInvoice(ClientVendorDTO clientVendorDTO) {
+        InvoiceDTO invoiceDTO = invoiceService.createPurchaseInvoice(clientVendorDTO);
+        return "redirect:/purchase-invoice/update/"+invoiceDTO.getId();
     }
-
 }

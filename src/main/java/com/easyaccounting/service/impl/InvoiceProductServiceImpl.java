@@ -1,6 +1,8 @@
 package com.easyaccounting.service.impl;
 
+import com.easyaccounting.dto.InvoiceDTO;
 import com.easyaccounting.dto.InvoiceProductDTO;
+import com.easyaccounting.entity.Invoice;
 import com.easyaccounting.entity.InvoiceProduct;
 import com.easyaccounting.mapper.MapperUtil;
 import com.easyaccounting.repository.InvoiceProductRepository;
@@ -46,7 +48,11 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
     }
 
     @Override
-    public void saveInvoiceProduct(InvoiceProductDTO invoiceProductDTO) {
+    public void saveInvoiceProduct(InvoiceProductDTO invoiceProductDTO, InvoiceDTO invoiceDTO) {
+        Invoice invoice = mapperUtil.convert(invoiceDTO, new Invoice());
+        InvoiceProduct invoiceProduct = mapperUtil.convert(invoiceProductDTO, new InvoiceProduct());
+        invoiceProduct.setInvoice(invoice);
+        invoiceProduct.setId(null);
         invoiceProductRepository.save(mapperUtil.convert(invoiceProductDTO, new InvoiceProduct()));
     }
 
