@@ -55,38 +55,32 @@ public class UserController {
     }
 
 
-    @GetMapping("/update/{username}")
-    public String editUser(@PathVariable("username") String username, Model model) {
+    @GetMapping("/update/{id}")
+    public String editUser(@PathVariable("id") Long id, Model model) {
 
-        model.addAttribute("user", userService.findByUsername(username));
+        model.addAttribute("user", userService.findById(id));
         model.addAttribute("roles", roleService.listAllRoles());
         model.addAttribute("users", userService.listAllUsers());
 
-        return "/user/update";//thymeleaf
+        return "user/user-update";//thymeleaf
 
     }
 
-    @PostMapping("/update")
-    public String updateUser( @ModelAttribute("user") UserDTO user, BindingResult bindingResult, Model model) {
+    @PostMapping("/update/{id}")
+    public String updateUser(@PathVariable("id") Long id, UserDTO dto) {
 
-        if (bindingResult.hasErrors()) {
+       userService.update(dto,id);
 
-            model.addAttribute("roles", roleService.listAllRoles());
-            model.addAttribute("users", userService.listAllUsers());
-
-            return "/user/update";//thymeleaf
-
-        }
-
-        userService.update(user);
-        return "redirect:/user/user-add";
+       return "redirect:/user/list";
 
     }
 
-    @GetMapping("/delete/{username}")
-    public String deleteUser(@PathVariable("username") String username) {
-        userService.deleteByUsername(username);
-         return "redirect:/user/user-add";//thymeleaf
+
+
+    @GetMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") Long id) {
+        userService.delete(id);
+         return "redirect:/user/list";//thymeleaf
     }
 
 

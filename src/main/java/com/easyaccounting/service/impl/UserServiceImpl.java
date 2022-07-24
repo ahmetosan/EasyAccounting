@@ -1,5 +1,6 @@
 package com.easyaccounting.service.impl;
 
+import com.easyaccounting.dto.CompanyDTO;
 import com.easyaccounting.dto.UserDTO;
 import com.easyaccounting.entity.Company;
 import com.easyaccounting.entity.User;
@@ -50,29 +51,40 @@ public class UserServiceImpl implements UserService {
 
 
     }
+//
+//    @Override
+//    public UserDTO findByUsername(String username) {
+//        return null;
+//    }
+
+//    @Override
+//    public UserDTO findByUsername(String username) {
+//        User user = userRepository.findByUsername(username);
+//        return userMapper.convertToDto(user);
+//    }
 
     @Override
-    public UserDTO findByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        return userMapper.convertToDto(user);
+    public UserDTO findById(Long id) {
+
+        return userMapper.convertToDto(userRepository.findById(id).get());
+    }
+
+
+    @Override
+    public void update(UserDTO dto, Long id) {
+        dto.setProductStatus(ProductStatus.ACTIVE);
+        dto.setCompany(mapperUtil.convert(getCurrentCompany(),new CompanyDTO()));
+        dto.setId(id);
+        User user=userMapper.convertToEntity(dto);
+        userRepository.save(user);
+
     }
 
     @Override
-    public UserDTO update(UserDTO dto) {
-
-        User user = userRepository.findByUsername(dto.getUsername());
-
-        User convertedUser =userMapper.convertToEntity(dto);
-
-        convertedUser.setId(user.getId());
-
-        userRepository.save(convertedUser);
-        return findByUsername(dto.getUsername());
-    }
-
-    @Override
-    public void deleteByUsername(String username) {
-        userRepository.deleteByUsername(username);
+    public void delete(Long id) {
+     User user = userRepository.getById(id);
+     user.setIsDeleted(true);
+     userRepository.save(user);
 
     }
 

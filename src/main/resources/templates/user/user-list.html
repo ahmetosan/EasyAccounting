@@ -79,10 +79,14 @@
                                                         <td th:text="${user.company.title}"></td>
                                                         <td th:text="${user.productStatus.value}"></td>
                                                         <td>
-                                                            <a >
+                                                            <a th:href="@{/user/update/{id}(id=${user.id})}">
                                                                 <i class="ft-edit"></i>
                                                             </a>
                                                         </td>
+
+
+
+
                                                     </tr>
                                                     </tbody>
                                                 </table>
