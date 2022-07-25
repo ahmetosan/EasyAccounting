@@ -1,5 +1,6 @@
 package com.easyaccounting.service.impl;
 
+import com.easyaccounting.dto.ClientVendorDTO;
 import com.easyaccounting.dto.InvoiceDTO;
 import com.easyaccounting.entity.ClientVendor;
 import com.easyaccounting.entity.Company;
@@ -15,8 +16,9 @@ import com.easyaccounting.repository.PurchaseInvoiceRepository;
 import com.easyaccounting.service.PurchaseInvoiceService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -88,17 +90,18 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     }
 
     @Override
-    public InvoiceDTO updatePurchaseInvoice(InvoiceDTO invoiceDTO, Long id) {
-        Invoice purchaseInvoice = purchaseInvoiceRepository.findInvoiceById(id);
-        purchaseInvoice.setClientVendor(mapperUtil.convert(invoiceDTO.getClientVendor(), new ClientVendor()));
-        return mapperUtil.convert(purchaseInvoiceRepository.save(purchaseInvoice), new InvoiceDTO());
-    }
-
-    @Override
-    public void savePurchaseInvoice(InvoiceDTO purchaseInvoiceDTO) {
-        purchaseInvoiceDTO.setInvoiceStatus(String.valueOf(InvoiceStatus.PENDING));
-        Invoice purchaseInvoice = purchaseInvoiceMapper.convertToEntity(purchaseInvoiceDTO);
-        purchaseInvoiceRepository.save(purchaseInvoice);
+    public InvoiceDTO createPurchaseInvoice(ClientVendorDTO clientVendorDTO) {
+        ClientVendor clientVendor = mapperUtil.convert(clientVendorDTO, new ClientVendor());
+        Invoice purchaseInvoice = new Invoice();
+        purchaseInvoice.setEnabled(true);
+        purchaseInvoice.setCompany(getCurrentCompany());
+        purchaseInvoice.setInvoiceDate(LocalDate.now());
+        purchaseInvoice.setInvoiceNumber(getInvoiceNumber());
+        purchaseInvoice.setInvoiceType(InvoiceType.PURCHASE);
+        purchaseInvoice.setInvoiceStatus(InvoiceStatus.PENDING);
+        purchaseInvoice.setClientVendor(clientVendor);
+        Invoice savedInvoice = purchaseInvoiceRepository.save(purchaseInvoice);
+        return mapperUtil.convert(savedInvoice, new InvoiceDTO());
     }
 
     @Override
@@ -130,6 +133,17 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
         purchaseInvoiceDTO.setInvoiceTax(getPurchaseInvoiceTax(purchaseInvoiceDTO).getInvoiceTax());
         purchaseInvoiceDTO.setTotalCost(getPurchaseInvoiceTotalCost(purchaseInvoiceDTO).getTotalCost());
         return purchaseInvoiceDTO;
+    }
+
+    @Override
+    public String getInvoiceNumber() {
+        Company company = getCurrentCompany();
+        List<Invoice> invoiceList = purchaseInvoiceRepository.findInvoicesByInvoiceTypeAndCompany(InvoiceType.PURCHASE, company)
+                .stream()
+                .sorted(Comparator.comparing(Invoice::getInvoiceNumber))
+                .collect(Collectors.toList());
+        int number = Integer.parseInt(invoiceList.get(invoiceList.size()-1).getInvoiceNumber().substring(5).replaceAll("[^0-9]", "")) + 1;
+        return "P-INV-" + String.format("%03d", number);
     }
 
     public Company getCurrentCompany() {

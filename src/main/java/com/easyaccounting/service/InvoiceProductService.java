@@ -1,5 +1,6 @@
 package com.easyaccounting.service;
 
+import com.easyaccounting.dto.InvoiceDTO;
 import com.easyaccounting.dto.InvoiceProductDTO;
 import com.easyaccounting.dto.ProductDTO;
 import com.easyaccounting.entity.InvoiceProduct;
@@ -11,6 +12,6 @@ public interface InvoiceProductService {
     List<InvoiceProductDTO> getAllInvoiceProductsById(Long id);
     void updateInvoiceProduct(Long id);
     InvoiceProductDTO getInvoiceProductById(Long id);
-    void saveInvoiceProduct(InvoiceProductDTO invoiceProductDTO);
+    void saveInvoiceProduct(InvoiceProductDTO invoiceProductDTO, InvoiceDTO invoiceDTO);
     void deleteInvoiceProduct(Long id);
 }
