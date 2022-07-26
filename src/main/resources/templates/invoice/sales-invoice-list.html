@@ -17,12 +17,26 @@
             <div class="content-wrapper">
                 <section class="users-list-wrapper">
                     <!-- ADD SALES INVOICE LINK BEGIN -->
-                    <div class="users-list-filter px-2">
-                        <form>
-                            <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-right">
-                                <a class="btn btn-success bg-light-success mb-1" th:href="@{/invoice/sales-invoice-create}"
-                                   ><i
-                                        class="fa fa-plus mr-1"></i>Create Sales Invoice</a>
+                    <div class="users-list-filter d-flex justify-content-end">
+                        <form action="#" th:object="${clientVendor}" th:action="@{/sales-invoice/create-invoice}" method="get">
+                            <div class="form-row justify-content-end">
+                                <div class="col-12 col-md-4">
+                                    <div class="form-group">
+                                        <label for="clientvendor">SELECT VENDOR</label>
+                                        <select id="clientvendor" name="id" th:field="*{id}" class="custom-select" required="required"
+                                                aria-invalid="false">
+                                            <option value="">Select Vendor</option>
+                                            <option th:each="clientVendor : ${clientVendors}" th:value="${clientVendor.id}"
+                                                    th:text="${clientVendor.companyName}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="form-group">
+                                        <label for="create">CREATE</label>
+                                        <button type="submit" name="action" value="createInvoice" id="create" class="btn btn-success bg-light-success mb-1">Invoice</button>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -60,7 +74,7 @@
                                                                 <a class="ft-list"
 
                                                                     th:if="${salesInvoice.getInvoiceStatus() == 'PENDING'}"
-                                                                    th:href="@{/invoice/update/{id}(id=${salesInvoice.id})}">
+                                                                    th:href="@{/sales-invoice/update/{id}(id=${salesInvoice.id})}">
                                                                 </a>
                                                             </td>
                                                             <td>
@@ -70,19 +84,19 @@
                                                                             th:if="${salesInvoice.getInvoiceStatus() == 'PENDING'}"
                                                                             class="btn btn-success mb-2 mb-sm-0 mr-sm-2"
                                                                             type="submit" value="approve"
-                                                                            th:href="@{/invoice/approve/{id}(id=${salesInvoice.id})}">Approve
+                                                                            th:href="@{/sales-invoice/approve/{id}(id=${salesInvoice.id})}">Approve
                                                                     </a>
                                                                     <a
                                                                             th:if="${salesInvoice.getInvoiceStatus() == 'PENDING'}"
                                                                             class="btn btn-danger mb-2 mb-sm-0 mr-sm-2"
                                                                             type="submit" value="delete"
-                                                                            th:href="@{/invoice/delete/{id}(id=${salesInvoice.id})}">Delete
+                                                                            th:href="@{/sales-invoice/delete/{id}(id=${salesInvoice.id})}">Delete
                                                                     </a>
                                                                     <a
                                                                             th:if="${salesInvoice.getInvoiceStatus() == 'APPROVED'}"
                                                                             class="btn btn-info mb-2 mb-sm-0 mr-sm-2"
                                                                             type="submit" value="toInvoice"
-                                                                            th:href="@{/invoice/toInvoice/{id}(id=${salesInvoice.getId()})}">To Invoice
+                                                                            th:href="@{/sales-invoice/toInvoice/{id}(id=${salesInvoice.getId()})}">To Invoice
                                                                     </a>
                                                                 </form>
                                                             </td>

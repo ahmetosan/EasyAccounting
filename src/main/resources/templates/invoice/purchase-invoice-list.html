@@ -16,16 +16,6 @@
             <div class="content-overlay"></div>
             <div class="content-wrapper">
                 <section class="users-list-wrapper">
-                    <!-- ADD PURCHASE INVOICE LINK BEGIN -->
-<!--                    <div class="users-list-filter px-2">-->
-<!--                        <form>-->
-<!--                            <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-right">-->
-<!--                                <a class="btn btn-success bg-light-success mb-1" th:href="@{/purchase-invoice/create}"-->
-<!--                                   ><i-->
-<!--                                        class="fa fa-plus mr-1"></i>Create Purchase Invoice</a>-->
-<!--                            </div>-->
-<!--                        </form>-->
-<!--                    </div>-->
                     <div class="users-list-filter d-flex justify-content-end">
                         <form action="#" th:object="${clientVendor}" th:action="@{/purchase-invoice/create-invoice}" method="get">
                                 <div class="form-row justify-content-end">
