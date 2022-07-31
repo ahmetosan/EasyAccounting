@@ -95,5 +95,6 @@ public class SalesInvoiceController {
         InvoiceDTO invoiceDTO = salesInvoiceService.createSalesInvoice(clientVendorDTO);
         return "redirect:/sales-invoice/update/"+invoiceDTO.getId();
     }
+    //
 
 }
