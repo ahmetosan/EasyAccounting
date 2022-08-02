@@ -214,7 +214,8 @@
 <!--                                            <a th:href="@{/pdf/generateToInvoice}" target="_blank" type="button" class="btn btn-dark"><i class="fa fa-edit"  ></i>Overview</a>-->
 <!--                                            <a th:href="@{/pdf/downloadToInvoice}"  type="button" class="btn btn-danger"><i class="fa fa-file-pdf-o" ></i> Export as PDF</a>-->
 <!--                                        </div>-->
-                                        <a th:href="@{/purchase-invoice/list}" type="button" class="btn btn-primary" data-html2canvas-ignore="true"><i class="fa fa-list mr-1"></i>Back to List</a>
+                                        <a th:if="${invoice.getInvoiceType() == 'SALE'}" th:href="@{/sales-invoice/list}" type="button" class="btn btn-primary" data-html2canvas-ignore="true"><i class="fa fa-list mr-1"></i>Back to List</a>
+                                        <a th:if="${invoice.getInvoiceType() == 'PURCHASE'}" th:href="@{/purchase-invoice/list}" type="button" class="btn btn-primary" data-html2canvas-ignore="true"><i class="fa fa-list mr-1"></i>Back to List</a>
                                         <a  onclick="generatePDF()" type="button" class="btn btn-danger" id="pdf-download" th:attr="data-html2canvas-ignore='true'"><i class="fa fa-file-pdf-o" ></i> Export as PDF</a>
                                     </div>
                                     <div class="invoice overflow-auto">

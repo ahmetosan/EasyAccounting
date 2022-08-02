@@ -1,6 +1,8 @@
 package com.easyaccounting.service.impl;
 
+import com.easyaccounting.dto.ClientVendorDTO;
 import com.easyaccounting.dto.InvoiceDTO;
+import com.easyaccounting.entity.ClientVendor;
 import com.easyaccounting.entity.Company;
 import com.easyaccounting.entity.Invoice;
 import com.easyaccounting.entity.InvoiceProduct;
@@ -14,6 +16,8 @@ import com.easyaccounting.repository.SalesInvoiceRepository;
 import com.easyaccounting.service.SalesInvoiceService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,9 +42,44 @@ public class SalesInvoiceServiceImpl implements SalesInvoiceService {
     @Override
     public List<InvoiceDTO> listAllSalesInvoice(InvoiceType type) {
         Company company = getCurrentCompany();
-   List<Invoice> invoices = salesInvoiceRepository.findInvoicesByInvoiceTypeAndCompany(type , company);
+        List<Invoice> invoices = salesInvoiceRepository.findInvoicesByInvoiceTypeAndCompany(type, company);
+        List<InvoiceDTO> listDTO = invoices.stream()
+                .map(invoiceObj -> mapperUtil.convert(invoiceObj, new InvoiceDTO()))
+                .collect(Collectors.toList());
+        return listDTO.stream()
+                .map(this::getSalesInvoiceCost)
+                .map(this::getSalesInvoiceTax)
+                .map(this::getSalesInvoiceTotalCost)
+                .collect(Collectors.toList());    }
 
-       return invoices.stream().map(salesInvoice -> mapperUtil.convert(salesInvoice, new InvoiceDTO())).collect(Collectors.toList());
+    public InvoiceDTO getSalesInvoiceCost(InvoiceDTO salesInvoiceDTO){
+        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllInvoiceProductsByInvoiceIdAndIsDeleted(salesInvoiceDTO.getId(), false);
+        int costWithoutTax = 0;
+        for (InvoiceProduct each:listInvoiceProducts) {
+            costWithoutTax += each.getQty() * each.getPrice();
+        }
+        salesInvoiceDTO.setInvoiceCost(costWithoutTax);
+        return salesInvoiceDTO;
+    }
+
+    public InvoiceDTO getSalesInvoiceTax(InvoiceDTO salesInvoiceDTO){
+        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllInvoiceProductsByInvoiceIdAndIsDeleted(salesInvoiceDTO.getId(), false);
+        int totalTax = 0;
+        for (InvoiceProduct each:listInvoiceProducts) {
+            totalTax += (each.getQty() * each.getPrice() * each.getTax())/100;
+        }
+        salesInvoiceDTO.setInvoiceTax(totalTax);
+        return salesInvoiceDTO;
+    }
+
+    public InvoiceDTO getSalesInvoiceTotalCost(InvoiceDTO salesInvoiceDTO){
+        List<InvoiceProduct> listInvoiceProducts = invoiceProductRepository.findAllInvoiceProductsByInvoiceIdAndIsDeleted(salesInvoiceDTO.getId(), false);
+        int totalCostWithTax = 0;
+        for (InvoiceProduct each:listInvoiceProducts) {
+            totalCostWithTax += (each.getQty() * each.getPrice()) + (each.getQty() * each.getPrice() * each.getTax())/100;
+        }
+        salesInvoiceDTO.setTotalCost(totalCostWithTax);
+        return salesInvoiceDTO;
     }
 
 
@@ -68,13 +107,6 @@ public class SalesInvoiceServiceImpl implements SalesInvoiceService {
     }
 
     @Override
-    public void saveSalesInvoice(InvoiceDTO salesInvoiceDto) {
-        salesInvoiceDto.setInvoiceStatus(String.valueOf(InvoiceStatus.PENDING));
-        Invoice salesInvoice = salesInvoiceMapper.convertToEntity(salesInvoiceDto);
-        salesInvoiceRepository.save(salesInvoice);
-    }
-
-    @Override
     public void deleteSalesInvoiceById(Long id) {
 
         Invoice salesInvoice = salesInvoiceRepository.findInvoiceById(id);
@@ -90,6 +122,41 @@ public class SalesInvoiceServiceImpl implements SalesInvoiceService {
         salesInvoice.setInvoiceStatus(InvoiceStatus.APPROVED);
         salesInvoiceRepository.save(salesInvoice);
     }
+
+    @Override
+    public InvoiceDTO calculateInvoiceCost(InvoiceDTO purchaseInvoiceDTO) {
+        purchaseInvoiceDTO.setInvoiceCost(getSalesInvoiceCost(purchaseInvoiceDTO).getInvoiceCost());
+        purchaseInvoiceDTO.setInvoiceTax(getSalesInvoiceTax(purchaseInvoiceDTO).getInvoiceTax());
+        purchaseInvoiceDTO.setTotalCost(getSalesInvoiceTotalCost(purchaseInvoiceDTO).getTotalCost());
+        return purchaseInvoiceDTO;
+    }
+
+    @Override
+    public InvoiceDTO createSalesInvoice(ClientVendorDTO clientVendorDTO) {
+        ClientVendor clientVendor = mapperUtil.convert(clientVendorDTO, new ClientVendor());
+        Invoice purchaseInvoice = new Invoice();
+        purchaseInvoice.setEnabled(true);
+        purchaseInvoice.setCompany(getCurrentCompany());
+        purchaseInvoice.setInvoiceDate(LocalDate.now());
+        purchaseInvoice.setInvoiceNumber(getInvoiceNumber());
+        purchaseInvoice.setInvoiceType(InvoiceType.SALE);
+        purchaseInvoice.setInvoiceStatus(InvoiceStatus.PENDING);
+        purchaseInvoice.setClientVendor(clientVendor);
+        Invoice savedInvoice = salesInvoiceRepository.save(purchaseInvoice);
+        return mapperUtil.convert(savedInvoice, new InvoiceDTO());
+    }
+
+    @Override
+    public String getInvoiceNumber() {
+        Company company = getCurrentCompany();
+        List<Invoice> invoiceList = salesInvoiceRepository.findInvoicesByInvoiceTypeAndCompany(InvoiceType.SALE, company)
+                .stream()
+                .sorted(Comparator.comparing(Invoice::getInvoiceNumber))
+                .collect(Collectors.toList());
+        int number = Integer.parseInt(invoiceList.get(invoiceList.size()-1).getInvoiceNumber().substring(5).replaceAll("[^0-9]", "")) + 1;
+        return "S-INV-" + String.format("%03d", number);
+    }
+
 
     public Company getCurrentCompany() {
 
