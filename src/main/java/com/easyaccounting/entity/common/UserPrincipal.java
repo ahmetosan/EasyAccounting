@@ -64,4 +64,6 @@ public class UserPrincipal implements UserDetails {
         return this.user.getId();
     }
 
+    public Long getLoggedInUserCompanyId() { return this.user.getCompany().getId(); }
+
 }

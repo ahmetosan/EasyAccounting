@@ -2,6 +2,7 @@ package com.easyaccounting.service;
 
 
 import com.easyaccounting.dto.CompanyDTO;
+import com.easyaccounting.entity.Company;
 
 import java.util.List;
 
@@ -21,6 +22,9 @@ public interface CompanyService {
 
     CompanyDTO findByCompanyTitle(String title);
     //  List<CompanyDTO> getCompanies();
+
+    Company getCurrentCompany();
+
 }
 
 

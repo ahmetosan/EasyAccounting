@@ -22,15 +22,15 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http.authorizeRequests()
-                .antMatchers("/company/**").hasAnyAuthority("Root", "Admin", "Manager", "Employee")
-                .antMatchers("/user/**").hasAnyAuthority("Root", "Admin", "Manager", "Employee")
+                .antMatchers("/company/**").hasAuthority("Root")
+                .antMatchers("/user/**").hasAnyAuthority("Root", "Admin")
                 .antMatchers("/client-vendor/**").hasAnyAuthority("Admin", "Manager", "Employee")
                 .antMatchers("/product/**").hasAnyAuthority("Admin", "Manager", "Manager")
                 .antMatchers("/category/**").hasAnyAuthority("Admin", "Manager", "Employee")
                 .antMatchers("/purchase-invoice/**").hasAnyAuthority("Admin", "Manager", "Employee")
                 .antMatchers("/sales-invoice/**").hasAnyAuthority("Admin", "Manager", "Employee")
-                .antMatchers("/report/**").hasAnyAuthority("Admin", "Manager", "Employee")
-                .antMatchers("/payment/**").hasAnyAuthority("Admin", "Manager", "Employee")
+                .antMatchers("/report/**").hasAnyAuthority("Admin", "Manager")
+                .antMatchers("/payment/**").hasAuthority("Admin")
                 .antMatchers("/dashboard").authenticated()
                 .antMatchers(
                         "/",
@@ -56,6 +56,5 @@ public class SecurityConfig {
                 .key("accounting")
                 .userDetailsService(securityService)
                 .and().build();
-
     }
 }

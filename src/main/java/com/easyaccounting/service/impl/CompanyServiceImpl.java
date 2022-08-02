@@ -3,10 +3,13 @@ package com.easyaccounting.service.impl;
 
 import com.easyaccounting.dto.CompanyDTO;
 import com.easyaccounting.entity.Company;
+import com.easyaccounting.entity.common.UserPrincipal;
 import com.easyaccounting.mapper.CompanyMapper;
 import com.easyaccounting.mapper.MapperUtil;
 import com.easyaccounting.repository.CompanyRepository;
+import com.easyaccounting.repository.UserRepository;
 import com.easyaccounting.service.CompanyService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +20,13 @@ public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyRepository companyRepository;
     private final MapperUtil mapperUtil;
+    private final UserRepository userRepository;
+    private UserPrincipal userPrincipal;
 
-    public CompanyServiceImpl(CompanyRepository companyRepository, CompanyMapper companyMapper, MapperUtil mapperUtil) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, CompanyMapper companyMapper, MapperUtil mapperUtil, UserRepository userRepository) {
         this.companyRepository = companyRepository;
         this.mapperUtil = mapperUtil;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -67,7 +73,8 @@ public class CompanyServiceImpl implements CompanyService {
 
 
     public Company getCurrentCompany() {
-        return companyRepository.findById(1L).get();
+        userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return companyRepository.findById(userPrincipal.getLoggedInUserCompanyId()).get();
     }
 
     @Override

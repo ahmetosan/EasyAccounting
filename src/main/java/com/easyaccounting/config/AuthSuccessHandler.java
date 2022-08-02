@@ -22,7 +22,7 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
         if(roles.contains("Root")){
-            response.sendRedirect("/dashboard");
+            response.sendRedirect("/company/list");
         }
 
         if(roles.contains("Admin")){

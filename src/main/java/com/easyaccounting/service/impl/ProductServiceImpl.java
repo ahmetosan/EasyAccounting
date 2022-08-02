@@ -5,11 +5,13 @@ import com.easyaccounting.dto.ProductDTO;
 import com.easyaccounting.entity.ClientVendor;
 import com.easyaccounting.entity.Company;
 import com.easyaccounting.entity.Product;
+import com.easyaccounting.entity.common.UserPrincipal;
 import com.easyaccounting.mapper.MapperUtil;
 import com.easyaccounting.mapper.ProductMapper;
 import com.easyaccounting.repository.CompanyRepository;
 import com.easyaccounting.repository.ProductRepository;
 import com.easyaccounting.service.ProductService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +26,7 @@ public class ProductServiceImpl implements ProductService {
     private final MapperUtil mapperUtil;
     private final ProductMapper productMapper;
     private final CompanyRepository companyRepository;
+    private UserPrincipal userPrincipal;
 
     public ProductServiceImpl(ProductRepository productRepository, MapperUtil mapperUtil, ProductMapper productMapper, CompanyRepository companyRepository) {
         this.productRepository = productRepository;
@@ -101,8 +104,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public Company getCurrentCompany() {
-// ToDO find current user, to return company info logged in by current user
-        return companyRepository.findById(1L).get();
+        userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return companyRepository.findById(userPrincipal.getLoggedInUserCompanyId()).get();
     }
 
 
