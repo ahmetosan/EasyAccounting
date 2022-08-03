@@ -118,8 +118,8 @@
                                                                            sec:authorize="hasAnyAuthority('Admin','Manager','Employee')">Dashboard</h3></span>
 
                                     <span th:unless="${company}==null"><h3 class="image-ruler login-page-title"
-                                                                               sec:authorize="hasAnyAuthority('Admin','Manager','Employee')"
-                                                                               th:text="${company}"></h3></span>
+                                                                           sec:authorize="hasAnyAuthority('Admin','Manager','Employee')"
+                                                                           th:text="${company}"></h3></span>
                                 </a></div>
                             </li>
                         </ul>

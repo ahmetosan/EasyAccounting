@@ -17,7 +17,6 @@ public class DashboardController {
 
     @GetMapping()
     public String getDashboard(Model model){
-        System.out.println(companyService.getCurrentCompany().getTitle());
         model.addAttribute("company", companyService.getCurrentCompany().getTitle());
         return "dashboard";
     }
