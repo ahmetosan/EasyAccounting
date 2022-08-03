@@ -3,12 +3,14 @@ package com.easyaccounting.service.impl;
 
 import com.easyaccounting.dto.ClientVendorDTO;
 import com.easyaccounting.entity.ClientVendor;
+import com.easyaccounting.entity.common.UserPrincipal;
 import com.easyaccounting.enums.ClientVendorType;
 import com.easyaccounting.mapper.MapperUtil;
 import com.easyaccounting.entity.Company;
 import com.easyaccounting.repository.CompanyRepository;
 import com.easyaccounting.repository.ClientVendorRepository;
 import com.easyaccounting.service.ClientVendorService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,7 @@ public class ClientVendorServiceImpl implements ClientVendorService {
     private final ClientVendorRepository clientVendorRepository;
     private final MapperUtil mapperUtil;
     private final CompanyRepository companyRepository;
+    private UserPrincipal userPrincipal;
 
     public ClientVendorServiceImpl(ClientVendorRepository clientVendorRepository, MapperUtil mapperUtil, CompanyRepository companyRepository) {
         this.clientVendorRepository = clientVendorRepository;
@@ -38,8 +41,8 @@ public class ClientVendorServiceImpl implements ClientVendorService {
     }
 
     public Company getCurrentCompany() {
-// ToDO find current user, to return company info logged in by current user
-        return companyRepository.findById(1L).get();
+        userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return companyRepository.findById(userPrincipal.getLoggedInUserCompanyId()).get();
     }
 
     @Override

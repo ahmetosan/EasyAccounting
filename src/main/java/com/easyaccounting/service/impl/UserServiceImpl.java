@@ -4,6 +4,7 @@ import com.easyaccounting.dto.CompanyDTO;
 import com.easyaccounting.dto.UserDTO;
 import com.easyaccounting.entity.Company;
 import com.easyaccounting.entity.User;
+import com.easyaccounting.entity.common.UserPrincipal;
 import com.easyaccounting.enums.ProductStatus;
 import com.easyaccounting.mapper.MapperUtil;
 import com.easyaccounting.mapper.UserMapper;
@@ -11,6 +12,7 @@ import com.easyaccounting.repository.CompanyRepository;
 import com.easyaccounting.repository.UserRepository;
 import com.easyaccounting.service.UserService;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +25,7 @@ public class UserServiceImpl implements UserService {
     private final MapperUtil mapperUtil;
     private final UserMapper userMapper;
     private final CompanyRepository companyRepository;
+    private UserPrincipal userPrincipal;
     //private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository, MapperUtil mapperUtil, UserMapper userMapper, CompanyRepository companyRepository) {
@@ -89,7 +92,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public Company getCurrentCompany(){
-        return companyRepository.findById(1L).get();
+        userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return companyRepository.findById(userPrincipal.getLoggedInUserCompanyId()).get();
     }
 
 //    @Override

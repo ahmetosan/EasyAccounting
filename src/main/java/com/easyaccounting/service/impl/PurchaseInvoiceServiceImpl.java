@@ -6,6 +6,7 @@ import com.easyaccounting.entity.ClientVendor;
 import com.easyaccounting.entity.Company;
 import com.easyaccounting.entity.Invoice;
 import com.easyaccounting.entity.InvoiceProduct;
+import com.easyaccounting.entity.common.UserPrincipal;
 import com.easyaccounting.enums.InvoiceStatus;
 import com.easyaccounting.enums.InvoiceType;
 import com.easyaccounting.mapper.MapperUtil;
@@ -14,6 +15,7 @@ import com.easyaccounting.repository.CompanyRepository;
 import com.easyaccounting.repository.InvoiceProductRepository;
 import com.easyaccounting.repository.PurchaseInvoiceRepository;
 import com.easyaccounting.service.PurchaseInvoiceService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -29,6 +31,7 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     private final PurchaseInvoiceMapper purchaseInvoiceMapper;
     private final CompanyRepository companyRepository;
     private final InvoiceProductRepository invoiceProductRepository;
+    private UserPrincipal userPrincipal;
 
     public PurchaseInvoiceServiceImpl(PurchaseInvoiceRepository purchaseInvoiceRepository, MapperUtil mapperUtil, PurchaseInvoiceMapper purchaseInvoiceMapper, CompanyRepository companyRepository, InvoiceProductRepository invoiceProductRepository) {
         this.purchaseInvoiceRepository = purchaseInvoiceRepository;
@@ -147,7 +150,7 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     }
 
     public Company getCurrentCompany() {
-// ToDO find current user, to return company info logged in by current user
-        return companyRepository.findById(1L).get();
+        userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return companyRepository.findById(userPrincipal.getLoggedInUserCompanyId()).get();
     }
 }

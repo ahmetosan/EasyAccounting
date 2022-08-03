@@ -4,6 +4,7 @@ import com.easyaccounting.dto.InvoiceDTO;
 import com.easyaccounting.entity.Company;
 import com.easyaccounting.entity.Invoice;
 import com.easyaccounting.entity.InvoiceProduct;
+import com.easyaccounting.entity.common.UserPrincipal;
 import com.easyaccounting.enums.InvoiceStatus;
 import com.easyaccounting.enums.InvoiceType;
 import com.easyaccounting.mapper.MapperUtil;
@@ -12,6 +13,7 @@ import com.easyaccounting.repository.CompanyRepository;
 import com.easyaccounting.repository.InvoiceProductRepository;
 import com.easyaccounting.repository.SalesInvoiceRepository;
 import com.easyaccounting.service.SalesInvoiceService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public class SalesInvoiceServiceImpl implements SalesInvoiceService {
     private final SalesInvoiceMapper salesInvoiceMapper;
     private final CompanyRepository companyRepository;
     private final InvoiceProductRepository invoiceProductRepository;
+    private UserPrincipal userPrincipal;
 
     public SalesInvoiceServiceImpl(SalesInvoiceRepository salesInvoiceRepository, MapperUtil mapperUtil, SalesInvoiceMapper salesInvoiceMapper, CompanyRepository companyRepository, InvoiceProductRepository invoiceProductRepository) {
         this.salesInvoiceRepository = salesInvoiceRepository;
@@ -92,8 +95,8 @@ public class SalesInvoiceServiceImpl implements SalesInvoiceService {
     }
 
     public Company getCurrentCompany() {
-
-        return companyRepository.findById(1L).get();
+        userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return companyRepository.findById(userPrincipal.getLoggedInUserCompanyId()).get();
     }
 
 
