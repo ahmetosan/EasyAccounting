@@ -53,7 +53,7 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
         InvoiceProduct invoiceProduct = mapperUtil.convert(invoiceProductDTO, new InvoiceProduct());
         invoiceProduct.setInvoice(invoice);
         invoiceProduct.setId(null);
-        invoiceProductRepository.save(mapperUtil.convert(invoiceProductDTO, new InvoiceProduct()));
+        invoiceProductRepository.save(invoiceProduct);
     }
 
     @Override
