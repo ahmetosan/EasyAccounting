@@ -3,6 +3,7 @@ package com.easyaccounting.controller;
 import com.easyaccounting.dto.ClientVendorDTO;
 import com.easyaccounting.enums.State;
 import com.easyaccounting.service.ClientVendorService;
+import com.easyaccounting.service.CompanyService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -16,9 +17,11 @@ public class ClientVendorController {
     private final Logger logger = LogManager.getLogger(ClientVendorController.class);
 
     private final ClientVendorService clientVendorService;
+    private final CompanyService companyService;
 
-    public ClientVendorController(ClientVendorService clientVendorService) {
+    public ClientVendorController(ClientVendorService clientVendorService, CompanyService companyService) {
         this.clientVendorService = clientVendorService;
+        this.companyService = companyService;
     }
 
 
@@ -27,6 +30,7 @@ public class ClientVendorController {
         List<ClientVendorDTO> clientVendorList = clientVendorService.listAllClientVendors();
         logger.info("Client Vendor list: " + clientVendorList);
         model.addAttribute("clientVendorList", clientVendorList);
+        model.addAttribute("company", companyService.getCurrentCompany().getTitle());
         return "/clientvendor/client-vendor-list";
     }
 

@@ -36,7 +36,7 @@ public class SalesInvoiceController {
         model.addAttribute("salesInvoice" , new InvoiceDTO());
         model.addAttribute("clientVendor", new ClientVendorDTO());
         model.addAttribute("clientVendors", clientVendorService.getAllClientVendorsByCompanyType(ClientVendorType.CLIENT));
-
+        model.addAttribute("company", companyService.getCurrentCompany().getTitle());
         return "/invoice/sales-invoice-list";
     }
 

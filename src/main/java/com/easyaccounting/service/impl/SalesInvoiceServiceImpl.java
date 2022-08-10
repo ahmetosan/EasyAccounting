@@ -31,7 +31,6 @@ public class SalesInvoiceServiceImpl implements SalesInvoiceService {
     private final SalesInvoiceMapper salesInvoiceMapper;
     private final CompanyRepository companyRepository;
     private final InvoiceProductRepository invoiceProductRepository;
-    private UserPrincipal userPrincipal;
 
     public SalesInvoiceServiceImpl(SalesInvoiceRepository salesInvoiceRepository, MapperUtil mapperUtil, SalesInvoiceMapper salesInvoiceMapper, CompanyRepository companyRepository, InvoiceProductRepository invoiceProductRepository) {
         this.salesInvoiceRepository = salesInvoiceRepository;
@@ -162,7 +161,7 @@ public class SalesInvoiceServiceImpl implements SalesInvoiceService {
 
 
     public Company getCurrentCompany() {
-        userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+       UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return companyRepository.findById(userPrincipal.getLoggedInUserCompanyId()).get();
     }
 

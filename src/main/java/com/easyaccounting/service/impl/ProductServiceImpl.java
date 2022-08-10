@@ -26,7 +26,6 @@ public class ProductServiceImpl implements ProductService {
     private final MapperUtil mapperUtil;
     private final ProductMapper productMapper;
     private final CompanyRepository companyRepository;
-    private UserPrincipal userPrincipal;
 
     public ProductServiceImpl(ProductRepository productRepository, MapperUtil mapperUtil, ProductMapper productMapper, CompanyRepository companyRepository) {
         this.productRepository = productRepository;
@@ -104,7 +103,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public Company getCurrentCompany() {
-        userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return companyRepository.findById(userPrincipal.getLoggedInUserCompanyId()).get();
     }
 

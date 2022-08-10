@@ -27,7 +27,7 @@ public class UserController {
     public String openUserList(Model model){
 
         model.addAttribute("users", userService.listAllUsers());
-
+        model.addAttribute("company", companyService.getCurrentCompany().getTitle());
         return "/user/user-list";
     }
 

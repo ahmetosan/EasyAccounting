@@ -1,6 +1,7 @@
 package com.easyaccounting.service.impl;
 
 import com.easyaccounting.dto.ClientVendorDTO;
+import com.easyaccounting.dto.CompanyDTO;
 import com.easyaccounting.dto.InvoiceDTO;
 import com.easyaccounting.entity.ClientVendor;
 import com.easyaccounting.entity.Company;
@@ -10,7 +11,6 @@ import com.easyaccounting.entity.common.UserPrincipal;
 import com.easyaccounting.enums.InvoiceStatus;
 import com.easyaccounting.enums.InvoiceType;
 import com.easyaccounting.mapper.MapperUtil;
-import com.easyaccounting.mapper.PurchaseInvoiceMapper;
 import com.easyaccounting.repository.CompanyRepository;
 import com.easyaccounting.repository.InvoiceProductRepository;
 import com.easyaccounting.repository.PurchaseInvoiceRepository;
@@ -28,15 +28,12 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
 
     private final PurchaseInvoiceRepository purchaseInvoiceRepository;
     private final MapperUtil mapperUtil;
-    private final PurchaseInvoiceMapper purchaseInvoiceMapper;
     private final CompanyRepository companyRepository;
     private final InvoiceProductRepository invoiceProductRepository;
-    private UserPrincipal userPrincipal;
 
-    public PurchaseInvoiceServiceImpl(PurchaseInvoiceRepository purchaseInvoiceRepository, MapperUtil mapperUtil, PurchaseInvoiceMapper purchaseInvoiceMapper, CompanyRepository companyRepository, InvoiceProductRepository invoiceProductRepository) {
+    public PurchaseInvoiceServiceImpl(PurchaseInvoiceRepository purchaseInvoiceRepository, MapperUtil mapperUtil, CompanyRepository companyRepository, InvoiceProductRepository invoiceProductRepository) {
         this.purchaseInvoiceRepository = purchaseInvoiceRepository;
         this.mapperUtil = mapperUtil;
-        this.purchaseInvoiceMapper = purchaseInvoiceMapper;
         this.companyRepository = companyRepository;
         this.invoiceProductRepository = invoiceProductRepository;
     }
@@ -150,7 +147,7 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     }
 
     public Company getCurrentCompany() {
-        userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return companyRepository.findById(userPrincipal.getLoggedInUserCompanyId()).get();
     }
 }

@@ -25,7 +25,6 @@ public class UserServiceImpl implements UserService {
     private final MapperUtil mapperUtil;
     private final UserMapper userMapper;
     private final CompanyRepository companyRepository;
-    private UserPrincipal userPrincipal;
     //private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository, MapperUtil mapperUtil, UserMapper userMapper, CompanyRepository companyRepository) {
@@ -92,7 +91,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public Company getCurrentCompany(){
-        userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return companyRepository.findById(userPrincipal.getLoggedInUserCompanyId()).get();
     }
 

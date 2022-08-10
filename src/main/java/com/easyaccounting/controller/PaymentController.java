@@ -1,6 +1,7 @@
 package com.easyaccounting.controller;
 
 import com.easyaccounting.dto.PaymentDTO;
+import com.easyaccounting.service.CompanyService;
 import com.easyaccounting.service.PaymentService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,12 +15,14 @@ import java.time.LocalDateTime;
 public class PaymentController {
 
     private final PaymentService paymentService;
+    private final CompanyService companyService;
 
     @Value("${app.stripePublicKey}")
     private String stripePublicKey;
 
-    public PaymentController(PaymentService paymentService) {
+    public PaymentController(PaymentService paymentService, CompanyService companyService) {
         this.paymentService = paymentService;
+        this.companyService = companyService;
     }
 
     @GetMapping("/list")
@@ -28,7 +31,7 @@ public class PaymentController {
         model.addAttribute("localDateTime", LocalDateTime.now());
         model.addAttribute("year", year);
         model.addAttribute("payments", paymentService.findAllByYear(year));
-
+        model.addAttribute("company", companyService.getCurrentCompany().getTitle());
         return "/payment/payment-list";
     }
 

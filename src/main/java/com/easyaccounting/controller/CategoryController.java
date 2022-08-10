@@ -2,6 +2,7 @@ package com.easyaccounting.controller;
 
 import com.easyaccounting.dto.CategoryDTO;
 import com.easyaccounting.service.CategoryService;
+import com.easyaccounting.service.CompanyService;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -12,15 +13,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/category")
 public class CategoryController {
     private final CategoryService categoryService;
+    private final CompanyService companyService;
 
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryService categoryService, CompanyService companyService) {
         this.categoryService = categoryService;
+        this.companyService = companyService;
     }
 
 
     @RequestMapping
     public String openCategory(Model model) {
         model.addAttribute("categories", categoryService.listAllCategories());
+        model.addAttribute("company", companyService.getCurrentCompany().getTitle());
         return "/category/category-list";
     }
 

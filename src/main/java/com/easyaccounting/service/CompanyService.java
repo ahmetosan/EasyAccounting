@@ -5,6 +5,7 @@ import com.easyaccounting.dto.CompanyDTO;
 import com.easyaccounting.entity.Company;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CompanyService {
     List<CompanyDTO> listAllCompanies();

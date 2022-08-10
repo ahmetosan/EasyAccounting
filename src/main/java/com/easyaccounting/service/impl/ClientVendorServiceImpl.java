@@ -21,7 +21,6 @@ public class ClientVendorServiceImpl implements ClientVendorService {
     private final ClientVendorRepository clientVendorRepository;
     private final MapperUtil mapperUtil;
     private final CompanyRepository companyRepository;
-    private UserPrincipal userPrincipal;
 
     public ClientVendorServiceImpl(ClientVendorRepository clientVendorRepository, MapperUtil mapperUtil, CompanyRepository companyRepository) {
         this.clientVendorRepository = clientVendorRepository;
@@ -41,7 +40,7 @@ public class ClientVendorServiceImpl implements ClientVendorService {
     }
 
     public Company getCurrentCompany() {
-        userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return companyRepository.findById(userPrincipal.getLoggedInUserCompanyId()).get();
     }
 

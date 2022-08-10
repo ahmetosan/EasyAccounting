@@ -9,9 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/dashboard")
 public class DashboardController {
+    private final CompanyService companyService;
+
+    public DashboardController(CompanyService companyService) {
+        this.companyService = companyService;
+    }
 
     @GetMapping()
-    public String getDashboard(){
+    public String getDashboard(Model model){
+        model.addAttribute("company", companyService.getCurrentCompany().getTitle());
         return "dashboard";
     }
 

@@ -34,6 +34,7 @@ public class PurchaseInvoiceController {
         model.addAttribute("invoice", new InvoiceDTO());
         model.addAttribute("clientVendor", new ClientVendorDTO());
         model.addAttribute("clientVendors", clientVendorService.getAllClientVendorsByCompanyType(ClientVendorType.VENDOR));
+        model.addAttribute("company", companyService.getCurrentCompany().getTitle());
         return "/invoice/purchase-invoice-list";
     }
 
