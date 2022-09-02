@@ -1,7 +1,7 @@
 package com.easyaccounting.mapper;
 
 
-import com.easyaccounting.dto.SalesInvoiceDTO;
+import com.easyaccounting.dto.InvoiceDTO;
 import com.easyaccounting.entity.Invoice;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -16,14 +16,14 @@ public class SalesInvoiceMapper {
         this.modelMapper = modelMapper;
     }
 
-    public Invoice convertToEntity(SalesInvoiceDTO dto){
+    public Invoice convertToEntity(InvoiceDTO dto){
 
         return modelMapper.map(dto,Invoice.class);
 
     }
 
-    public SalesInvoiceDTO convertToDto(Invoice entity){
+    public InvoiceDTO convertToDto(Invoice entity){
 
-        return modelMapper.map(entity,SalesInvoiceDTO.class);
+        return modelMapper.map(entity,InvoiceDTO.class);
     }
 }

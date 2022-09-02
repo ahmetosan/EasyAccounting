@@ -11,15 +11,10 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping("/main2")
-    public String welcome() {
-        return "main2";
-    }
+//    @RequestMapping("/main2")
+//    public String welcome() {
+//        return "main2";
+//    }
 
-    //dashboard page added
-    @RequestMapping("/dashboard.html")
-    public String dashboard() {
-        return "dashboard";
-    }
 
 }

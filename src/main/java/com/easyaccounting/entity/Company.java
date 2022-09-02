@@ -2,14 +2,18 @@ package com.easyaccounting.entity;
 
 import com.easyaccounting.enums.State;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@Data // do we need to use @data ???
 @Entity
 @Where(clause = "is_deleted = false")
 @Table(name = "companies")

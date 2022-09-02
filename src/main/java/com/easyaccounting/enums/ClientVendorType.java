@@ -1,12 +1,14 @@
 package com.easyaccounting.enums;
 
-public enum CompanyType {
-    // just a placeholder, actual types will be placed
-    IT("It"), TRAVEL("Travel"), FINTECH("Fintech");
+public enum ClientVendorType {
+
+//    CLIENT,VENDOR
+
+    VENDOR("Vendor"), CLIENT("Client");
 
     private final String value;
 
-    CompanyType(String value) {
+    ClientVendorType(String value) {
         this.value = value;
     }
 

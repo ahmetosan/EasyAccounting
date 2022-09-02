@@ -214,7 +214,9 @@
 <!--                                            <a th:href="@{/pdf/generateToInvoice}" target="_blank" type="button" class="btn btn-dark"><i class="fa fa-edit"  ></i>Overview</a>-->
 <!--                                            <a th:href="@{/pdf/downloadToInvoice}"  type="button" class="btn btn-danger"><i class="fa fa-file-pdf-o" ></i> Export as PDF</a>-->
 <!--                                        </div>-->
-                                        <hr>
+                                        <a th:if="${invoice.getInvoiceType() == 'SALE'}" th:href="@{/sales-invoice/list}" type="button" class="btn btn-primary" data-html2canvas-ignore="true"><i class="fa fa-list mr-1"></i>Back to List</a>
+                                        <a th:if="${invoice.getInvoiceType() == 'PURCHASE'}" th:href="@{/purchase-invoice/list}" type="button" class="btn btn-primary" data-html2canvas-ignore="true"><i class="fa fa-list mr-1"></i>Back to List</a>
+                                        <a  onclick="generatePDF()" type="button" class="btn btn-danger" id="pdf-download" th:attr="data-html2canvas-ignore='true'"><i class="fa fa-file-pdf-o" ></i> Export as PDF</a>
                                     </div>
                                     <div class="invoice overflow-auto">
                                         <div style="min-width: 600px">
@@ -226,67 +228,66 @@
                                                         </a>
                                                     </div>
                                                     <div class="col company-details">
-                                                        <h2 class="name">
-                                                            <a target="_blank" href="javascript:"
-                                                               >
-                                                            </a>
-                                                        </h2>
-                                                        <div><a ></a></div>
-                                                        <div><a ></a></div>
-                                                        <div><a ></a></div>
-                                                        <div><a ></a></div>
-                                                        <div><a ></a></div>
+                                                        <h2 class="name" th:text="${company.getTitle()}"></h2>
+                                                        <div><a th:text="${company.address1}"></a></div>
+                                                        <div><a th:text="${company.getZip()}"></a></div>
+                                                        <div><a th:text="${company.getState()}"></a></div>
+                                                        <div><a th:text="${company.phone}"></a></div>
+                                                        <div><a th:text="${company.email}"></a></div>
                                                     </div>
                                                 </div>
                                             </header>
-                                            <main>
-                                                <div class="row contacts">
-                                                    <div class="col invoice-to">
-                                                        <div class="text-gray-light">INVOICE TO:</div>
-                                                        <h2 class="to" ></h2>
-                                                        <div class="address" ></div>
-                                                        <div class="address" ></div>
-                                                        <div class="email"><a href="mailto:john@example.com" ></a></div>
-                                                    </div>
-                                                    <div class="col invoice-details">
-                                                        <h1 class="invoice-id" ></h1>
-                                                        <div class="date" ></div>
-                                                    </div>
+                                            <div class="row contacts">
+                                                <div class="col invoice-to">
+                                                    <div class="text-gray-light">INVOICE TO:</div>
+                                                    <h2 class="to" th:text="${invoice.getClientVendor().companyName}"></h2>
+                                                    <div class="address" th:text="${invoice.getClientVendor().address}"></div>
+                                                    <div class="address" th:text="${invoice.getClientVendor().zipCode} + ' / ' + ${invoice.getClientVendor().state}"></div>
+                                                    <div class="email"><a href="mailto:john@example.com" th:text="${invoice.getClientVendor().email}"></a></div>
+                                                </div>
+                                                <div class="col invoice-details">
+                                                    <h1 class="invoice-id" th:text="${invoice.invoiceNumber}"></h1>
+                                                    <div class="date" th:text="'Invoice Date: '+${invoice.invoiceDate}"></div>
                                                 </div>
                                                 <table>
                                                     <thead>
-                                                        <tr>
-                                                            <th class="text-left">Product</th>
-                                                            <th class="text-right">Price</th>
-                                                            <th class="text-right">Quantity</th>
-                                                            <th class="text-right">Tax</th>
-                                                            <th class="text-right">Total</th>
-                                                        </tr>
+                                                    <tr>
+                                                        <th class="text-left">#</th>
+                                                        <th class="text-left">Product</th>
+                                                        <th class="text-right">Price</th>
+                                                        <th class="text-right">Quantity</th>
+                                                        <th class="text-right">Tax</th>
+                                                        <th class="text-right">Total</th>
+                                                    </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr >
-                                                            <td class="text-left"><h3 ></h3></td>
-                                                            <td class="unit" ></td>
-                                                            <td class="extra" ></td>
-                                                            <td class="total" ></td>
-                                                            <td class="total" ></td>
-                                                        </tr>
+                                                    <tr th:each="invoiceProduct, item:${invoiceProducts}">
+                                                        <td class="total" th:text="${item.count}"></td>
+                                                        <td class="text-left"><h3 th:text="${invoiceProduct.name}"></h3></td>
+                                                        <td class="unit" th:text="'$ '+${invoiceProduct.price}"></td>
+                                                        <td class="unit" th:text="${invoiceProduct.qty}"></td>
+                                                        <td class="unit" th:text="'% '+${invoiceProduct.tax}"></td>
+                                                        <td class="total" th:text="'$ '+${(invoiceProduct.qty * invoiceProduct.price) + (invoiceProduct.qty * invoiceProduct.price * invoiceProduct.tax )/100}"></td>
+                                                    </tr>
                                                     </tbody>
                                                     <tfoot>
                                                     <tr>
+                                                        <td></td>
                                                         <td colspan="2"></td>
                                                         <td colspan="2">SUBTOTAL</td>
-                                                        <td>5100</td>
+                                                        <td th:text="'$ '+${invoice.getInvoiceCost()}"></td>
                                                     </tr>
                                                     <tr>
+                                                        <td></td>
                                                         <td colspan="2"></td>
-                                                        <td colspan="2">TAX 25%</td>
-                                                        <td>510</td>
+                                                        <td colspan="2">TAX </td>
+                                                        <td th:text="'$ '+${invoice.getInvoiceTax()}"></td>
                                                     </tr>
                                                     <tr>
+                                                        <td></td>
                                                         <td colspan="2"></td>
                                                         <td colspan="2">GRAND TOTAL</td>
-                                                        <td>5610</td>
+                                                        <td th:text="'$ '+${invoice.getTotalCost()}"></td>
                                                     </tr>
                                                     </tfoot>
                                                 </table>
@@ -294,6 +295,7 @@
                                                     <div>NOTICE:</div>
                                                     <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
                                                 </div>
+                                            </div>
                                             </main>
                                             <footer>Invoice was created on a computer and is valid without the signature and seal.</footer>
                                         </div>
@@ -308,12 +310,21 @@
             </div>
         </div>
     </div>
-    <button class="btn btn-primary scroll-top" type="button"><i class="ft-arrow-up"></i></button>
+
+    <!-- END : End Main Content-->
+
 </div>
 
+<!-- ////////////////////////////////////////////////////////////////////////////-->
+
 <div class="sidenav-overlay"></div>
+<!-- BEGIN PAGE LEVEL JS-->
 <script th:src="@{/js/dashboard2.js}"></script>
+<!-- END PAGE LEVEL JS-->
+<!-- BEGIN: Custom CSS-->
 <script th:src="@{/assets/js/scripts.js}"></script>
+
 </body>
+<!-- END : Body-->
 
 </html>

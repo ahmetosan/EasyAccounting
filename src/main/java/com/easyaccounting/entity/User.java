@@ -1,5 +1,6 @@
 package com.easyaccounting.entity;
 
+import com.easyaccounting.enums.ProductStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
@@ -16,7 +17,7 @@ public class User extends BaseEntity{
     private String firstname;
     private String lastname;
 
-    @Column(unique = true, nullable = false)
+   // @Column(unique = true, nullable = false)
     private String username;
 
     private String password;
@@ -31,6 +32,11 @@ public class User extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @Enumerated(EnumType.STRING)
+    private ProductStatus productStatus;
+
+
 
 
 

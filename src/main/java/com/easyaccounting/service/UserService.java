@@ -1,10 +1,18 @@
 package com.easyaccounting.service;
 
+import com.easyaccounting.dto.CompanyDTO;
 import com.easyaccounting.dto.UserDTO;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService  {
 
     List<UserDTO> listAllUsers();
+    void save(UserDTO dto);
+//    UserDTO findByUsername(String username);
+    UserDTO findById(Long id);
+    void update(UserDTO dto, Long id);
+    void delete(Long id);
+
+
 }

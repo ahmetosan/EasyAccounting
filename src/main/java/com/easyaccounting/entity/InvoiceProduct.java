@@ -1,8 +1,6 @@
 package com.easyaccounting.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -14,13 +12,12 @@ import javax.persistence.*;
 @Setter
 @Where(clause = "is_deleted=false")
 public class InvoiceProduct extends BaseEntity{
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-    private String name;
     private Long qty;
     private Long price;
     private Long tax;
