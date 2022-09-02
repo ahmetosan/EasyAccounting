@@ -45,7 +45,7 @@ public class SalesInvoiceController {
         salesInvoiceService.approveSalesInvoice(id);
         return "redirect:/sales-invoice/list";
     }
-
+//
 
     @GetMapping("/delete/{id}")
     public String deleteSalesInvoiceById(@PathVariable("id") Long id){
